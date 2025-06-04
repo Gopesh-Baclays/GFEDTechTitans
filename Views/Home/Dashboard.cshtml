@@ -3,12 +3,32 @@
     Layout = "_Layout";
 }
 
+<!-- #region Pie chart area -->
 @{
     var pieChartData = ViewBag.PieChartData ?? new int[] { 0, 0, 0 };
 }
 <script>
     var pieChartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(pieChartData));
 </script>
+
+<!-- #endregion -->
+<!-- #region Bar chart area -->
+@{
+    var barLabels = ViewBag.BarLabels ?? new[] { "January", "February", "March", "April", "May", "June" };
+    var matchedBalanceRuleBasedData = ViewBag.MatchedBalanceRuleBasedData ?? new[] { 0, 0, 0, 0, 0, 0 };
+    var matchedBalanceAiData = ViewBag.MatchedBalanceAiData ?? new[] { 0, 0, 0, 0, 0, 0 };
+    var unmatchedBalanceData = ViewBag.UnmatchedBalanceData ?? new[] { 0, 0, 0, 0, 0, 0 };
+}
+}
+<script>
+    var barLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(barLabels));
+    var matchedBalanceRuleBasedData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceRuleBasedData));
+    var matchedBalanceAiData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceAiData));
+    var unmatchedBalanceData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(unmatchedBalanceData));
+</script>
+
+<!-- #endregion -->
+
 
 <div class="container-fluid">
     <!-- Page Heading -->

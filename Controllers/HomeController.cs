@@ -121,7 +121,10 @@ public class HomeController : Controller
     /// </summary>
     private void SetEmpiricalViewBarChartData()
     {
-
+        ViewBag.BarLabels = new[] { "January", "February", "March", "April", "May", "June" };
+        ViewBag.MatchedBalanceRuleBasedData = new[] { 4215, 5312, 6251, 7841, 9821, 14984 };
+        ViewBag.MatchedBalanceAiData = new[] { 2000, 2500, 3000, 3500, 4000, 4500 };
+        ViewBag.UnmatchedBalanceData = new[] { 2215, 2812, 3251, 4341, 5821, 9484 };
     }
 
     /// <summary>
