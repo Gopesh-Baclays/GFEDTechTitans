@@ -89,6 +89,7 @@ public class HomeController : Controller
     /// <returns></returns>
     public IActionResult Data()
     {
+         SetUserInformation();
         return View();
     }
 
@@ -98,6 +99,7 @@ public class HomeController : Controller
     /// <returns></returns>
     public IActionResult Rules()
     {
+         SetUserInformation();
         return View();
     }
 
