@@ -1,0 +1,93 @@
+﻿@{
+    ViewData["Title"] = "Rules";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Reconciliation Rules</h1>
+        <button class="btn btn-primary" data-toggle="modal" data-target="#ruleModal">
+            <i class="fas fa-plus"></i> Add Rule
+        </button>
+    </div>
+
+    <!-- Rules Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Current Rules</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="rulesTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Rule Name</th>
+                            <th>Sheet 1 Attribute</th>
+                            <th>Sheet 2 Attribute</th>
+                            <th>Match Type</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example row, replace with dynamic data -->
+                        <tr>
+                            <td>Rule 1</td>
+                            <td>Account Number</td>
+                            <td>Acct No</td>
+                            <td>Exact</td>
+                            <td>
+                                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ruleModal"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <!-- End example row -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rule Modal -->
+    <div class="modal fade" id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ruleModalLabel">Add/Edit Rule</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="ruleName">Rule Name</label>
+                            <input type="text" class="form-control" id="ruleName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sheet1Attr">Sheet 1 Attribute</label>
+                            <input type="text" class="form-control" id="sheet1Attr" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="sheet2Attr">Sheet 2 Attribute</label>
+                            <input type="text" class="form-control" id="sheet2Attr" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="matchType">Match Type</label>
+                            <select class="form-control" id="matchType">
+                                <option>Exact</option>
+                                <option>Contains</option>
+                                <option>Starts With</option>
+                                <option>Ends With</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Rule</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

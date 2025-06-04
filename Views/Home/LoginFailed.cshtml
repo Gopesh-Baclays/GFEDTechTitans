@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Login Failed";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Login Failed</title>
+    <style type="text/css">
+        body {
+            font-family: Calibri;
+            font-size: 12pt;
+            color: #00AEEF;
+            background-color: #f8fafd;
+        }
+        #divFailedLoginFrame {
+            position: relative;
+            width: 600px;
+            height: 250px;
+            border-radius: 15px;
+            margin: 100px auto 0 auto;
+            padding: 30px 40px;
+            background: #fff;
+            box-shadow: rgb(224,224,224) 5px 5px 40px 0px;
+            text-align: center;
+        }
+        #lblFailedLoginTitle {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00AEEF;
+            margin-bottom: 20px;
+        }
+        #lblFailedLoginText {
+            font-size: 16px;
+            color: #808080;
+            margin-bottom: 30px;
+        }
+        #btnOk {
+            width: 120px;
+            height: 40px;
+            background-color: #00AEEF;
+            background-image: linear-gradient(to bottom, #59CAF5, #00AEEF);
+            border-radius: 10px;
+            color: white;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+        #btnOk:hover {
+            background: #59B5EC;
+        }
+    </style>
+</head>
+<body>
+    <div id="divFailedLoginFrame">
+        <div id="lblFailedLoginTitle">Login Failed</div>
+        <div id="lblFailedLoginText">
+            You are not a valid user of the system.<br />
+            Please contact your System Administrator for further information.
+        </div>
+        <form method="get" action="/Home/SystemLogin">
+            <button id="btnOk" type="submit">OK</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Data";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Reconciliation Data</h1>
+    </div>
+
+    <!-- Matched Records Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-success">Matched Records</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="matchedTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Sheet 1 - Account</th>
+                            <th>Sheet 2 - Acct No</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example matched row -->
+                        <tr>
+                            <td>123456</td>
+                            <td>123456</td>
+                            <td>$1,000</td>
+                            <td><span class="badge badge-success">Matched</span></td>
+                        </tr>
+                        <!-- End example row -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unmatched Records Table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-danger">Unmatched Records</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="unmatchedTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Sheet</th>
+                            <th>Account</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Example unmatched rows -->
+                        <tr>
+                            <td>Sheet 1</td>
+                            <td>654321</td>
+                            <td>$500</td>
+                            <td><span class="badge badge-danger">Unmatched</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sheet 2</td>
+                            <td>789012</td>
+                            <td>$500</td>
+                            <td><span class="badge badge-danger">Unmatched</span></td>
+                        </tr>
+                        <!-- End example rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,412 @@
+﻿@{
+    ViewData["Title"] = "System Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>System Login</title>
+    <style type="text/css">
+        body {
+            font-family: Calibri;
+            font-size: 12pt;
+            color: #00AEEF;
+            font-weight: normal;
+        }
+
+        #divOuterFrame {
+            position: relative;
+            width: 900px;
+            height: 620px;
+            border: 0px dotted red
+            border-radius: 15px 15px 15px 15px;
+            margin: 50px auto 0 auto;
+            padding: 10px;
+            box-shadow: rgb(224,224,224) 5px 5px 40px 0px;
+        }
+
+        #divOuterFrame_TopHalf {
+            position: absolute;
+            left: 0;
+            top: -50px;
+            width: 900px;
+            height: 200px;
+            border-top: 1px solid #E0E0E0;
+            border-bottom: 1px solid #E0E0E0;
+            border-left: 1px solid #E0E0E0;
+            border-right: 1px solid #E0E0E0;
+            border-radius: 15px 15px 0px 0px;
+            margin: 50px auto 50px auto;
+            padding: 10px;
+        }
+
+        #divOuterFrame_BottomHalf {
+            position: absolute;
+            left: 0;
+            top: 220px;
+            width: 900px;
+            height: 400px;
+            border-bottom: 1px solid #E0E0E0;
+            border-left: 1px solid #E0E0E0;
+            border-right: 1px solid #E0E0E0;
+            border-radius:  0px 0px 15px 15px;
+            margin: 50px auto 50px auto;
+            padding: 10px;
+        }
+
+        .vertical_blue_bar {
+            position: absolute;
+            width: 6px;
+            height: 100px;
+            border: 0px solid red;
+            border-radius: 3px;
+            background-color: #0AEEF0;
+        }
+
+        .login_icons {
+            position: absolute;
+            width: 96px;
+            height: 96px;
+            border: 0px dotted red;
+        }
+
+        #imgBarclaysLogo {
+            position: absolute;
+            left: 25px;
+            top: 775px;
+            width: 100px;
+            height: 17px;
+        }
+
+        #lblSystemTitle {
+            position: absolute;
+            top: 50px;
+            left: 500px;
+            width: 375px;
+            height: 45px;
+            font-size: 36px;
+            font-weight: bold;
+            color: #00AEEF;
+            overflow: hidden;
+             border: 0px dotted red;
+        }
+
+        #lblSystemName {
+            position: absolute;
+            top: 100px;
+            left: 500px;
+            width: 375px;
+            height: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00AEEF;
+            overflow: hidden;
+            border: 0px dotted red;
+        }
+
+        #lblSystemSummary {
+            position: absolute;
+            top: 135px;
+            left: 500px;
+            width: 375px;
+            height: 60px;
+            font-size: 16px;
+            font-style: italic;
+            font-weight: normal;
+            color: #00AEEF;
+            overflow: hidden;
+            border: 0px dotted red;
+        }
+
+        #lblLoginTitle {
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            width: 825px;
+            height: 35px;
+            font-size: 28px;
+           font-weight: normal;
+            color: #00AEEF;
+            overflow: hidden;
+            border: 0px dotted red;
+        }
+
+        #lblLoginSummary {
+            position: absolute;
+            top: 70px;
+            left: 50px;
+            width: 825px;
+            height: 25px;
+            font-size: 20px;
+              font-weight: normal;
+            color: #00AEEF;
+            overflow: hidden;
+            border: 0px dotted red;
+        }
+
+        #divLoginFrame {
+            position: absolute;
+            left: 50px;
+            top: 125px;
+            width: 550px;
+            height: 200px;
+            border: 1px solid #E0E0E0;
+            border-radius: 15px 15px 15px 15px;
+            padding: 10px;
+            box-shadow: rgb(224,224,224) 5px 5px 20px 0px;
+        }
+
+        #divMisuseWarningFrame {
+            position: absolute;
+            left: 650px;
+            top: 125px;
+            width: 200px;
+            height: 200px;
+            border: 1px solid #E0E0E0;
+            border-radius: 15px 15px 15px 15px;
+            padding: 10px;
+            background-color: aliceblue;
+            box-shadow: rgb(224,224,224) 5px 5px 20px 0px;
+        }
+
+        #lblLoginGuidance {
+            position: absolute;
+            left: 25px;
+            top: 25px;
+            width: 525px;
+            height: 45px;
+            font-size: 13pt;
+            color: #A0A0A0;
+            text-align: center;
+            border: 0px dotted red;
+        }
+
+        #btnLogin {
+            position: absolute;
+            left: 225px;
+            top: 85px;
+            width: 125px;
+            height: 40px;
+            background-color: #00AEEF;
+            background-image: -webkit-linear-gradient(top, #59CAF5, #00AEEF);
+            background-image: -moz-linear-gradient(top, #59CAF5, #00AEEF);
+            background-image: -ms-linear-gradient(top, #59CAF5, #00AEEF);
+            background-image: -o-linear-gradient(top, #59CAF5, #00AEEF);
+            background-image: linear-gradient(to bottom, #59CAF5, #00AEEF);
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            color: white;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        #btnLogin:hover {
+            background: #59B5EC;
+        }
+
+        #btnLogin_PopupText {
+            position: absolute;
+            left: 250px;
+            top: 130px;
+            width: 225px;
+            height: 50px;
+            border: solid 5px white;
+            border-radius: 25px;
+            background-color: #59B5EC;
+            color: white;
+            text-align: center;
+            padding: 15px 10px 5px 10px;
+            box-shadow: rgb(224,224,224) 5px 5px 40px 0px;
+            z-index: 999;
+            display: none;
+        }
+
+        #lblNewUserGuidance {
+            position: absolute;
+            left: 25px;
+            top: 145px;
+            width: 525px;
+            height: 60px;
+            font-size: 12pt;
+            color: #A0A0AA;
+            text-align: center;
+            border: 0px dotted red;
+        }
+
+        #lblNewUserGuidance a {
+            color: #ABAA00;
+        }
+
+        #lblMisuseWarningHeading {
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            width: 200px;
+            height: 40px;
+            border: 0px dotted red;
+            font-size: 10pt;
+            font-weight: bold;
+            color: #808080;
+            text-align: center;
+        }
+
+        #lblMisuseWarningText {
+            position: absolute;
+            left: 10px;
+            top: 50px;
+            width: 200px;
+            height: 160px;
+            border: 0px dotted red;
+            font-weight: normal;
+            font-size: 10pt;
+            line-height: 90%;
+            color: #808080;
+            text-align: center;
+        }
+
+        #divHelpFrame {
+            position: absolute;
+            left: 50px;
+            top: 370px;
+            width: 825px;
+            height: 32px;
+            border: 0px dotted red;
+        }
+
+        #imgHelpIcon {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 32px;
+            height: 32px;
+        }
+
+        #lblHelpText {
+            position: absolute;
+            left: 40px;
+            top: 5px;
+            width: 785px;
+            height: 25px;
+            font-size: 10pt;
+            border: 0px dotted red;
+        }
+
+        #lblHelpText a {
+            font-size: 10pt;
+        }
+        #imgRttIcon {
+            position: absolute;
+            left: 850px;
+            top: 660px;
+            width: 75px;
+            height: 30px;
+        }
+
+
+        #divEnvironmentInformation {
+            position: absolute;
+            right: 20px;
+            bottom: 0px;
+            width: 100px;
+            height: 25px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 0px;
+            border-bottom-right-radius: 0px;
+            background-color: darkred;
+            text-align: center;
+            font-size: 10pt;
+            font-weight: bold;
+            line-height: 25px;
+            color: white;
+            cursor: pointer;
+        }
+
+        #divEnvironmentInformation_PopupText {
+            position: absolute;
+            right: 50px;
+            bottom: 50px;
+            width: 475px;
+            height: 155px;
+            border: solid 5px white;
+            border-radius: 25px;
+            background-color: #59B5EC;
+            padding: 15px 25px 5px 25px;
+            text-align: left;
+            color: white;
+            display: none;
+            z-index: 999;
+        }
+
+        #divEnvironmentInformation_PopupText b {
+            color: white;
+            font-weight: bold;
+            font-size: 14pt;
+        }
+
+        #divEnvironmentInformation_PopupText td {
+            color: white;
+            font-weight: normal;
+            font-size: 12pt;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function PopupHelp_Show(ControlName) {
+            document.getElementById(ControlName).style.display = "block";
+        }
+
+        function PopupHelp_Hide(ControlName) {
+            document.getElementById(ControlName).style.display = "none";
+        }
+    </script>
+    @section Scripts {
+        <script>
+            document.getElementById("btnLogin").addEventListener("click", function (event) {
+                window.location.href = "/Home/SSOLogin";
+            });
+        </script>
+    }
+</head>
+<body>
+    <form id="form1" method="post" asp-action="SsoLogin">
+        <div id="divOuterFrame">
+            <div id="divOuterFrame_TopHalf">
+                <div id="column_1_left" class="vertical_blue_bar" style="left: 49px; top: 50px;"></div>
+                <div id="column_1_right" class="vertical_blue_bar" style="left: 151px; top: 50px;"></div>
+                <div id="column_2_left" class="vertical_blue_bar" style="left: 199px; top: 75px;"></div>
+                <div id="column_2_right"class="vertical_blue_bar" style="left: 301px; top: 75px;"></div>
+                <div id="column_3_left" class="vertical_blue_bar" style="left: 349px; top: 50px;"></div>
+                <div id="column_3_right"class="vertical_blue_bar" style="left: 451px; top: 50px;"></div>
+
+                <img src="/images/default_images/default-login-image-01.png" id="imgLoginIcon01" class="login_icons" style="left: 55px; top: 51px;" />
+                <img src="/images/default_images/default-login-image-02.png" id="imgLoginIcon02" class="login_icons" style="left: 205px; top: 76px;" />
+                <img src="/images/default_images/default-login-image-03.png" id="imgLoginIcon03" class="login_icons" style="left: 355px; top: 51px;" />
+                <img src="/images/default_images/default-barclays-logo.png" id="imgBarclaysLogo" alt="Barclays Logo" title="Barclays Logo" style="display: block;" />
+
+                <div id="lblSystemTitle">RECAP</div>
+                <div id="lblSystemName">Reconciliation-Exception-Analysis Tool</div>
+                <div id="lblSystemSummary">Reconciliation, Exception Capture & Analysis Platform</div>
+            </div>
+
+            <div id="divOuterFrame_BottomHalf">
+                <div id="lblLoginTitle">Login</div>
+                <div id="lblLoginSummary">Please log into the system</div>
+
+                <div id="divLoginFrame">
+                    <div id="lblLoginGuidance">Click on the Login button below<br />to log into the RECAP system using SSO</div>
+                    <button id="btnLogin" type="submit">SSO Login</button>
+                    <div id="btnLogin_PopupText">Click here to log into the system using SSO Single Sign-On</div>
+                    <div id="lblNewUserGuidance">If you are not yet registered to use the system<br />then please consult your system administrator.</div>
+                </div>
+                <div id="divMisuseWarningFrame" style="display: block;">
+                    <div id="lblMisuseWarningHeading">Warning<br/>Computer Misuse Act 1990</div>
+                    <div id="lblMisuseWarningText">You will commit a crimal offence if you act outside of you authoriy in relation to this computer<br/><br/> The penalty is a fine,<br/>imprisonment or both<br/><br/>If you are acting outside of your authority then do not continue<br/><br/>If you are an authorised user of this system then please proceed to login.</div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
