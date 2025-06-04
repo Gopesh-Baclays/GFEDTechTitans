@@ -2,8 +2,7 @@ import pandas as pd
 import os
 # Load the Excel file
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-file_path = os.path.join(current_dir, '..', 'sourceFiles', 'Sample Data.xlsx')
+file_path =  r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\Sample Data.xlsx'
 xls = pd.ExcelFile(file_path)
 
 # Read data from sheets
@@ -39,9 +38,7 @@ final_df = merged_df[output_columns]
 # Export results to a new Excel file
 
 # Ensure outputFiles folder exists
-output_folder = os.path.join(current_dir, '..', 'outputFiles')
-os.makedirs(output_folder, exist_ok=True)
-
+output_folder =  r'C:\Users\DGrewal\Downloads\RECAP\RECAP\OutputFiles'
 # Export results to a new Excel file in outputFiles folder with name rule1.xlsx
 output_file = os.path.join(output_folder, 'rule1.xlsx')
 final_df.to_excel(output_file, index=False)
