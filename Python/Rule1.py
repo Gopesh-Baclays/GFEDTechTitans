@@ -1,7 +1,8 @@
 import pandas as pd
+import os
+# Load the Excel file
 
-# Load Excel file
-file_path = r'C:\Users\ARohilla\Tech Titans\Data Rule 1.xlsx'  # Replace with your actual file path
+file_path =  r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\Sample Data.xlsx'
 xls = pd.ExcelFile(file_path)
 
 # Read data from sheets
@@ -35,7 +36,11 @@ output_columns = key_columns + ['BalanceGBP_Src1', 'BalanceGBP_Src2', 'Balance_D
 final_df = merged_df[output_columns]
 
 # Export results to a new Excel file
-output_file = 'comparison_results.xlsx'
+
+# Ensure outputFiles folder exists
+output_folder =  r'C:\Users\DGrewal\Downloads\RECAP\RECAP\OutputFiles'
+# Export results to a new Excel file in outputFiles folder with name rule1.xlsx
+output_file = os.path.join(output_folder, 'rule1.xlsx')
 final_df.to_excel(output_file, index=False)
 
 print(f"Comparison results saved to {output_file}")

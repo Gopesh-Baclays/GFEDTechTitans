@@ -9,73 +9,71 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = RECAP
 build_property.RootNamespace = RECAP
-build_property.ProjectDir = C:\Users\GGupta\Desktop\GFEDTechTitans-Git\
+build_property.ProjectDir = C:\Users\DGrewal\Downloads\RECAP\RECAP\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\GGupta\Desktop\GFEDTechTitans-Git
+build_property.MSBuildProjectDirectory = C:\Users\DGrewal\Downloads\RECAP\RECAP
 build_property._RazorSourceGeneratorDebug = 
-build_property.EffectiveAnalysisLevelStyle = 8.0
-build_property.EnableCodeStyleSeverity = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/Dashboard.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/Data.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/Data.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/Index.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/LoginFailed.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/LoginFailed.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dpbkZhaWxlZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/Privacy.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/Rules.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/Rules.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSdWxlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Home/SystemLogin.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Home/SystemLogin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTeXN0ZW1Mb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Shared/Error.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Shared/_Footer.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Shared/_Footer.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Gb290ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Shared/_Sidebar.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Shared/_Sidebar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9TaWRlYmFyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Shared/_Topbar.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Shared/_Topbar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9Ub3BiYXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/_ViewImports.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/_ViewStart.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/GGupta/Desktop/GFEDTechTitans-Git/Views/Shared/_Layout.cshtml]
+[C:/Users/DGrewal/Downloads/RECAP/RECAP/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-ybsaqmmj6a
