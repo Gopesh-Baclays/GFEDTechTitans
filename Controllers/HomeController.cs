@@ -31,7 +31,24 @@ public class HomeController : Controller
             return RedirectToAction("Dashboard");
         }
     }
+[HttpPost]
+    public IActionResult RunPythonScript()
+    {
+        var psi = new ProcessStartInfo();
+        psi.FileName = "python";
+        psi.Arguments = "phython/test.py";
+        psi.WorkingDirectory = Directory.GetCurrentDirectory();
+        psi.RedirectStandardOutput = true;
+        psi.UseShellExecute = false;
+        psi.CreateNoWindow = true;
 
+        using (var process = Process.Start(psi))
+        {
+            process.WaitForExit();
+        }
+
+        return Json(new { success = true });
+    }
     public IActionResult Dashboard()
     {
         return View();
