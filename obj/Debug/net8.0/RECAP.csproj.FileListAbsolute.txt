@@ -89,3 +89,13 @@ C:\Users\DGrewal\Downloads\RECAP\RECAP\obj\Debug\net8.0\refint\RECAP.dll
 C:\Users\DGrewal\Downloads\RECAP\RECAP\obj\Debug\net8.0\RECAP.pdb
 C:\Users\DGrewal\Downloads\RECAP\RECAP\obj\Debug\net8.0\RECAP.genruntimeconfig.cache
 C:\Users\DGrewal\Downloads\RECAP\RECAP\obj\Debug\net8.0\ref\RECAP.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\obj\Debug\net8.0\RECAP.csproj.AssemblyReference.cache
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\EPPlus.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\EPPlus.Interfaces.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\EPPlus.System.Drawing.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\System.Drawing.Common.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\runtimes\win\lib\net7.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\bin\Debug\net8.0\runtimes\win\lib\net7.0\System.Drawing.Common.dll
+C:\Users\DGrewal\Downloads\RECAP\RECAP\obj\Debug\net8.0\RECAP.csproj.Up2Date

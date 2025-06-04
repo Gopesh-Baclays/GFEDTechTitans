@@ -128,6 +128,8 @@ public class HomeController : Controller
     /// <returns></returns>
     public IActionResult Dashboard()
     {
+        GetDatafromExcel();
+        // Set user information and various data for the dashboard view.
         SetUserInformation();
         SetCardsData();
         SetEmpiricalViewBarChartData();
@@ -137,6 +139,46 @@ public class HomeController : Controller
         // You can replace the above sample data with actual data fetching logic as needed.
         return View();
     }
+
+private List<DashboardRow> _dashboardRows;
+
+private void GetDatafromExcel()
+{
+    var sourceFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles");
+    var excelPath = Path.Combine(sourceFilesPath, "dashboarddata.xlsx");
+
+    OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+    _dashboardRows = new List<DashboardRow>();
+
+    using (var package = new ExcelPackage(new FileInfo(excelPath)))
+    {
+        var worksheet = package.Workbook.Worksheets[0];
+        int rowCount = worksheet.Dimension.Rows;
+
+        for (int row = 2; row <= rowCount; row++) // Assuming first row is header
+        {
+            var data = new DashboardRow
+            {
+                Month = worksheet.Cells[row, 1].Text,
+                Total = int.Parse(worksheet.Cells[row, 2].Text),
+                MatchedRule = int.Parse(worksheet.Cells[row, 3].Text),
+                MatchedAI = int.Parse(worksheet.Cells[row, 4].Text),
+                Unmatched = int.Parse(worksheet.Cells[row, 5].Text)
+            };
+            _dashboardRows.Add(data);
+        }
+    }
+}
+
+// Helper class for dashboard data
+private class DashboardRow
+{
+    public string Month { get; set; }
+    public int Total { get; set; }
+    public int MatchedRule { get; set; }
+    public int MatchedAI { get; set; }
+    public int Unmatched { get; set; }
+}
 
     /// <summary>
     /// Sets user information in the current view context by retrieving values from the session.
@@ -160,10 +202,13 @@ public class HomeController : Controller
     /// purposes and may not reflect real-time or dynamic data.</remarks>
     private void SetCardsData()
     {
-        ViewBag.TotalAmount = 4000000;
-        ViewBag.MatchedBalanceRuleBased = 215000;
-        ViewBag.UnmatchedBalance = 12345.76;
-        ViewBag.MatchedBalanceAi = 4568.00022;
+         if (_dashboardRows == null || !_dashboardRows.Any()) return;
+    // Use the latest month (last row)
+    var latest = _dashboardRows.Last();
+    ViewBag.TotalAmount = latest.Total;
+    ViewBag.MatchedBalanceRuleBased = latest.MatchedRule;
+    ViewBag.UnmatchedBalance = latest.Unmatched;
+    ViewBag.MatchedBalanceAi = latest.MatchedAI;
     }
 
     /// <summary>
@@ -171,11 +216,13 @@ public class HomeController : Controller
     /// </summary>
     private void SetEmpiricalViewBarChartData()
     {
-        ViewBag.BarLabels = new[] { "January", "February", "March", "April", "May", "June" };
-        ViewBag.MatchedBalanceRuleBasedData = new[] { 4215, 5312, 6251, 7841, 9821, 14984 };
-        ViewBag.MatchedBalanceAiData = new[] { 2000, 2500, 3000, 3500, 4000, 4500 };
-        ViewBag.UnmatchedBalanceData = new[] { 2215, 2812, 3251, 4341, 5821, 9484 };
-    }
+          if (_dashboardRows == null || !_dashboardRows.Any()) return;
+    ViewBag.BarLabels = _dashboardRows.Select(r => r.Month).ToArray();
+    ViewBag.MatchedBalanceRuleBasedData = _dashboardRows.Select(r => r.MatchedRule).ToArray();
+    ViewBag.MatchedBalanceAiData = _dashboardRows.Select(r => r.MatchedAI).ToArray();
+    ViewBag.UnmatchedBalanceData = _dashboardRows.Select(r => r.Unmatched).ToArray();
+}
+    
 
     /// <summary>
     /// Sets the rule chart data for the view by assigning predefined values to the ViewBag.
@@ -197,17 +244,20 @@ public class HomeController : Controller
     /// percentage, matched balance (rule-based and AI-based), and unmatched balance percentage.</remarks>
     private void SetPieChartData()
     {
-        // Sample data for the bar chart
-        int matchedBalanceRuleBasedPercentage = 30;
-        int unmatchedBalancePercentage = 25;
-        int matchedBalanceAiPercentage = 5;
+        if (_dashboardRows == null || !_dashboardRows.Any()) return;
+    var latest = _dashboardRows.Last();
+    int total = latest.Total;
+    int matchedRule = latest.MatchedRule;
+    int matchedAI = latest.MatchedAI;
+    int unmatched = latest.Unmatched;
 
-        ViewBag.PieChartData = new[] {
-            matchedBalanceRuleBasedPercentage,
-            unmatchedBalancePercentage,
-            matchedBalanceAiPercentage};
-    }
+    // Calculate percentages
+    int matchedRulePct = (int)Math.Round((double)matchedRule / total * 100);
+    int matchedAIPct = (int)Math.Round((double)matchedAI / total * 100);
+    int unmatchedPct = (int)Math.Round((double)unmatched / total * 100);
 
+    ViewBag.PieChartData = new[] { matchedRulePct, unmatchedPct, matchedAIPct };
+}
     #endregion
 
     #region Python 
