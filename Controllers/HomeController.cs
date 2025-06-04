@@ -92,14 +92,131 @@ public class HomeController : Controller
         return View();
     }
 
+    #region Rules
+
+    private readonly string _rulesFile = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles"), "Rules.xlsx");
+
     /// <summary>
-    /// 
+    /// Displays a view containing a list of rules retrieved from an Excel file.
     /// </summary>
-    /// <returns></returns>
+    /// <remarks>The rules are read from an external Excel file and passed to the view for rendering.  Ensure
+    /// the Excel file is properly formatted and accessible to avoid errors.</remarks>
+    /// <returns>An <see cref="IActionResult"/> that renders the view with the list of rules.</returns>
     public IActionResult Rules()
     {
-        return View();
+        var rules = ReadRulesFromExcel();
+        return View(rules);
     }
+
+    /// <summary>
+    /// Adds a new rule or edits an existing rule in the collection of rules stored in the Excel file.
+    /// </summary>
+    /// <remarks>If <paramref name="rowIndex"/> is provided, the rule at the specified index is replaced with
+    /// the given <paramref name="rule"/>. If <paramref name="rowIndex"/> is null, the rule is appended to the end of
+    /// the collection. The updated collection is saved to the Excel file.</remarks>
+    /// <param name="rule">The rule to add or edit. Cannot be null.</param>
+    /// <param name="rowIndex">The zero-based index of the rule to edit. If null, a new rule is added to the collection.</param>
+    /// <returns>A redirect to the "Rules" action after the operation is completed.</returns>
+    [HttpPost]
+    public IActionResult AddOrEditRule(RuleModel rule, int? rowIndex)
+    {
+        var rules = ReadRulesFromExcel();
+        if (rowIndex.HasValue)
+        {
+            // Edit
+            rules[rowIndex.Value] = rule;
+        }
+        else
+        {
+            // Add
+            rules.Add(rule);
+        }
+        WriteRulesToExcel(rules);
+        return RedirectToAction("Rules");
+    }
+
+    /// <summary>
+    /// Deletes a rule at the specified index from the list of rules and updates the data source.
+    /// </summary>
+    /// <remarks>If the specified <paramref name="rowIndex"/> is out of range, no rule is deleted, and the
+    /// data source remains unchanged.</remarks>
+    /// <param name="rowIndex">The zero-based index of the rule to delete. Must be within the valid range of the rules list.</param>
+    /// <returns>An <see cref="IActionResult"/> that redirects to the "Rules" view after the operation is completed.</returns>
+    [HttpPost]
+    public IActionResult DeleteRule(int rowIndex)
+    {
+        var rules = ReadRulesFromExcel();
+        if (rowIndex >= 0 && rowIndex < rules.Count)
+        {
+            rules.RemoveAt(rowIndex);
+            WriteRulesToExcel(rules);
+        }
+        return RedirectToAction("Rules");
+    }
+
+    /// <summary>
+    /// Reads rules from an Excel file and returns a list of <see cref="RuleModel"/> objects.
+    /// </summary>
+    /// <remarks>This method reads data from the first worksheet of the specified Excel file. Each row in the
+    /// worksheet represents a rule, with columns corresponding to the properties of <see cref="RuleModel"/>. If the
+    /// file does not exist or the worksheet is empty, an empty list is returned.</remarks>
+    /// <returns>A list of <see cref="RuleModel"/> objects populated with data from the Excel file. If the file does not exist or
+    /// the worksheet is empty, the returned list will be empty.</returns>
+    private List<RuleModel> ReadRulesFromExcel()
+    {
+        var rules = new List<RuleModel>();
+
+        if (!System.IO.File.Exists(_rulesFile))
+            return rules;
+
+        using (var package = new ExcelPackage(new FileInfo(_rulesFile)))
+        {
+            var ws = package.Workbook.Worksheets.FirstOrDefault();
+            if (ws == null) return rules;
+            int row = 2;
+            while (ws.Cells[row, 1].Value != null)
+            {
+                rules.Add(new RuleModel
+                {
+                    RuleName = ws.Cells[row, 1].Text,
+                    Sheet1Attribute = ws.Cells[row, 2].Text,
+                    Sheet2Attribute = ws.Cells[row, 3].Text,
+                    MatchType = ws.Cells[row, 4].Text
+                });
+                row++;
+            }
+        }
+        return rules;
+    }
+
+    /// <summary>
+    /// Writes a collection of rules to an Excel file.
+    /// </summary>
+    /// <remarks>Each rule is written to a new row in the Excel file, with columns for the rule name,
+    /// attributes from two sheets, and the match type. The Excel file is saved to the location specified by the
+    /// internal <c>_rulesFile</c> field.</remarks>
+    /// <param name="rules">A list of <see cref="RuleModel"/> objects representing the rules to be written to the Excel file.</param>
+    private void WriteRulesToExcel(List<RuleModel> rules)
+    {
+        using (var package = new ExcelPackage())
+        {
+            var ws = package.Workbook.Worksheets.Add("Rules");
+            ws.Cells[1, 1].Value = "RuleName";
+            ws.Cells[1, 2].Value = "Sheet1Attribute";
+            ws.Cells[1, 3].Value = "Sheet2Attribute";
+            ws.Cells[1, 4].Value = "MatchType";
+            for (int i = 0; i < rules.Count; i++)
+            {
+                ws.Cells[i + 2, 1].Value = rules[i].RuleName;
+                ws.Cells[i + 2, 2].Value = rules[i].Sheet1Attribute;
+                ws.Cells[i + 2, 3].Value = rules[i].Sheet2Attribute;
+                ws.Cells[i + 2, 4].Value = rules[i].MatchType;
+            }
+            package.SaveAs(new FileInfo(_rulesFile));
+        }
+    }
+
+    #endregion
 
     /// <summary>
     /// 

@@ -19,7 +19,7 @@
     var matchedBalanceAiData = ViewBag.MatchedBalanceAiData ?? new[] { 0, 0, 0, 0, 0, 0 };
     var unmatchedBalanceData = ViewBag.UnmatchedBalanceData ?? new[] { 0, 0, 0, 0, 0, 0 };
 }
-}
+
 <script>
     var barLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(barLabels));
     var matchedBalanceRuleBasedData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceRuleBasedData));
@@ -40,7 +40,7 @@
     </div>
     <!-- Content Row -->
     <div class="row">
-        <!-- Earnings (Monthly) Card Example -->
+        <!-- Total Balance Card  -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="/Balance/TotalBalanceDetails" class="text-decoration-none">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -51,19 +51,19 @@
                                     Total Balance
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.TotalAmount.ToString("C0")
+                                    @ViewBag.TotalAmount.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
                                 </div>
                                 <span class="stretched-link"></span>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
         </div>
-        <!-- Earnings (Annual) Card Example -->
+        <!-- Matched Balance (Rule Based) Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="/Balance/MatchedBalanceAutomatedDetails" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -74,11 +74,11 @@
                                     Matched Balance (Rule Based)
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.MatchedBalanceRuleBased.ToString("C0")
+                                    @ViewBag.MatchedBalanceRuleBased.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -86,29 +86,7 @@
             </a>
         </div>
 
-        <!-- Pending Requests Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="/Balance/UnmatchedBalanceDetails" class="text-decoration-none">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Unmatched Balance
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.UnmatchedBalance.ToString("C0")
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- Tasks Card Example -->
+        <!-- Matched Balance (AI) Cars -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="/Balance/MatchedBalanceAiDetails" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -119,17 +97,41 @@
                                     Matched Balance (AI)
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.MatchedBalanceAi.ToString("C0")
+                                    @ViewBag.MatchedBalanceAi.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
             </a>
         </div>
+
+        <!-- Unmatched Balance Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="/Balance/UnmatchedBalanceDetails" class="text-decoration-none">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Unmatched Balance
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @ViewBag.UnmatchedBalance.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
     </div>
 
 </div>

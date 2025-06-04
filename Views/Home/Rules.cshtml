@@ -3,6 +3,29 @@
     Layout = "_Layout";
 }
 
+@model List<RECAP.Models.RuleModel>
+
+
+<input type="hidden" id="rowIndex" name="rowIndex" />
+
+<script>
+        $('#ruleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var rule = button.data('rule');
+        var index = button.data('index');
+        if (rule) {
+            $('#ruleName').val(rule.RuleName);
+            $('#sheet1Attr').val(rule.Sheet1Attribute);
+            $('#sheet2Attr').val(rule.Sheet2Attribute);
+            $('#matchType').val(rule.MatchType);
+            $('#rowIndex').val(index);
+        } else {
+            $('#ruleName, #sheet1Attr, #sheet2Attr').val('');
+            $('#matchType').val('Exact');
+            $('#rowIndex').val('');
+        }
+    });
+</script>
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -30,18 +53,28 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Example row, replace with dynamic data -->
-                        <tr>
-                            <td>Rule 1</td>
-                            <td>Account Number</td>
-                            <td>Acct No</td>
-                            <td>Exact</td>
-                            <td>
-                                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ruleModal"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        <!-- End example row -->
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model[i].RuleName</td>
+                                <td>@Model[i].Sheet1Attribute</td>
+                                <td>@Model[i].Sheet2Attribute</td>
+                                <td>@Model[i].MatchType</td>
+                                <td>
+                                    <form asp-action="DeleteRule" method="post" style="display:inline">
+                                        <input type="hidden" name="rowIndex" value="@i" />
+                                        <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
+                                    </form>
+                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ruleModal" data-index="@i"
+                                            data-rule='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model[i]))'>
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <form asp-action="ExecuteRule" method="post" style="display:inline">
+                                        <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-play"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
