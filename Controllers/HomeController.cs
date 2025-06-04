@@ -161,18 +161,11 @@ public class HomeController : Controller
 
         using (var process = Process.Start(psi))
         {
-            string output = process.StandardOutput.ReadToEnd();
-            string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
-
-            if (!string.IsNullOrEmpty(error))
-            {
-                // Log or return the error for debugging
-                return Content("Error: " + error);
-            }
         }
 
         return Json(new { success = true });
     }
+
     #endregion
 }
