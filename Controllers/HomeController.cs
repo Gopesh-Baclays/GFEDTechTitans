@@ -36,7 +36,7 @@ public class HomeController : Controller
     {
         var psi = new ProcessStartInfo();
         psi.FileName = "python";
-        psi.Arguments = "phython/Rule1.py";
+        psi.Arguments = "Python/Rule1.py";
         psi.WorkingDirectory = Directory.GetCurrentDirectory();
         psi.RedirectStandardOutput = true;
         psi.UseShellExecute = false;
