@@ -20,8 +20,9 @@ public class HomeController : Controller
 
     public IActionResult SSOLogin()
     {
-        string userid = Environment.UserName;
-        if (string.IsNullOrEmpty(userid))
+        var userId = Environment.UserName;
+
+        if (string.IsNullOrEmpty(userId))
         {
             return RedirectToAction("SystemLogin");
         }
@@ -30,19 +31,21 @@ public class HomeController : Controller
             return RedirectToAction("Dashboard");
         }
     }
+
     public IActionResult Dashboard()
     {
         return View();
     }
-     public IActionResult SystemLogin()
+
+    public IActionResult SystemLogin()
     {
         return View();
     }
- public IActionResult Data()
+    public IActionResult Data()
     {
         return View();
     }
-     public IActionResult Rules()
+    public IActionResult Rules()
     {
         return View();
     }
