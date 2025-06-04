@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using RECAP.Models;
+using OfficeOpenXml; // Add this at the top (requires EPPlus NuGet package)
 
 namespace RECAP.Controllers;
 
@@ -29,6 +30,8 @@ public class HomeController : Controller
     public IActionResult SSOLogin()
     {
         var userId = Environment.UserName;
+        HttpContext.Session.SetString("UserId", userId);
+
 
         if (string.IsNullOrEmpty(userId))
         {
@@ -36,7 +39,38 @@ public class HomeController : Controller
         }
         else
         {
-            return RedirectToAction("Dashboard");
+            var sourceFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles");
+            var excelPath = Path.Combine(sourceFilesPath, "userdetails.xlsx");
+
+            // ...existing code...
+            string userName = null;
+            OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage(new FileInfo(excelPath)))
+            {
+                var worksheet = package.Workbook.Worksheets[0]; // Assumes first worksheet
+                int rowCount = worksheet.Dimension.Rows;
+
+                for (int row = 2; row <= rowCount; row++) // Assuming first row is header
+                {
+                    var excelUserId = worksheet.Cells[row, 1].Text.Trim(); // Assuming UserId is in column 1
+                    if (string.Equals(excelUserId, userId, StringComparison.OrdinalIgnoreCase))
+                    {
+                        userName = worksheet.Cells[row, 2].Text.Trim(); // Assuming UserName is in column 2
+                        break;
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(userName))
+            {
+                // User not found in Excel
+                return RedirectToAction("SystemLogin");
+            }
+            else
+            {
+                HttpContext.Session.SetString("UserName", userName);
+                return RedirectToAction("Dashboard");
+            }
         }
     }
 
@@ -94,12 +128,28 @@ public class HomeController : Controller
     /// <returns></returns>
     public IActionResult Dashboard()
     {
+        SetUserInformation();
         SetCardsData();
         SetEmpiricalViewBarChartData();
         SetPieChartData();
+        SetRuleChartData();
 
         // You can replace the above sample data with actual data fetching logic as needed.
         return View();
+    }
+
+    /// <summary>
+    /// Sets user information in the current view context by retrieving values from the session.
+    /// </summary>
+    /// <remarks>This method retrieves the user's ID and name from the session and assigns them to the  <see
+    /// cref="ViewBag"/> for use in the current view. Ensure that the session contains valid  values for "UserId" and
+    /// "UserName" before calling this method.</remarks>
+    private void SetUserInformation()
+    {
+        var userId = HttpContext.Session.GetString("UserId");
+        var userName = HttpContext.Session.GetString("UserName");
+        ViewBag.UserId = userId;
+        ViewBag.UserName = userName;
     }
 
     /// <summary>
@@ -125,6 +175,18 @@ public class HomeController : Controller
         ViewBag.MatchedBalanceRuleBasedData = new[] { 4215, 5312, 6251, 7841, 9821, 14984 };
         ViewBag.MatchedBalanceAiData = new[] { 2000, 2500, 3000, 3500, 4000, 4500 };
         ViewBag.UnmatchedBalanceData = new[] { 2215, 2812, 3251, 4341, 5821, 9484 };
+    }
+
+    /// <summary>
+    /// Sets the rule chart data for the view by assigning predefined values to the ViewBag.
+    /// </summary>
+    /// <remarks>This method populates the ViewBag with specific values for keys "Rl01", "Rl02", and "Rl03",
+    /// which can be used in the view to display rule-related chart data.</remarks>
+    private void SetRuleChartData()
+    {
+        ViewBag.Rl01 = 39;
+        ViewBag.Rl02 = 21;
+        ViewBag.Rl03 = 15;
     }
 
     /// <summary>
@@ -164,7 +226,15 @@ public class HomeController : Controller
 
         using (var process = Process.Start(psi))
         {
+            string output = process.StandardOutput.ReadToEnd();
+            string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                // Log or return the error for debugging
+                return Content("Error: " + error);
+            }
         }
 
         return Json(new { success = true });

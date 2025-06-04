@@ -39,7 +39,7 @@ var myBarChart = new Chart(ctx, {
                 backgroundColor: "#4e73df",
                 hoverBackgroundColor: "#2e59d9",
                 borderColor: "#4e73df",
-                data: typeof revenueData !== "undefined" ? revenueData : [],
+                data: typeof matchedBalanceRuleBasedData !== "undefined" ? matchedBalanceRuleBasedData : [],
                 barPercentage: 0.8,
                 categoryPercentage: 0.5
             },
@@ -48,7 +48,7 @@ var myBarChart = new Chart(ctx, {
                 backgroundColor: "#e74a3b",
                 hoverBackgroundColor: "#be2617",
                 borderColor: "#e74a3b",
-                data: typeof expensesData !== "undefined" ? expensesData : [],
+                data: typeof matchedBalanceAiData !== "undefined" ? matchedBalanceAiData : [],
                 barPercentage: 0.8,
                 categoryPercentage: 0.5
             },
@@ -57,7 +57,7 @@ var myBarChart = new Chart(ctx, {
                 backgroundColor: "#1cc88a",
                 hoverBackgroundColor: "#17a673",
                 borderColor: "#1cc88a",
-                data: typeof profitData !== "undefined" ? profitData : [],
+                data: typeof unmatchedBalanceData !== "undefined" ? unmatchedBalanceData : [],
                 barPercentage: 0.8,
                 categoryPercentage: 0.5
             }
