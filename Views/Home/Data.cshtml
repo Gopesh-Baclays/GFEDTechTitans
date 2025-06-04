@@ -1,6 +1,8 @@
 ﻿@{
     ViewData["Title"] = "Data";
     Layout = "_Layout";
+    var matched = ViewBag.Matched as List<Dictionary<string, object>>;
+    var unmatched = ViewBag.Unmatched as List<Dictionary<string, object>>;
 }
 
 <div class="container-fluid">
@@ -21,19 +23,31 @@
                         <tr>
                             <th>Sheet 1 - Account</th>
                             <th>Sheet 2 - Acct No</th>
-                            <th>Amount</th>
+                            <th>Amount Src1</th>
+                            <th>Amount Src2</th>
+                            <th>Difference</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Example matched row -->
-                        <tr>
-                            <td>123456</td>
-                            <td>123456</td>
-                            <td>$1,000</td>
-                            <td><span class="badge badge-success">Matched</span></td>
-                        </tr>
-                        <!-- End example row -->
+                        @if (matched != null && matched.Any())
+                        {
+                            foreach (var item in matched)
+                            {
+                                <tr>
+                                    <td>@item["GL"]</td>
+                                    <td>@item["PC"]</td>
+                                    <td>@item["BalanceGBP_Src1"]</td>
+                                    <td>@item["BalanceGBP_Src2"]</td>
+                                    <td>@item["Balance_Difference"]</td>
+                                    <td><span class="badge badge-success">Matched</span></td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="6" class="text-center">No matched records found.</td></tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -52,25 +66,46 @@
                         <tr>
                             <th>Sheet</th>
                             <th>Account</th>
-                            <th>Amount</th>
+                            <th>Amount Src1</th>
+                            <th>Amount Src2</th>
+                            <th>Difference</th>
                             <th>Status</th>
+                            <th>Comments</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Example unmatched rows -->
-                        <tr>
-                            <td>Sheet 1</td>
-                            <td>654321</td>
-                            <td>$500</td>
-                            <td><span class="badge badge-danger">Unmatched</span></td>
-                        </tr>
-                        <tr>
-                            <td>Sheet 2</td>
-                            <td>789012</td>
-                            <td>$500</td>
-                            <td><span class="badge badge-danger">Unmatched</span></td>
-                        </tr>
-                        <!-- End example rows -->
+                        @if (unmatched != null && unmatched.Any())
+                        {
+                            foreach (var item in unmatched)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (string.IsNullOrEmpty(item["BalanceGBP_Src1"]?.ToString()) || item["BalanceGBP_Src1"]?.ToString() == "0")
+                                        {
+                                            <span>Sheet 2</span>
+                                        }
+                                        else if (string.IsNullOrEmpty(item["BalanceGBP_Src2"]?.ToString()) || item["BalanceGBP_Src2"]?.ToString() == "0")
+                                        {
+                                            <span>Sheet 1</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Both</span>
+                                        }
+                                    </td>
+                                    <td>@item["GL"]</td>
+                                    <td>@item["BalanceGBP_Src1"]</td>
+                                    <td>@item["BalanceGBP_Src2"]</td>
+                                    <td>@item["Balance_Difference"]</td>
+                                    <td><span class="badge badge-danger">Unmatched</span></td>
+                                    <td>@item["Comments"]</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="7" class="text-center">No unmatched records found.</td></tr>
+                        }
                     </tbody>
                 </table>
             </div>

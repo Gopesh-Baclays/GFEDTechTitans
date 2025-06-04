@@ -83,6 +83,43 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult DataFetch()
+{
+    var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "OutputFiles", "rule1.xlsx");
+    var matched = new List<Dictionary<string, object>>();
+    var unmatched = new List<Dictionary<string, object>>();
+
+    OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+    using (var package = new ExcelPackage(new FileInfo(outputPath)))
+    {
+        var ws = package.Workbook.Worksheets[0];
+        int rowCount = ws.Dimension.Rows;
+
+        for (int row = 2; row <= rowCount; row++)
+        {
+            var dict = new Dictionary<string, object>
+            {
+                ["GL"] = ws.Cells[row, 4].Text, // Sheet 1 - Account
+                ["PC"] = ws.Cells[row, 5].Text, // Sheet 2 - Acct No
+                ["BalanceGBP_Src1"] = ws.Cells[row, 6].Text,
+                ["BalanceGBP_Src2"] = ws.Cells[row, 7].Text,
+                ["Balance_Difference"] = ws.Cells[row, 8].Text,
+                ["Comments"] = ws.Cells[row, 9].Text
+            };
+
+            if (dict["Comments"].ToString() == "Match")
+                matched.Add(dict);
+            else
+                unmatched.Add(dict);
+        }
+    }
+
+    ViewBag.Matched = matched;
+    ViewBag.Unmatched = unmatched;
+    return View("Data");
+}
+
+
     /// <summary>
     /// Displays the data view for the system.
     /// </summary>
@@ -347,12 +384,44 @@ public class HomeController : Controller
     /// </summary>
     /// <remarks>This method populates the ViewBag with specific values for keys "Rl01", "Rl02", and "Rl03",
     /// which can be used in the view to display rule-related chart data.</remarks>
-    private void SetRuleChartData()
+   private void SetRuleChartData()
+{
+    var sourceFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles");
+    var excelPath = Path.Combine(sourceFilesPath, "RuleData.xlsx");
+
+    OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+    int rl01Pct = 0, rl02Pct = 0, rl03Pct = 0;
+
+    if (System.IO.File.Exists(excelPath))
     {
-        ViewBag.Rl01 = 39;
-        ViewBag.Rl02 = 21;
-        ViewBag.Rl03 = 15;
+        using (var package = new ExcelPackage(new FileInfo(excelPath)))
+        {
+            var worksheet = package.Workbook.Worksheets[0];
+            int rowCount = worksheet.Dimension.Rows;
+
+            for (int row = 2; row <= rowCount; row++) // Assuming first row is header
+            {
+                var ruleName = worksheet.Cells[row, 1].Text.Trim();
+                int total = int.TryParse(worksheet.Cells[row, 2].Text, out var t) ? t : 0;
+                int match = int.TryParse(worksheet.Cells[row, 3].Text, out var m) ? m : 0;
+
+                int percent = (total > 0) ? (int)Math.Round((double)match / total * 100) : 0;
+
+                if (ruleName.Equals("Rule 1", StringComparison.OrdinalIgnoreCase))
+                    rl01Pct = percent;
+                else if (ruleName.Equals("Rule 2", StringComparison.OrdinalIgnoreCase))
+                    rl02Pct = percent;
+                else if (ruleName.Equals("Rule 3", StringComparison.OrdinalIgnoreCase))
+                    rl03Pct = percent;
+            }
+        }
     }
+
+    ViewBag.Rl01 = rl01Pct;
+    ViewBag.Rl02 = rl02Pct;
+    ViewBag.Rl03 = rl03Pct;
+}
 
     /// <summary>
     /// Sets the data for a pie chart visualization.
