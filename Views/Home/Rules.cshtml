@@ -28,6 +28,7 @@
 </script>
 <div class="container-fluid">
     <!-- Page Heading -->
+
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Reconciliation Rules</h1>
         <button class="btn btn-primary" data-toggle="modal" data-target="#ruleModal">
@@ -81,11 +82,24 @@
         </div>
     </div>
 
+    @*  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <button class="btn btn-primary">
+            <i class="fas fa-play"></i> Execute All
+        </button>
+    </div> *@
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"></h1>
+        <a href="javascript:void(0);" onclick="runReconn()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-play fa-sm text-white-50"></i> Execute All
+        </a>
+    </div>
+
     <!-- Rule Modal -->
     <div class="modal fade" id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form>
+                <form asp-action="AddOrEditRule" method="post">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ruleModalLabel">Add/Edit Rule</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -95,19 +109,19 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="ruleName">Rule Name</label>
-                            <input type="text" class="form-control" id="ruleName" required>
+                            <input type="text" class="form-control" id="ruleName" name="RuleName" required>
                         </div>
                         <div class="form-group">
                             <label for="sheet1Attr">Sheet 1 Attribute</label>
-                            <input type="text" class="form-control" id="sheet1Attr" required>
+                            <input type="text" class="form-control" id="sheet1Attr" name="Sheet1Attribute" required>
                         </div>
                         <div class="form-group">
                             <label for="sheet2Attr">Sheet 2 Attribute</label>
-                            <input type="text" class="form-control" id="sheet2Attr" required>
+                            <input type="text" class="form-control" id="sheet2Attr" name="Sheet2Attribute"  required>
                         </div>
                         <div class="form-group">
                             <label for="matchType">Match Type</label>
-                            <select class="form-control" id="matchType">
+                            <select class="form-control" id="matchType" name="MatchType">
                                 <option>Exact</option>
                                 <option>Contains</option>
                                 <option>Starts With</option>
@@ -124,3 +138,28 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/bootstrap/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/bootstrap/js/demo/chart-area-demo.js"></script>
+    <script src="~/bootstrap/js/demo/chart-pie-demo.js"></script>
+    <script src="~/bootstrap/js/demo/chart-bar-demo.js"></script>
+    <script>
+        function runReconn() {
+            fetch('@Url.Action("RunPythonScript", "Home")', {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Python script executed!');
+                } else {
+                    alert('Failed to run script.');
+                }
+            });
+        }
+    </script>
+}

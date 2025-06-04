@@ -122,7 +122,7 @@ public class HomeController : Controller
     public IActionResult AddOrEditRule(RuleModel rule, int? rowIndex)
     {
         var rules = ReadRulesFromExcel();
-        if (rowIndex.HasValue)
+        if (rowIndex.HasValue && rowIndex.Value >= 0 && rowIndex.Value < rules.Count)
         {
             // Edit
             rules[rowIndex.Value] = rule;
