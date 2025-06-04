@@ -40,8 +40,6 @@ public class HomeController : Controller
         }
     }
 
-   
-
     /// <summary>
     /// Displays the login view for the system.
     /// </summary>
@@ -135,13 +133,11 @@ public class HomeController : Controller
     private void SetPieChartData()
     {
         // Sample data for the bar chart
-        int totalAmountPercentage = 49;
         int matchedBalanceRuleBasedPercentage = 30;
         int unmatchedBalancePercentage = 25;
         int matchedBalanceAiPercentage = 5;
 
         ViewBag.PieChartData = new[] {
-            totalAmountPercentage,
             matchedBalanceRuleBasedPercentage,
             unmatchedBalancePercentage,
             matchedBalanceAiPercentage};

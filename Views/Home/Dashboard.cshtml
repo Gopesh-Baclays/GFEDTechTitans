@@ -4,7 +4,7 @@
 }
 
 @{
-    var pieChartData = ViewBag.PieChartData ?? new int[] { 0, 0, 0, 0 };
+    var pieChartData = ViewBag.PieChartData ?? new int[] { 0, 0, 0 };
 }
 <script>
     var pieChartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(pieChartData));
@@ -14,7 +14,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-     <a href="javascript:void(0);" onclick="runReconn()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="javascript:void(0);" onclick="runReconn()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-download fa-sm text-white-50"></i> Reconcile Record
         </a>
     </div>
@@ -182,9 +182,6 @@
                 </div>
                 <div class="mt-4 text-center small">
                     <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> Total Balance
-                    </span>
-                    <span class="mr-2">
                         <i class="fas fa-circle text-success"></i> Matched Balance (Rule Based)
                     </span>
                     <span class="mr-2">
@@ -260,7 +257,7 @@
     <script src="~/bootstrap/js/demo/chart-area-demo.js"></script>
     <script src="~/bootstrap/js/demo/chart-pie-demo.js"></script>
     <script src="~/bootstrap/js/demo/chart-bar-demo.js"></script>
-     <script>
+    <script>
         function runReconn() {
             fetch('@Url.Action("RunPythonScript", "Home")', {
                 method: 'POST',

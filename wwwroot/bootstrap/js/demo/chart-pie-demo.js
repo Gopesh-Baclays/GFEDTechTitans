@@ -37,15 +37,15 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
-var data = typeof pieChartData !== "undefined" ? pieChartData : [45, 30, 15, 10];
+var data = typeof pieChartData !== "undefined" ? pieChartData : [30, 15, 10];
 var myPieChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
-        labels: ["Total Balance", "Matched Balance (Rule Based)", "Unmatched", "Matched Balance (AI)"],
+        labels: ["Matched Balance (Rule Based)", "Unmatched", "Matched Balance (AI)"],
         datasets: [{
             data: data,
-            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e'],
-            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf', '#dda20a'],
+            backgroundColor: ['#1cc88a', '#36b9cc', '#f6c23e'],
+            hoverBackgroundColor: ['#17a673', '#2c9faf', '#dda20a'],
             hoverBorderColor: "rgba(234, 236, 244, 1)",
         }],
     },
