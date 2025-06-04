@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/RECAP/FileContentIndex
+/obj/Debug/net8.0/RECAP.AssemblyInfo.cs
