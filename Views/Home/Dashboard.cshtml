@@ -42,7 +42,7 @@
     <div class="row">
         <!-- Total Balance Card  -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <a href="/Balance/TotalBalanceDetails" class="text-decoration-none">
+            <a href="@Url.Action("DataFetch", "Home")"  class="text-decoration-none">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body position-relative">
                         <div class="row no-gutters align-items-center">
@@ -65,7 +65,7 @@
         </div>
         <!-- Matched Balance (Rule Based) Card -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <a href="/Balance/MatchedBalanceAutomatedDetails" class="text-decoration-none">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -88,7 +88,7 @@
 
         <!-- Matched Balance (AI) Cars -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <a href="/Balance/MatchedBalanceAiDetails" class="text-decoration-none">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -111,7 +111,7 @@
 
         <!-- Unmatched Balance Card -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <a href="/Balance/UnmatchedBalanceDetails" class="text-decoration-none">
+            <ahref="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -227,19 +227,20 @@
                 <h6 class="m-0 font-weight-bold text-primary">Matched (Rule Based)</h6>
             </div>
             <div class="card-body">
-                <h4 class="small font-weight-bold">Rl01 <span class="float-right">@ViewBag.Rl01.ToString("P0")</span></h4>
+
+                <h4 class="small font-weight-bold">Rl01 <span class="float-right">@ViewBag.Rl01%</span></h4>
                 <div class="progress mb-4">
-                    <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: @ViewBag.Rl01%"
                          aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <h4 class="small font-weight-bold">Rl02 <span class="float-right">@ViewBag.Rl02.ToString("P0")</span></h4>
+                <h4 class="small font-weight-bold">Rl02 <span class="float-right">@ViewBag.Rl02%</span></h4>
                 <div class="progress mb-4">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: @ViewBag.Rl02%"
                          aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                <h4 class="small font-weight-bold">Rl02 <span class="float-right">@ViewBag.Rl03.ToString("P0")</span></h4>
+                <h4 class="small font-weight-bold">Rl02 <span class="float-right">@ViewBag.Rl03%</span></h4>
                 <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: 60%"
+                    <div class="progress-bar" role="progressbar" style="width: @ViewBag.Rl03%"
                          aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
             </div>
