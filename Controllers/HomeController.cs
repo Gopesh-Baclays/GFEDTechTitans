@@ -159,16 +159,24 @@ public class HomeController : Controller
         psi.Arguments = "Python/Rule1.py";
         psi.WorkingDirectory = Directory.GetCurrentDirectory();
         psi.RedirectStandardOutput = true;
+        psi.RedirectStandardError = true;
         psi.UseShellExecute = false;
         psi.CreateNoWindow = true;
 
         using (var process = Process.Start(psi))
         {
-            process.WaitForExit();
-        }
+           string output = process.StandardOutput.ReadToEnd();
+        string error = process.StandardError.ReadToEnd();
+        process.WaitForExit();
 
-        return Json(new { success = true });
+        if (!string.IsNullOrEmpty(error))
+        {
+            // Log or return the error for debugging
+            return Content("Error: " + error);
+        }
     }
 
+    return Json(new { success = true });
+}
     #endregion
 }
