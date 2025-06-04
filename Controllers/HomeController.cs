@@ -161,6 +161,7 @@ public class HomeController : Controller
 
         using (var process = Process.Start(psi))
         {
+            string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
             process.WaitForExit();
 
@@ -173,6 +174,5 @@ public class HomeController : Controller
 
         return Json(new { success = true });
     }
-
     #endregion
 }
