@@ -1,7 +1,9 @@
 import pandas as pd
+import os
+# Load the Excel file
 
-# Load Excel file
-file_path = r'C:\Users\ARohilla\Tech Titans\Data Rule 1.xlsx'  # Replace with your actual file path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(current_dir, '..', 'sourceFiles', 'sample data.xlsx')
 xls = pd.ExcelFile(file_path)
 
 # Read data from sheets
