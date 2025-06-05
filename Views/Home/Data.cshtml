@@ -5,6 +5,65 @@
     var unmatched = ViewBag.Unmatched as List<Dictionary<string, object>>;
 }
 
+@section Scripts {
+    <script>
+        // Paging for Matched
+        let matchedPage = 1;
+        let matchedPageSize = 10;
+        function showMatchedPage(page) {
+            matchedPage = page;
+            let rows = document.querySelectorAll("#matchedTable tbody tr");
+            rows.forEach((row, idx) => {
+                row.style.display = (idx >= (page - 1) * matchedPageSize && idx < page * matchedPageSize) ? "" : "none";
+            });
+            document.getElementById("matchedPageNum").innerText = page;
+        }
+        function matchedPrev() { if (matchedPage > 1) showMatchedPage(matchedPage - 1); }
+        function matchedNext() {
+            let rows = document.querySelectorAll("#matchedTable tbody tr");
+            if (matchedPage * matchedPageSize < rows.length) showMatchedPage(matchedPage + 1);
+        }
+
+        // Paging for Unmatched
+        let unmatchedPage = 1;
+        let unmatchedPageSize = 10;
+        function showUnmatchedPage(page) {
+            unmatchedPage = page;
+            let rows = document.querySelectorAll("#unmatchedTable tbody tr");
+            rows.forEach((row, idx) => {
+                row.style.display = (idx >= (page - 1) * unmatchedPageSize && idx < page * unmatchedPageSize) ? "" : "none";
+            });
+            document.getElementById("unmatchedPageNum").innerText = page;
+        }
+        function unmatchedPrev() { if (unmatchedPage > 1) showUnmatchedPage(unmatchedPage - 1); }
+        function unmatchedNext() {
+            let rows = document.querySelectorAll("#unmatchedTable tbody tr");
+            if (unmatchedPage * unmatchedPageSize < rows.length) showUnmatchedPage(unmatchedPage + 1);
+        }
+
+        // Move Selected for Unmatched
+        function moveSelected() {
+            let checkboxes = document.querySelectorAll("#unmatchedTable tbody input[type='checkbox']:checked");
+            if (checkboxes.length === 0) {
+                alert("Please select at least one record to move.");
+                return;
+            }
+            checkboxes.forEach(cb => {
+                let row = cb.closest("tr");
+                row.style.backgroundColor = "#d4edda"; // highlight moved
+                cb.checked = false;
+            });
+            alert("Selected records have been marked as moved (demo only).");
+        }
+
+        // On page load, show first page
+        document.addEventListener("DOMContentLoaded", function () {
+            showMatchedPage(1);
+            showUnmatchedPage(1);
+        });
+    </script>
+}
+
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -60,20 +119,27 @@
                         }
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <button class="btn btn-secondary btn-sm" onclick="matchedPrev()">Prev</button>
+                    <span>Page <span id="matchedPageNum">1</span></span>
+                    <button class="btn btn-secondary btn-sm" onclick="matchedNext()">Next</button>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Unmatched Records Table -->
     <div class="card shadow mb-4">
-        <div class="card-header py-3">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center">
             <h6 class="m-0 font-weight-bold text-danger">Unmatched Records</h6>
+            <button class="btn btn-primary btn-sm" onclick="moveSelected()">Approve</button>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="unmatchedTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th><input type="checkbox" onclick="document.querySelectorAll('#unmatchedTable tbody input[type=checkbox]').forEach(cb=>cb.checked=this.checked)" /></th>
                             <th>Business Date</th>
                             <th>ISIN</th>
                             <th>Reporting Id Src1</th>
@@ -93,7 +159,11 @@
                         {
                             foreach (var item in unmatched)
                             {
-                                <tr>
+                                 <tr>
+                <td>
+                    <input type="checkbox" />
+        
+                </td>
                                     <td>@item["Business_date"]</td>
                                     <td>@item["ISIN"]</td>
                                     <td>@item["Reporting_id_src1"]</td>
@@ -111,10 +181,15 @@
                         }
                         else
                         {
-                            <tr><td colspan="12" class="text-center">No unmatched records found.</td></tr>
+                            <tr><td colspan="13" class="text-center">No unmatched records found.</td></tr>
                         }
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <button class="btn btn-secondary btn-sm" onclick="unmatchedPrev()">Prev</button>
+                    <span>Page <span id="unmatchedPageNum">1</span></span>
+                    <button class="btn btn-secondary btn-sm" onclick="unmatchedNext()">Next</button>
+                </div>
             </div>
         </div>
     </div>
