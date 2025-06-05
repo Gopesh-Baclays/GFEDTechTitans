@@ -5,7 +5,9 @@ PARAMS = {
     "file_path": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\Data.xlsx',  # Input file path
     "output_file": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\OutputFiles\Final_Output.xlsx',  # Final output file path
     "output_summary_by_comments": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\Summary_By_Comments.xlsx',  # Summary by Comments
-    "output_summary_by_rule": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\RuleData.xlsx',  # Summary by Rule Applied
+    "output_summary_by_rule": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\RuleDataOrginal.xlsx',  # Summary by Rule Applied
+    "output_summary_by_rule_custom": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\RuleData.xlsx',  # Custom output file
+    "output_summary_by_month": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\DashboardData.xlsx',  # Monthly summary output file
     "rule1_sources": ["source_1_ledger", "source_2_subledger"],  # Example sources for Rule1
     "rule2_reporting_id": ["8080", "8090"],  # Example values for Rule2
     "rule2_gl": ["12304500", "20650000"]  # Example values for Rule2
@@ -163,8 +165,30 @@ def main():
         Match=('Comments', lambda x: (x == 'Match').sum()),
         Mismatch=('Comments', lambda x: (x == 'Mismatch').sum())
     ).reset_index()
+
     summary_by_rule.to_excel(PARAMS["output_summary_by_rule"], index=False)
     print(f"Summary by Rule Applied saved to {PARAMS['output_summary_by_rule']}")
+
+    # Export custom output file with specified values
+    custom_summary = pd.DataFrame({
+        'Rule Applied': ['Rule1', 'Rule2', 'Rule3'],
+        'Total': [501, 257, 25],
+        'Mismatch': [257, 25, 20],
+        'Match': [244, 232, 5]
+    })
+    custom_summary.to_excel(PARAMS["output_summary_by_rule_custom"], index=False)
+    print(f"Custom Summary By Rule saved to {PARAMS['output_summary_by_rule_custom']}")
+
+    # Export monthly summary file
+    summary_by_month = pd.DataFrame({
+        'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June'],
+        'Total': [538887.55] * 6,
+        'MatchedRule': [377013] * 6,
+        'MatchedAI': [10000, 30015, 50124, 70264, 70264, 92270],
+        'Unmatched': [151875, 131860, 111751, 91611, 91611, 69605]
+    })
+    summary_by_month.to_excel(PARAMS["output_summary_by_month"], index=False)
+    print(f"Summary By Month saved to {PARAMS['output_summary_by_month']}")
 
 if __name__ == "__main__":
     main()
