@@ -21,11 +21,16 @@
                 <table class="table table-bordered" id="matchedTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Sheet 1 - Account</th>
-                            <th>Sheet 2 - Acct No</th>
+                            <th>Business Date</th>
+                            <th>ISIN</th>
+                            <th>Reporting Id Src1</th>
+                            <th>GL Src1</th>
+                            <th>Reporting Id Src2</th>
+                            <th>GL Src2</th>
                             <th>Amount Src1</th>
                             <th>Amount Src2</th>
                             <th>Difference</th>
+                            <th>Rule Applied</th>
                             <th>Status</th>
                         </tr>
                     </thead>
@@ -35,18 +40,23 @@
                             foreach (var item in matched)
                             {
                                 <tr>
-                                    <td>@item["GL"]</td>
-                                    <td>@item["PC"]</td>
-                                    <td>@item["BalanceGBP_Src1"]</td>
-                                    <td>@item["BalanceGBP_Src2"]</td>
+                                    <td>@item["Business_date"]</td>
+                                    <td>@item["ISIN"]</td>
+                                    <td>@item["Reporting_id_src1"]</td>
+                                    <td>@item["GL_src1"]</td>
+                                    <td>@item["Reporting_id_src2"]</td>
+                                    <td>@item["GL_src2"]</td>
+                                    <td>@item["balancegbp_src1"]</td>
+                                    <td>@item["balancegbp_src2"]</td>
                                     <td>@item["Balance_Difference"]</td>
+                                    <td>@item["Rule_Applied"]</td>
                                     <td><span class="badge badge-success">Matched</span></td>
                                 </tr>
                             }
                         }
                         else
                         {
-                            <tr><td colspan="6" class="text-center">No matched records found.</td></tr>
+                            <tr><td colspan="11" class="text-center">No matched records found.</td></tr>
                         }
                     </tbody>
                 </table>
@@ -64,11 +74,16 @@
                 <table class="table table-bordered" id="unmatchedTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Sheet</th>
-                            <th>Account</th>
+                            <th>Business Date</th>
+                            <th>ISIN</th>
+                            <th>Reporting Id Src1</th>
+                            <th>GL Src1</th>
+                            <th>Reporting Id Src2</th>
+                            <th>GL Src2</th>
                             <th>Amount Src1</th>
                             <th>Amount Src2</th>
                             <th>Difference</th>
+                            <th>Rule Applied</th>
                             <th>Status</th>
                             <th>Comments</th>
                         </tr>
@@ -79,24 +94,16 @@
                             foreach (var item in unmatched)
                             {
                                 <tr>
-                                    <td>
-                                        @if (string.IsNullOrEmpty(item["BalanceGBP_Src1"]?.ToString()) || item["BalanceGBP_Src1"]?.ToString() == "0")
-                                        {
-                                            <span>Sheet 2</span>
-                                        }
-                                        else if (string.IsNullOrEmpty(item["BalanceGBP_Src2"]?.ToString()) || item["BalanceGBP_Src2"]?.ToString() == "0")
-                                        {
-                                            <span>Sheet 1</span>
-                                        }
-                                        else
-                                        {
-                                            <span>Both</span>
-                                        }
-                                    </td>
-                                    <td>@item["GL"]</td>
-                                    <td>@item["BalanceGBP_Src1"]</td>
-                                    <td>@item["BalanceGBP_Src2"]</td>
+                                    <td>@item["Business_date"]</td>
+                                    <td>@item["ISIN"]</td>
+                                    <td>@item["Reporting_id_src1"]</td>
+                                    <td>@item["GL_src1"]</td>
+                                    <td>@item["Reporting_id_src2"]</td>
+                                    <td>@item["GL_src2"]</td>
+                                    <td>@item["balancegbp_src1"]</td>
+                                    <td>@item["balancegbp_src2"]</td>
                                     <td>@item["Balance_Difference"]</td>
+                                    <td>@item["Rule_Applied"]</td>
                                     <td><span class="badge badge-danger">Unmatched</span></td>
                                     <td>@item["Comments"]</td>
                                 </tr>
@@ -104,7 +111,7 @@
                         }
                         else
                         {
-                            <tr><td colspan="7" class="text-center">No unmatched records found.</td></tr>
+                            <tr><td colspan="12" class="text-center">No unmatched records found.</td></tr>
                         }
                     </tbody>
                 </table>

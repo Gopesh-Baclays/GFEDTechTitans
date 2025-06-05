@@ -2,10 +2,10 @@ import pandas as pd
 
 # User-defined parameters
 PARAMS = {
-    "file_path": r'C:\Users\ARohilla\Tech Titans\Data.xlsx',  # Input file path
-    "output_file": r'C:\Users\ARohilla\Tech Titans\Final_Output.xlsx',  # Final output file path
-    "output_summary_by_comments": r'C:\Users\ARohilla\Tech Titans\Summary_By_Comments.xlsx',  # Summary by Comments
-    "output_summary_by_rule": r'C:\Users\ARohilla\Tech Titans\Summary_By_Rule.xlsx',  # Summary by Rule Applied
+    "file_path": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\Data.xlsx',  # Input file path
+    "output_file": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\OutputFiles\Final_Output.xlsx',  # Final output file path
+    "output_summary_by_comments": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\Summary_By_Comments.xlsx',  # Summary by Comments
+    "output_summary_by_rule": r'C:\Users\DGrewal\Downloads\RECAP\RECAP\SourceFiles\RuleData.xlsx',  # Summary by Rule Applied
     "rule1_sources": ["source_1_ledger", "source_2_subledger"],  # Example sources for Rule1
     "rule2_reporting_id": ["8080", "8090"],  # Example values for Rule2
     "rule2_gl": ["12304500", "20650000"]  # Example values for Rule2
