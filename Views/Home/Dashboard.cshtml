@@ -18,6 +18,9 @@
     var matchedBalanceRuleBasedData = ViewBag.MatchedBalanceRuleBasedData ?? new[] { 0, 0, 0, 0, 0, 0 };
     var matchedBalanceAiData = ViewBag.MatchedBalanceAiData ?? new[] { 0, 0, 0, 0, 0, 0 };
     var unmatchedBalanceData = ViewBag.UnmatchedBalanceData ?? new[] { 0, 0, 0, 0, 0, 0 };
+
+    var yAxisMin = ViewBag.YAxisMin ?? 0;
+    var yAxisMax = ViewBag.YAxisMax ?? 15;
 }
 
 <script>
@@ -25,6 +28,9 @@
     var matchedBalanceRuleBasedData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceRuleBasedData));
     var matchedBalanceAiData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceAiData));
     var unmatchedBalanceData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(unmatchedBalanceData));
+
+    var yAxisMin = @yAxisMin;
+    var yAxisMax = @yAxisMax;
 </script>
 
 <!-- #endregion -->
@@ -42,7 +48,7 @@
     <div class="row">
         <!-- Total Balance Card  -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <a href="@Url.Action("DataFetch", "Home")"  class="text-decoration-none">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-primary shadow h-100 py-2">
                     <div class="card-body position-relative">
                         <div class="row no-gutters align-items-center">
@@ -111,7 +117,7 @@
 
         <!-- Unmatched Balance Card -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <ahref="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+            <ahref ="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -129,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-            </a>
+                </a>
         </div>
 
     </div>

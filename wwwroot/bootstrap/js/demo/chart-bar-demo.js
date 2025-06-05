@@ -28,7 +28,8 @@ function number_format(number, decimals, dec_point, thousands_sep) {
 }
 
 // Bar Chart Examplevar 
-ctx = document.getElementById("myBarChart");
+// Bar Chart Example
+var ctx = document.getElementById("myBarChart");
 var myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -81,15 +82,15 @@ var myBarChart = new Chart(ctx, {
                     drawBorder: false
                 },
                 ticks: {
-                    maxTicksLimit: 6
+                    maxTicksLimit: barLabels.length > 0 ? barLabels.length : 6
                 },
                 maxBarThickness: 25,
             }],
             yAxes: [{
                 stacked: false,
                 ticks: {
-                    min: 0,
-                    max: 15000,
+                    min: typeof yAxisMin !== "undefined" ? yAxisMin : 0,
+                    max: typeof yAxisMax !== "undefined" ? yAxisMax : 20000,
                     maxTicksLimit: 5,
                     padding: 10,
                     callback: function (value, index, values) {

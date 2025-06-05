@@ -315,10 +315,10 @@ public class HomeController : Controller
                 var data = new DashboardRow
                 {
                     Month = worksheet.Cells[row, 1].Text,
-                    Total = int.Parse(worksheet.Cells[row, 2].Text),
-                    MatchedRule = int.Parse(worksheet.Cells[row, 3].Text),
-                    MatchedAI = int.Parse(worksheet.Cells[row, 4].Text),
-                    Unmatched = int.Parse(worksheet.Cells[row, 5].Text)
+                    Total = decimal.Parse(worksheet.Cells[row, 2].Text),
+                    MatchedRule = decimal.Parse(worksheet.Cells[row, 3].Text),
+                    MatchedAI = decimal.Parse(worksheet.Cells[row, 4].Text),
+                    Unmatched = decimal.Parse(worksheet.Cells[row, 5].Text)
                 };
                 _dashboardRows.Add(data);
             }
@@ -329,10 +329,14 @@ public class HomeController : Controller
     private class DashboardRow
     {
         public string Month { get; set; }
-        public int Total { get; set; }
-        public int MatchedRule { get; set; }
-        public int MatchedAI { get; set; }
-        public int Unmatched { get; set; }
+
+        public decimal Total { get; set; }
+
+        public decimal MatchedRule { get; set; }
+
+        public decimal MatchedAI { get; set; }
+
+        public decimal Unmatched { get; set; }
     }
 
     /// <summary>
@@ -376,6 +380,8 @@ public class HomeController : Controller
         ViewBag.MatchedBalanceRuleBasedData = _dashboardRows.Select(r => r.MatchedRule).ToArray();
         ViewBag.MatchedBalanceAiData = _dashboardRows.Select(r => r.MatchedAI).ToArray();
         ViewBag.UnmatchedBalanceData = _dashboardRows.Select(r => r.Unmatched).ToArray();
+
+        ViewBag.YAxisMax = 700000;
     }
 
 
@@ -433,15 +439,15 @@ public class HomeController : Controller
     {
         if (_dashboardRows == null || !_dashboardRows.Any()) return;
         var latest = _dashboardRows.Last();
-        int total = latest.Total;
-        int matchedRule = latest.MatchedRule;
-        int matchedAI = latest.MatchedAI;
-        int unmatched = latest.Unmatched;
+        decimal total = latest.Total;
+        decimal matchedRule = latest.MatchedRule;
+        decimal matchedAI = latest.MatchedAI;
+        decimal unmatched = latest.Unmatched;
 
         // Calculate percentages
-        int matchedRulePct = (int)Math.Round((double)matchedRule / total * 100);
-        int matchedAIPct = (int)Math.Round((double)matchedAI / total * 100);
-        int unmatchedPct = (int)Math.Round((double)unmatched / total * 100);
+        int matchedRulePct = (int)Math.Round((decimal)matchedRule / total * 100);
+        int matchedAIPct = (int)Math.Round((decimal)matchedAI / total * 100);
+        int unmatchedPct = (int)Math.Round((decimal)unmatched / total * 100);
 
         ViewBag.PieChartData = new[] { matchedRulePct, unmatchedPct, matchedAIPct };
     }
