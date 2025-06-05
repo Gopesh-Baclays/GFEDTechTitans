@@ -386,11 +386,10 @@ public class HomeController : Controller
         ViewBag.MatchedBalanceAiData = _dashboardRows.Select(r => r.MatchedAI).ToArray();
         ViewBag.UnmatchedBalanceData = _dashboardRows.Select(r => r.Unmatched).ToArray();
 
-        ViewBag.YAxisMax = 700000;
+        ViewBag.YAxisMax = 380000;
     }
 
-
-    /// <summary>
+        /// <summary>
     /// Sets the rule chart data for the view by assigning predefined values to the ViewBag.
     /// </summary>
     /// <remarks>This method populates the ViewBag with specific values for keys "Rl01", "Rl02", and "Rl03",

@@ -70,7 +70,7 @@
                                             data-rule='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model[i]))'>
                                         <i class="fas fa-edit"></i>
                                     </button>
-                                    <form asp-action="ExecuteRule" method="post" style="display:inline">
+                                    <form asp-action="RunPythonScript" method="post" style="display:inline">
                                         <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-play"></i></button>
                                     </form>
                                 </td>

@@ -6,13 +6,13 @@ Chart.defaults.global.defaultFontColor = '#858796';
 var ctx = document.getElementById("myPieChart");
 var data = typeof pieChartData !== "undefined" ? pieChartData : [30, 15, 10];
 var myPieChart = new Chart(ctx, {
-    type: 'doughnut',
+    type: 'pie',
     data: {
-        labels: ["Matched Balance (Rule Based)", "Unmatched", "Matched Balance (AI)"],
+        labels: ["Matched Balance (Rule Based)", "Matched Balance (AI)", "Unmatched"],
         datasets: [{
             data: data,
-            backgroundColor: ['#1cc88a', '#36b9cc', '#f6c23e'],
-            hoverBackgroundColor: ['#17a673', '#2c9faf', '#dda20a'],
+            backgroundColor: ['#1cc88a', '#4e73df', '#e74a3b'],
+            hoverBackgroundColor: ['#1cc88a', '#4e73df', '#e74a3b'],
             hoverBorderColor: "rgba(234, 236, 244, 1)",
         }],
     },
@@ -29,8 +29,8 @@ var myPieChart = new Chart(ctx, {
             caretPadding: 10,
         },
         legend: {
-            display: false
-        },
-        cutoutPercentage: 80,
+            display: true
+        }
+        // cutoutPercentage removed for pie chart
     },
 });

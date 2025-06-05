@@ -37,27 +37,27 @@ var myBarChart = new Chart(ctx, {
         datasets: [
             {
                 label: "Matched Balance (Rule Based)",
-                backgroundColor: "#4e73df",
-                hoverBackgroundColor: "#2e59d9",
-                borderColor: "#4e73df",
+                backgroundColor: "#1cc88a",
+                hoverBackgroundColor: "#1cc88a",
+                borderColor: "#1cc88a",
                 data: typeof matchedBalanceRuleBasedData !== "undefined" ? matchedBalanceRuleBasedData : [],
                 barPercentage: 0.8,
                 categoryPercentage: 0.5
             },
             {
                 label: "Matched Balance (AI)",
-                backgroundColor: "#e74a3b",
-                hoverBackgroundColor: "#be2617",
-                borderColor: "#e74a3b",
+                backgroundColor: "#4e73df",
+                hoverBackgroundColor: "#4e73df",
+                borderColor: "#4e73df",
                 data: typeof matchedBalanceAiData !== "undefined" ? matchedBalanceAiData : [],
                 barPercentage: 0.8,
                 categoryPercentage: 0.5
             },
             {
                 label: "Unmatched Balance",
-                backgroundColor: "#1cc88a",
-                hoverBackgroundColor: "#17a673",
-                borderColor: "#1cc88a",
+                backgroundColor: "#e74a3b",
+                hoverBackgroundColor: "#e74a3b",
+                borderColor: "#e74a3b",
                 data: typeof unmatchedBalanceData !== "undefined" ? unmatchedBalanceData : [],
                 barPercentage: 0.8,
                 categoryPercentage: 0.5
