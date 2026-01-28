@@ -3,124 +3,114 @@
     Layout = "_Layout";
 }
 
-@model List<RECAP.Models.ProspectViewModel>
+@model RECAP.Models.ProspectDetailsViewModel
 
-
-<input type="hidden" id="rowIndex" name="rowIndex" />
-
-<script>
-        $('#ruleModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var rule = button.data('rule');
-        var index = button.data('index');
-        if (rule) {
-            $('#ruleName').val(rule.RuleName);
-            $('#sheet1Attr').val(rule.Sheet1Attribute);
-            $('#sheet2Attr').val(rule.Sheet2Attribute);
-            $('#matchType').val(rule.MatchType);
-            $('#rowIndex').val(index);
-        } else {
-            $('#ruleName, #sheet1Attr, #sheet2Attr').val('');
-            $('#matchType').val('Exact');
-            $('#rowIndex').val('');
-        }
-    });
-</script>
 <div class="container-fluid">
-    <!-- Page Heading -->
-    <!-- Rules Table -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Prospect Detail</h6>
         </div>
+
         <div class="card-body">
-            @*   <table>
-                <tr>
-                    <td>
-                        <div class="form-group">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="Name" class="form-control" required />
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form asp-controller="Prospect" asp-action="Save" method="post" class="needs-validation" novalidate>
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="__SelectedIndex" value="@(Model.SelectedIndex?.ToString() ?? "")" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="Name">Name</label>
+                        <input type="text" id="Name" name="Name" class="form-control" required value="@(Model.SelectedProspect?.Name ?? "")" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="DOB">Date of Birth</label>
+                        <input type="date" id="DOB" name="DOB" class="form-control" required value="@(Model.SelectedProspect != null ? Model.SelectedProspect.DOB.ToString():"")" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="AADHAR">AADHAR</label>
+                        <input type="text" id="AADHAR" name="AADHAR" class="form-control" value="@(Model.SelectedProspect?.AADHAR ?? "")" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="GuardianName">Guardian Name</label>
+                        <input type="text" id="GuardianName" name="GuardianName" class="form-control" value="@(Model.SelectedProspect?.GuardianName ?? "")" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="text" id="Address" name="Address" class="form-control" value="@(Model.SelectedProspect?.Address ?? "")" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="FamilyIncome">Family Income</label>
+                        <input type="text" id="FamilyIncome" name="FamilyIncome" class="form-control" value="@(Model.SelectedProspect?.FamilyIncome ?? "")" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="CurrentStage">Current Stage</label>
+                        <input type="text" id="CurrentStage" name="CurrentStage" class="form-control" value="@(Model.SelectedProspect?.CurrentStage ?? "")" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="Score">Score</label>
+                        <input type="number" id="Score" name="Score" class="form-control" value="@(Model.SelectedProspect?.Score.ToString() ?? "")" />
+                    </div>
+                    <div class="form-group col-md-2 d-flex align-items-center">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="Reference" name="Reference" value="true" @(Model.SelectedProspect != null && Model.SelectedProspect.Reference ? "checked" : "") />
+                            <label class="form-check-label" for="Reference">Reference?</label>
                         </div>
-                    </td>
-                    <td>
-                        <div class="form-group">
-                            <label for="dob">Date of Birth</label>
-                            <input type="date" id="dob" name="DOB" class="form-control" required />
-                        </div>
-                    </td>
-                </tr>
-            </table> *@
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="Name" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="dob">Date of Birth</label>
-                <input type="date" id="dob" name="DOB" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">AADHAR</label>
-                <input type="text" id="name" name="AADHAR" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">Guardian Name</label>
-                <input type="text" id="name" name="GuardianName" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">Address</label>
-                <input type="text" id="name" name="Address" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">Family Income</label>
-                <input type="text" id="name" name="FamilyIncome" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">Reference?</label>
-                <input type="text" id="name" name="Reference" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">Current Stage</label>
-                <input type="text" id="name" name="CurrentStage" class="form-control" required />
-            </div>
-            <div class="form-group">
-                <label for="name">Score</label>
-                <input type="text" id="name" name="Score" class="form-control" required />
-            </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
         </div>
 
-
         <div class="table-responsive">
-            <table class="table table-bordered" id="rulesTable" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="prospectsTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Name</th>
-                        <th>CurrentStage</th>
+                        <th>Current Stage</th>
                         <th>AADHAR</th>
-                        <th>Match Type</th>
-                        <th>GuardianName</th>
+                        <th>Guardian Name</th>
+                        <th>Score</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @for (int i = 0; i < Model.Count; i++)
+                    @if (Model.Prospects != null && Model.Prospects.Any())
+                    {
+                        for (int i = 0; i < Model.Prospects.Count; i++)
+                        {
+                            var p = Model.Prospects[i];
+                            var isSelected = Model.SelectedIndex.HasValue && Model.SelectedIndex.Value == (i + 1);
+                            <tr class="@(isSelected ? "table-primary" : "")">
+                                <td>@(i + 1)</td>
+                                <td>@p.Name</td>
+                                <td>@p.CurrentStage</td>
+                                <td>@p.AADHAR</td>
+                                <td>@p.GuardianName</td>
+                                <td>@p.Score</td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td>@Model[i].Name</td>
-                            <td>@Model[i].CurrentStage</td>
-                            <td>@Model[i].AADHAR</td>
-                            <td>@Model[i].GuardianName</td>
-                            @*  <td>
-                                    <form asp-action="DeleteRule" method="post" style="display:inline">
-                                        <input type="hidden" name="rowIndex" value="@i" />
-                                        <button class="btn btn-sm btn-danger" type="submit"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                    <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#ruleModal" data-index="@i"
-                                            data-rule='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model[i]))'>
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <form asp-action="RunPythonScript" method="post" style="display:inline">
-                                        <button class="btn btn-sm btn-success" type="submit"><i class="fas fa-play"></i></button>
-                                    </form>
-                                </td> *@
+                            <td colspan="6" class="text-center text-muted">No prospects found.</td>
                         </tr>
                     }
                 </tbody>
@@ -128,85 +118,3 @@
         </div>
     </div>
 </div>
-
-@*  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <button class="btn btn-primary">
-            <i class="fas fa-play"></i> Execute All
-        </button>
-    </div> *@
-
-<div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800"></h1>
-    <a href="javascript:void(0);" onclick="runReconn()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-        <i class="fas fa-play fa-sm text-white-50"></i> Submit
-    </a>
-</div>
-
-<!-- Rule Modal -->
-<div class="modal fade" id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="ruleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form asp-action="AddOrEditRule" method="post">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="ruleModalLabel">Add/Edit Rule</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="ruleName">Rule Name</label>
-                        <input type="text" class="form-control" id="ruleName" name="RuleName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sheet1Attr">Sheet 1 Attribute</label>
-                        <input type="text" class="form-control" id="sheet1Attr" name="Sheet1Attribute" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sheet2Attr">Sheet 2 Attribute</label>
-                        <input type="text" class="form-control" id="sheet2Attr" name="Sheet2Attribute" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="matchType">Match Type</label>
-                        <select class="form-control" id="matchType" name="MatchType">
-                            <option>Exact</option>
-                            <option>Contains</option>
-                            <option>Starts With</option>
-                            <option>Ends With</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Rule</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-</div>
-
-@section Scripts {
-    <script src="~/bootstrap/vendor/chart.js/Chart.min.js"></script>
-    <script src="~/bootstrap/js/demo/chart-area-demo.js"></script>
-    <script src="~/bootstrap/js/demo/chart-pie-demo.js"></script>
-    <script src="~/bootstrap/js/demo/chart-bar-demo.js"></script>
-    <script>
-        function runReconn() {
-            fetch('@Url.Action("RunPythonScript", "Home")', {
-                method: 'POST',
-                headers: {
-                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Python script executed!');
-                } else {
-                    alert('Failed to run script.');
-                }
-            });
-        }
-    </script>
-}

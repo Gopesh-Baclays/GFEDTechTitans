@@ -95,22 +95,22 @@ public class HomeController : Controller
             var ws = package.Workbook.Worksheets[0];
             int rowCount = ws.Dimension.Rows;
 
-        for (int row = 2; row <= rowCount; row++)
-        {
-            var dict = new Dictionary<string, object>
+            for (int row = 2; row <= rowCount; row++)
             {
-                ["Business_date"] = ws.Cells[row, 1].Text,
-                ["ISIN"] = ws.Cells[row, 2].Text,
-                ["Reporting_id_src1"] = ws.Cells[row, 3].Text,
-                ["GL_src1"] = ws.Cells[row, 4].Text,
-                ["Reporting_id_src2"] = ws.Cells[row, 5].Text,
-                ["GL_src2"] = ws.Cells[row, 6].Text,
-                ["balancegbp_src1"] = ws.Cells[row, 7].Text,
-                ["balancegbp_src2"] = ws.Cells[row, 8].Text,
-                ["Balance_Difference"] = ws.Cells[row, 9].Text,
-                ["Comments"] = ws.Cells[row, 10].Text,
-                ["Rule_Applied"] = ws.Cells[row, 11].Text
-            };
+                var dict = new Dictionary<string, object>
+                {
+                    ["Business_date"] = ws.Cells[row, 1].Text,
+                    ["ISIN"] = ws.Cells[row, 2].Text,
+                    ["Reporting_id_src1"] = ws.Cells[row, 3].Text,
+                    ["GL_src1"] = ws.Cells[row, 4].Text,
+                    ["Reporting_id_src2"] = ws.Cells[row, 5].Text,
+                    ["GL_src2"] = ws.Cells[row, 6].Text,
+                    ["balancegbp_src1"] = ws.Cells[row, 7].Text,
+                    ["balancegbp_src2"] = ws.Cells[row, 8].Text,
+                    ["Balance_Difference"] = ws.Cells[row, 9].Text,
+                    ["Comments"] = ws.Cells[row, 10].Text,
+                    ["Rule_Applied"] = ws.Cells[row, 11].Text
+                };
 
                 if (dict["Comments"].ToString() == "Match")
                     matched.Add(dict);
@@ -261,42 +261,152 @@ public class HomeController : Controller
 
     #endregion
 
-    #region Prospect
+    //#region Prospect
 
-    public IActionResult Prospect()
-    {
-        var prospect = ReadProspectsFromExcel();
-        return View(prospect);
-    }
+    //private readonly string _prospectsFile = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles"), "ProspectData.xlsx");
 
-    private List<ProspectViewModel> ReadProspectsFromExcel()
-    {
-        var prospects = new List<ProspectViewModel>();
+    //public IActionResult Prospect()
+    //{
+    //    var prospect = ReadProspectsFromExcel();
+    //    return View(prospect);
+    //}
 
-        if (!System.IO.File.Exists(_rulesFile))
-            return prospects;
+    //private List<ProspectViewModel> ReadProspectsFromExcel()
+    //{
+    //    var list = new List<ProspectViewModel>();
 
-        //using (var package = new ExcelPackage(new FileInfo(_rulesFile)))
-        //{
-        //    var ws = package.Workbook.Worksheets.FirstOrDefault();
-        //    if (ws == null) return rules;
-        //    int row = 2;
-        //    while (ws.Cells[row, 1].Value != null)
-        //    {
-        //        rules.Add(new RuleModel
-        //        {
-        //            RuleName = ws.Cells[row, 1].Text,
-        //            Sheet1Attribute = ws.Cells[row, 2].Text,
-        //            Sheet2Attribute = ws.Cells[row, 3].Text,
-        //            MatchType = ws.Cells[row, 4].Text
-        //        });
-        //        row++;
-        //    }
-        //}
-        return prospects;
-    }
+    //    if (!System.IO.File.Exists(_prospectsFile))
+    //        return list;
 
-    #endregion
+    //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+    //    using (var package = new ExcelPackage(new FileInfo(_prospectsFile)))
+    //    {
+    //        var ws = package.Workbook.Worksheets.FirstOrDefault();
+    //        if (ws == null) return list;
+
+    //        int row = 2;
+    //        while (!string.IsNullOrWhiteSpace(ws.Cells[row, 1].Text))
+    //        {
+    //            var name = ws.Cells[row, 1].Text;
+    //            var dobText = ws.Cells[row, 2].Text;
+    //            DateOnly dob;
+    //            if (!DateOnly.TryParse(dobText, out dob))
+    //            {
+    //                // fallback parse as DateTime
+    //                if (DateTime.TryParse(dobText, out var dt))
+    //                    dob = DateOnly.FromDateTime(dt);
+    //                else
+    //                    dob = DateOnly.FromDateTime(DateTime.MinValue);
+    //            }
+
+    //            list.Add(new ProspectViewModel
+    //            {
+    //                Name = name,
+    //                DOB = dob,
+    //                AADHAR = ws.Cells[row, 3].Text,
+    //                GuardianName = ws.Cells[row, 4].Text,
+    //                Address = ws.Cells[row, 5].Text,
+    //                FamilyIncome = ws.Cells[row, 6].Text,
+    //                Reference = bool.TryParse(ws.Cells[row, 7].Text, out var r) && r,
+    //                CurrentStage = ws.Cells[row, 8].Text,
+    //                Score = int.TryParse(ws.Cells[row, 9].Text, out var s) ? s : 0
+    //            });
+
+    //            row++;
+    //        }
+    //    }
+
+    //    return list;
+    //}
+
+    //[HttpPost]
+    //public IActionResult AddOrEditProspect(ProspectViewModel prospect, int? rowIndex)
+    //{
+    //    var prospects = ReadProspectsFromExcel();
+
+    //    if (rowIndex.HasValue && rowIndex.Value >= 0 && rowIndex.Value < prospects.Count)
+    //    {
+    //        // Edit
+    //        prospects[rowIndex.Value] = prospect;
+    //    }
+    //    else
+    //    {
+    //        // Add
+    //        prospects.Add(prospect);
+    //    }
+
+    //    WriteProspectsToExcel(prospects);
+    //    return RedirectToAction("Prospect");
+    //}
+
+    //private void WriteProspectsToExcel(List<ProspectViewModel> list)
+    //{
+    //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+    //    // Ensure folder exists
+    //    var dir = Path.GetDirectoryName(_prospectsFile);
+    //    if (!Directory.Exists(dir))
+    //        Directory.CreateDirectory(dir);
+
+    //    using (var package = new ExcelPackage())
+    //    {
+    //        var ws = package.Workbook.Worksheets.Add("Prospects");
+    //        ws.Cells[1, 1].Value = "Name";
+    //        ws.Cells[1, 2].Value = "DOB";
+    //        ws.Cells[1, 3].Value = "AADHAR";
+    //        ws.Cells[1, 4].Value = "GuardianName";
+    //        ws.Cells[1, 5].Value = "Address";
+    //        ws.Cells[1, 6].Value = "FamilyIncome";
+    //        ws.Cells[1, 7].Value = "Reference";
+    //        ws.Cells[1, 8].Value = "CurrentStage";
+    //        ws.Cells[1, 9].Value = "Score";
+
+    //        for (int i = 0; i < list.Count; i++)
+    //        {
+    //            var r = i + 2;
+    //            ws.Cells[r, 1].Value = list[i].Name;
+    //            ws.Cells[r, 2].Value = list[i].DOB.ToString("yyyy-MM-dd");
+    //            ws.Cells[r, 3].Value = list[i].AADHAR;
+    //            ws.Cells[r, 4].Value = list[i].GuardianName;
+    //            ws.Cells[r, 5].Value = list[i].Address;
+    //            ws.Cells[r, 6].Value = list[i].FamilyIncome;
+    //            ws.Cells[r, 7].Value = list[i].Reference;
+    //            ws.Cells[r, 8].Value = list[i].CurrentStage;
+    //            ws.Cells[r, 9].Value = list[i].Score;
+    //        }
+
+    //        var fi = new FileInfo(_prospectsFile);
+    //        package.SaveAs(fi);
+    //    }
+    //}
+
+    //// POST: /Prospect/Save
+    //[HttpPost]
+    //[ValidateAntiForgeryToken]
+    //public IActionResult Save(ProspectViewModel model)
+    //{
+    //    if (model == null)
+    //    {
+    //        ModelState.AddModelError(string.Empty, "Invalid prospect data.");
+    //        return RedirectToAction(nameof(Index));
+    //    }
+
+    //    var list = ReadProspectsFromExcel();
+    //    list.Add(model);
+    //    try
+    //    {
+    //        WriteProspectsToExcel(list);
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        _logger.LogError(ex, "Failed to write prospects to Excel");
+    //        // Optionally display a friendly error to the user
+    //    }
+
+    //    return RedirectToAction(nameof(Index));
+    //}
+
+    //#endregion
 
     /// <summary>
     /// 
@@ -426,7 +536,7 @@ public class HomeController : Controller
         ViewBag.YAxisMax = 380000;
     }
 
-        /// <summary>
+    /// <summary>
     /// Sets the rule chart data for the view by assigning predefined values to the ViewBag.
     /// </summary>
     /// <remarks>This method populates the ViewBag with specific values for keys "Rl01", "Rl02", and "Rl03",
@@ -455,15 +565,15 @@ public class HomeController : Controller
 
                     int percent = (total > 0) ? (int)Math.Round((double)match / total * 100) : 0;
 
-                if (ruleName.Equals("Rule1", StringComparison.OrdinalIgnoreCase))
-                    rl01Pct = percent;
-                else if (ruleName.Equals("Rule2", StringComparison.OrdinalIgnoreCase))
-                    rl02Pct = percent;
-                else if (ruleName.Equals("Rule3", StringComparison.OrdinalIgnoreCase))
-                    rl03Pct = percent;
+                    if (ruleName.Equals("Rule1", StringComparison.OrdinalIgnoreCase))
+                        rl01Pct = percent;
+                    else if (ruleName.Equals("Rule2", StringComparison.OrdinalIgnoreCase))
+                        rl02Pct = percent;
+                    else if (ruleName.Equals("Rule3", StringComparison.OrdinalIgnoreCase))
+                        rl03Pct = percent;
+                }
             }
         }
-    }
 
         ViewBag.Rl01 = rl01Pct;
         ViewBag.Rl02 = rl02Pct;
