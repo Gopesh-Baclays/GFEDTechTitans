@@ -3,38 +3,32 @@
     Layout = "_Layout";
 }
 
-<!-- #region Pie chart area -->
+<!-- #region Data Setup -->
 @{
     var pieChartData = ViewBag.PieChartData ?? new int[] { 0, 0, 0 };
+    var prospectStageLabels = ViewBag.ProspectStageLabels ?? new[] { "Identification", "Counselling", "Follow-ups", "Document Processing", "Waiting for Session" };
+    var prospectStageDays = ViewBag.ProspectStageDays ?? new int[] { 5, 10, 15, 20, 8 };
+    
+    var barLabels = ViewBag.BarLabels ?? new[] { "January", "February", "March", "April", "May", "June" };
+    var matchedBalanceRuleBasedData = ViewBag.MatchedBalanceRuleBasedData ?? new decimal[] { 0, 0, 0, 0, 0, 0 };
+    var matchedBalanceAiData = ViewBag.MatchedBalanceAiData ?? new decimal[] { 0, 0, 0, 0, 0, 0 };
+    var unmatchedBalanceData = ViewBag.UnmatchedBalanceData ?? new decimal[] { 0, 0, 0, 0, 0, 0 };
+
+    var yAxisMax = ViewBag.YAxisMax ?? 380000;
 }
+
 <script>
     var pieChartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(pieChartData));
-</script>
-
-<!-- #endregion -->
-<!-- #region Bar chart area -->
-@{
-    var barLabels = ViewBag.BarLabels ?? new[] { "January", "February", "March", "April", "May", "June" };
-    var matchedBalanceRuleBasedData = ViewBag.MatchedBalanceRuleBasedData ?? new[] { 0, 0, 0, 0, 0, 0 };
-    var matchedBalanceAiData = ViewBag.MatchedBalanceAiData ?? new[] { 0, 0, 0, 0, 0, 0 };
-    var unmatchedBalanceData = ViewBag.UnmatchedBalanceData ?? new[] { 0, 0, 0, 0, 0, 0 };
-
-    var yAxisMin = ViewBag.YAxisMin ?? 0;
-    var yAxisMax = ViewBag.YAxisMax ?? 15;
-}
-
-<script>
+    var prospectStageLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prospectStageLabels));
+    var prospectStageDays = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prospectStageDays));
+    
     var barLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(barLabels));
     var matchedBalanceRuleBasedData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceRuleBasedData));
     var matchedBalanceAiData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceAiData));
     var unmatchedBalanceData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(unmatchedBalanceData));
-
-    var yAxisMin = @yAxisMin;
     var yAxisMax = @yAxisMax;
 </script>
-
 <!-- #endregion -->
-
 
 <div class="container-fluid">
     <!-- Page Heading -->
@@ -44,9 +38,10 @@
             <i class="fas fa-play fa-sm text-white-50"></i> Refresh Dashboard
         </a>
     </div>
-    <!-- Content Row -->
+
+    <!-- Content Row - Summary Cards -->
     <div class="row">
-        <!-- Total Balance Card  -->
+        <!-- Total Students Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-primary shadow h-100 py-2">
@@ -57,34 +52,12 @@
                                     Total Students
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.TotalAmount.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                    @ViewBag.TotalAmount
                                 </div>
                                 <span class="stretched-link"></span>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <!-- Matched Balance (Rule Based) Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Fully Onboanbed 
-                                </div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.MatchedBalanceRuleBased.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-users fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -92,7 +65,7 @@
             </a>
         </div>
 
-        <!-- Matched Balance (AI) Cars -->
+        <!-- Fully Onboarded Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -100,14 +73,14 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Matched Balance (AI)
+                                    Fully Onboarded
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.MatchedBalanceAi.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                    @ViewBag.MatchedBalanceRuleBased
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-check-circle fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
@@ -115,115 +88,154 @@
             </a>
         </div>
 
-        <!-- Unmatched Balance Card -->
+        <!-- In Progress Card -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <ahref ="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    In Progress
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @ViewBag.MatchedBalanceAi
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-hourglass-half fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Pending Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                    Unmatched Balance
+                                    Pending
                                 </div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                                    @ViewBag.UnmatchedBalance.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                    @ViewBag.UnmatchedBalance
                                 </div>
                             </div>
                             <div class="col-auto">
-                                <i class="fas fa-pound-sign fa-2x text-gray-300"></i>
+                                <i class="fas fa-clock fa-2x text-gray-300"></i>
                             </div>
                         </div>
                     </div>
                 </div>
-                </a>
+            </a>
         </div>
-
     </div>
 
+    <!-- Charts Row 1 -->
+    <div class="row">
+        <!-- Bar Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Monthly Distribution</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-bar">
+                        <canvas id="myBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Matching Overview Pie Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Overview: Current Month</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row 2 - Prospect Stage Distribution -->
+    <div class="row">
+        <!-- Prospect Stage Pie Chart -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Prospect Stage Distribution (Days)</h6>
+                </div>
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        <canvas id="prospectStagePieChart"></canvas>
+                    </div>
+                    <hr />
+                    <small class="text-muted d-block mt-2">Time spent in each stage of the prospect journey</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rule Based Matching Card -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Matched (Rule Based)</h6>
+                </div>
+                <div class="card-body">
+                    <h4 class="small font-weight-bold">Rule1 <span class="float-right">@ViewBag.Rl01%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: @ViewBag.Rl01%"
+                             aria-valuenow="@ViewBag.Rl01" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Rule2 <span class="float-right">@ViewBag.Rl02%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: @ViewBag.Rl02%"
+                             aria-valuenow="@ViewBag.Rl02" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">Rule3 <span class="float-right">@ViewBag.Rl03%</span></h4>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: @ViewBag.Rl03%"
+                             aria-valuenow="@ViewBag.Rl03" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rules Overview Card -->
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Rules: Overview</h6>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Rule1:</strong> Aggregated match based on Profit Centre, General Ledger Account & Company Code
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Rule2:</strong> Amount match based on ISIN (or any key variables)
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Rule3:</strong> ML Pattern based potential match & explain
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Content Row -->
-<div class="row">
-    <div class="col-lg-6 mb-4">
-        <!-- Bar Chart (replaces Illustrations) -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Empirical View</h6>
-            </div>
-            <div class="card-body">
-                <div class="chart-bar">
-                    <canvas id="myBarChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Pie Chart -->
-    <div class="col-lg-6 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Overview: Current Month</h6>
-            </div>
-            <div class="card-body">
-                <div class="chart-pie pt-4 pb-2">
-                    <canvas id="myPieChart"></canvas>
-                </div>
-            </div>
-            <br /> <br />
-        </div>
-    </div>
-</div>
-
-
-<div class="row">
-
-    <!-- Rule Card -->
-    <div class="col-lg-6 mb-4">
-        <!-- Project Card Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Matched (Rule Based)</h6>
-            </div>
-            <div class="card-body">
-                <h4 class="small font-weight-bold">Rule1 <span class="float-right">@ViewBag.Rl01%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-success" role="progressbar" style="width: @ViewBag.Rl01%"
-                         aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-bold">Rule2 <span class="float-right">@ViewBag.Rl02%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar" role="progressbar" style="width: @ViewBag.Rl02%"
-                         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h4 class="small font-weight-b">Rule3 <span class="float-right">@ViewBag.Rl03%</span></h4>
-                <div class="progress mb-4">
-                    <div class="progress-bar bg-gray-900" role="progressbar" style="width: @ViewBag.Rl03%"
-                         aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rules Definition Card -->
-    <div class="col-lg-6 mb-4">
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Rules: Overview</h6>
-            </div>
-            <div class="card-body">
-                Rule1: Aggregated match based on Profit Centre, General Ledger Account & Company Code
-                <br /> <br />
-                Rule2: Amount match based on ISIN ( or any key variables )
-                <br /> <br />
-                Rule3: ML Pattern based potential match & explain
-                <br /> <br />
-                <br />
-            </div>
-        </div>
-    </div>
-
-   
-    
-</div>
 <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
 </a>
@@ -233,7 +245,61 @@
     <script src="~/bootstrap/js/demo/chart-area-demo.js"></script>
     <script src="~/bootstrap/js/demo/chart-pie-demo.js"></script>
     <script src="~/bootstrap/js/demo/chart-bar-demo.js"></script>
+
     <script>
+        // Prospect Stage Distribution Pie Chart
+        var ctxProspectStage = document.getElementById("prospectStagePieChart");
+        if (ctxProspectStage) {
+            var prospectStageChart = new Chart(ctxProspectStage, {
+                type: 'doughnut',
+                data: {
+                    labels: prospectStageLabels,
+                    datasets: [{
+                        data: prospectStageDays,
+                        backgroundColor: [
+                            '#4e73df',
+                            '#858ae3',
+                            '#36b9cc',
+                            '#1cc88a',
+                            '#f6c23e'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    maintainAspectRatio: false,
+                    tooltips: {
+                        backgroundColor: "rgb(255,255,255)",
+                        bodyFontColor: "#858796",
+                        borderColor: '#dddfaa',
+                        borderWidth: 1,
+                        xPadding: 15,
+                        yPadding: 15,
+                        displayColors: false,
+                        caretPadding: 10,
+                        callbacks: {
+                            label: function(tooltipItem, chart) {
+                                var dataset = chart.datasets[0];
+                                var total = dataset.data.reduce(function(previousValue, currentValue) {
+                                    return previousValue + currentValue;
+                                });
+                                var percentages = Math.round((tooltipItem.value / total) * 100);
+                                return tooltipItem.label + ': ' + tooltipItem.value + ' days (' + percentages + '%)';
+                            }
+                        }
+                    },
+                    responsive: true,
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    cutoutPercentage: 80
+                }
+            });
+        }
+
+        // Refresh Dashboard
         function runReconn() {
             fetch('@Url.Action("RunPythonScript", "Home")', {
                 method: 'POST',
@@ -244,10 +310,15 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Python script executed!');
+                    alert('Dashboard refreshed!');
+                    location.reload();
                 } else {
-                    alert('Failed to run script.');
+                    alert('Failed to refresh dashboard.');
                 }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error refreshing dashboard.');
             });
         }
     </script>
