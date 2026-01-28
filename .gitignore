@@ -1,4 +1,30 @@
-﻿################################################################################
+﻿# General build output and non-essentials
+bin/
+obj/
+**/bin/
+**/obj/
+Debug/
+**/Debug/
+OutputFiles/
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+# OS generated files
+.DS_Store
+Thumbs.db
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# Logs
+*.log
+# Local settings
+appsettings.Development.json
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
