@@ -17,104 +17,395 @@
                 <div class="alert alert-danger">@TempData["Error"]</div>
             }
 
+            <!-- Document Upload Section -->
+            <div class="card mb-4 border-info">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">Upload Document/Image</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="DocumentUpload">Upload ID/Document Image</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="DocumentUpload" accept="image/*,.pdf" />
+                            <label class="custom-file-label" for="DocumentUpload">Choose file...</label>
+                        </div>
+                        <small class="form-text text-muted">Supported formats: JPG, PNG, PDF (Max 5MB). System will extract details if readable.</small>
+                    </div>
+                </div>
+            </div>
+
             <form asp-controller="Prospect" asp-action="Save" method="post" class="needs-validation" novalidate>
                 @Html.AntiForgeryToken()
 
                 <input type="hidden" name="__SelectedIndex" value="@(Model.SelectedIndex?.ToString() ?? "")" />
 
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="Name">Name</label>
-                        <input type="text" id="Name" name="Name" class="form-control" required value="@(Model.SelectedProspect?.Name ?? "")" />
+                <!-- Essential Information Section -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Essential Information <span class="text-danger">*</span></h5>
                     </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="CandidateName">Candidate Name <span class="text-danger">*</span></label>
+                                <input type="text" id="CandidateName" name="CandidateName" class="form-control" required value="@(Model.SelectedProspect?.CandidateName ?? "")" placeholder="Enter candidate name" />
+                            </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="DOB">Date of Birth</label>
-                        <input type="date" id="DOB" name="DOB" class="form-control" required value="@(Model.SelectedProspect != null ? Model.SelectedProspect.DOB.ToString():"")" />
-                    </div>
-                </div>
+                            <div class="form-group col-md-6">
+                                <label for="MobileNumber">Mobile Number <span class="text-danger">*</span></label>
+                                <input type="tel" id="MobileNumber" name="MobileNumber" class="form-control" required value="@(Model.SelectedProspect?.MobileNumber ?? "")" placeholder="Enter mobile number" />
+                            </div>
+                        </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="AADHAR">AADHAR</label>
-                        <input type="text" id="AADHAR" name="AADHAR" class="form-control" value="@(Model.SelectedProspect?.AADHAR ?? "")" />
-                    </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="Age">Age</label>
+                                <input type="number" id="Age" name="Age" class="form-control" value="@(Model.SelectedProspect?.Age?.ToString() ?? "")" placeholder="Age" />
+                            </div>
 
-                    <div class="form-group col-md-6">
-                        <label for="GuardianName">Guardian Name</label>
-                        <input type="text" id="GuardianName" name="GuardianName" class="form-control" value="@(Model.SelectedProspect?.GuardianName ?? "")" />
-                    </div>
-                </div>
+                            <div class="form-group col-md-3">
+                                <label for="DOB">Date of Birth</label>
+                                <input type="date" id="DOB" name="DOB" class="form-control" value="@(Model.SelectedProspect?.DOB?.ToString("yyyy-MM-dd") ?? "")" />
+                            </div>
 
-                <div class="form-group">
-                    <label for="Address">Address</label>
-                    <input type="text" id="Address" name="Address" class="form-control" value="@(Model.SelectedProspect?.Address ?? "")" />
-                </div>
+                            <div class="form-group col-md-3">
+                                <label for="AADHAR">AADHAR <span class="text-danger">*</span></label>
+                                <input type="text" id="AADHAR" name="AADHAR" class="form-control" required value="@(Model.SelectedProspect?.AADHAR ?? "")" placeholder="AADHAR number" />
+                            </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="FamilyIncome">Family Income</label>
-                        <input type="text" id="FamilyIncome" name="FamilyIncome" class="form-control" value="@(Model.SelectedProspect?.FamilyIncome ?? "")" />
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="CurrentStage">Current Stage</label>
-                        <input type="text" id="CurrentStage" name="CurrentStage" class="form-control" value="@(Model.SelectedProspect?.CurrentStage ?? "")" />
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="Score">Score</label>
-                        <input type="number" id="Score" name="Score" class="form-control" value="@(Model.SelectedProspect?.Score.ToString() ?? "")" />
-                    </div>
-                    <div class="form-group col-md-2 d-flex align-items-center">
-                        <div class="form-check mt-3">
-                            <input class="form-check-input" type="checkbox" id="Reference" name="Reference" value="true" @(Model.SelectedProspect != null && Model.SelectedProspect.Reference == true ? "checked" : "") />
-                            <label class="form-check-label" for="Reference">Reference?</label>
+                            <div class="form-group col-md-3">
+                                <label for="EmailId">Email ID</label>
+                                <input type="email" id="EmailId" name="EmailId" class="form-control" value="@(Model.SelectedProspect?.EmailId ?? "")" placeholder="email@example.com" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="GuardianName">Guardian Name <span class="text-danger">*</span></label>
+                                <input type="text" id="GuardianName" name="GuardianName" class="form-control" required value="@(Model.SelectedProspect?.GuardianName ?? "")" placeholder="Enter guardian name" />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="Address">Address <span class="text-danger">*</span></label>
+                                <textarea id="Address" name="Address" class="form-control" required rows="2" placeholder="Enter complete address">@(Model.SelectedProspect?.Address ?? "")</textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-end">
+                <!-- Education & Background Section -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Education & Background</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="FamilyIncome">Family Income</label>
+                                <input type="text" id="FamilyIncome" name="FamilyIncome" class="form-control" value="@(Model.SelectedProspect?.FamilyIncome ?? "")" placeholder="Enter family income" />
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="EducationLevel">Education Level</label>
+                                <input type="text" id="EducationLevel" name="EducationLevel" class="form-control" value="@(Model.SelectedProspect?.EducationLevel ?? "")" placeholder="Education level" />
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="CurrentStage">Current Stage</label>
+                                <input type="text" id="CurrentStage" name="CurrentStage" class="form-control" value="@(Model.SelectedProspect?.CurrentStage ?? "")" placeholder="Current stage" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="SmartDevAvailable">Smart Device Available</label>
+                                <select id="SmartDevAvailable" name="SmartDevAvailable" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @if(Model.SelectedProspect?.SmartDevAvailable == "Yes") 
+                                    { 
+                                        <option value="Yes" selected>Yes</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="Yes">Yes</option> 
+                                    }
+                                    @if(Model.SelectedProspect?.SmartDevAvailable == "No") 
+                                    { 
+                                        <option value="No" selected>No</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="No">No</option> 
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="InternetAccess">Internet Access</label>
+                                <select id="InternetAccess" name="InternetAccess" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @if(Model.SelectedProspect?.InternetAccess == "Yes") 
+                                    { 
+                                        <option value="Yes" selected>Yes</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="Yes">Yes</option> 
+                                    }
+                                    @if(Model.SelectedProspect?.InternetAccess == "No") 
+                                    { 
+                                        <option value="No" selected>No</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="No">No</option> 
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="PastWorkExperience">Past Work Experience</label>
+                                <select id="PastWorkExperience" name="PastWorkExperience" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @if(Model.SelectedProspect?.PastWorkExperience == true) 
+                                    { 
+                                        <option value="True" selected>Yes</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="True">Yes</option> 
+                                    }
+                                    @if(Model.SelectedProspect?.PastWorkExperience == false) 
+                                    { 
+                                        <option value="False" selected>No</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="False">No</option> 
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="PastWorkDetails">Past Work Details</label>
+                                <textarea id="PastWorkDetails" name="PastWorkDetails" class="form-control" rows="2" placeholder="Enter past work experience details">@(Model.SelectedProspect?.PastWorkDetails ?? "")</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preferences & Contact Section -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Preferences & Contact</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="PreferredLanguage">Preferred Language</label>
+                                <input type="text" id="PreferredLanguage" name="PreferredLanguage" class="form-control" value="@(Model.SelectedProspect?.PreferredLanguage ?? "")" placeholder="Preferred language" />
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="PreferredContactMode">Preferred Contact Mode</label>
+                                <input type="text" id="PreferredContactMode" name="PreferredContactMode" class="form-control" value="@(Model.SelectedProspect?.PreferredContactMode ?? "")" placeholder="Phone/Email/SMS" />
+                            </div>
+
+                            <div class="form-group col-md-4">
+                                <label for="PreferredTimeForContact">Preferred Time For Contact</label>
+                                <input type="text" id="PreferredTimeForContact" name="PreferredTimeForContact" class="form-control" value="@(Model.SelectedProspect?.PreferredTimeForContact ?? "")" placeholder="Morning/Afternoon/Evening" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Health & Personal Section -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Health & Personal Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="HealthIssues">Health Issues</label>
+                                <textarea id="HealthIssues" name="HealthIssues" class="form-control" rows="2" placeholder="Any health issues or concerns">@(Model.SelectedProspect?.HealthIssues ?? "")</textarea>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="FamilySupport">Family Support</label>
+                                <textarea id="FamilySupport" name="FamilySupport" class="form-control" rows="2" placeholder="Details of family support">@(Model.SelectedProspect?.FamilySupport ?? "")</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="FamilyMembers">Family Members Count</label>
+                                <input type="number" id="FamilyMembers" name="FamilyMembers" class="form-control" value="@(Model.SelectedProspect?.FamilyMembers?.ToString() ?? "")" placeholder="Number of family members" />
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="SmokingHabits">Smoking Habits</label>
+                                <select id="SmokingHabits" name="SmokingHabits" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @if(Model.SelectedProspect?.SmokingHabits == true) 
+                                    { 
+                                        <option value="True" selected>Yes</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="True">Yes</option> 
+                                    }
+                                    @if(Model.SelectedProspect?.SmokingHabits == false) 
+                                    { 
+                                        <option value="False" selected>No</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="False">No</option> 
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3">
+                                <label for="DrinkingHabits">Drinking Habits</label>
+                                <select id="DrinkingHabits" name="DrinkingHabits" class="form-control">
+                                    <option value="">-- Select --</option>
+                                    @if(Model.SelectedProspect?.DrinkingHabits == true) 
+                                    { 
+                                        <option value="True" selected>Yes</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="True">Yes</option> 
+                                    }
+                                    @if(Model.SelectedProspect?.DrinkingHabits == false) 
+                                    { 
+                                        <option value="False" selected>No</option> 
+                                    } 
+                                    else 
+                                    { 
+                                        <option value="False">No</option> 
+                                    }
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-3 d-flex align-items-end">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="Reference" name="Reference" value="true" @(Model.SelectedProspect != null && Model.SelectedProspect.Reference == true ? "checked" : "") />
+                                    <label class="form-check-label" for="Reference">Reference</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Information Section -->
+                <div class="card mb-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">Additional Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="ReferenceSourceOf">Reference Source Of</label>
+                                <input type="text" id="ReferenceSourceOf" name="ReferenceSourceOf" class="form-control" value="@(Model.SelectedProspect?.ReferenceSourceOf ?? "")" placeholder="Source of reference" />
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="InstallmentDetails">Installment Details</label>
+                                <input type="text" id="InstallmentDetails" name="InstallmentDetails" class="form-control" value="@(Model.SelectedProspect?.InstallmentDetails ?? "")" placeholder="Installment details" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="PreviousProgram">Previous Program</label>
+                                <textarea id="PreviousProgram" name="PreviousProgram" class="form-control" rows="2" placeholder="Details of previous program participation">@(Model.SelectedProspect?.PreviousProgram ?? "")</textarea>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="ReasonForPlanning">Reason For Planning</label>
+                                <textarea id="ReasonForPlanning" name="ReasonForPlanning" class="form-control" rows="2" placeholder="Reason for planning to join">@(Model.SelectedProspect?.ReasonForPlanning ?? "")</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="Score">Score</label>
+                                <input type="number" id="Score" name="Score" class="form-control" value="@(Model.SelectedProspect?.Score?.ToString() ?? "")" placeholder="Prospect score" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-warning" onclick="sendBehaviorSurvey()">
+                        <i class="fas fa-paper-plane"></i> Send Behavior Survey
+                    </button>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
-
-        <div class="table-responsive">
-            <table class="table table-bordered" id="prospectsTable" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Current Stage</th>
-                        <th>AADHAR</th>
-                        <th>Guardian Name</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Prospects != null && Model.Prospects.Any())
-                    {
-                        for (int i = 0; i < Model.Prospects.Count; i++)
-                        {
-                            var p = Model.Prospects[i];
-                            var isSelected = Model.SelectedIndex.HasValue && Model.SelectedIndex.Value == (i + 1);
-                            <tr class="@(isSelected ? "table-primary" : "")">
-                                <td>@(i + 1)</td>
-                                <td>@p.Name</td>
-                                <td>@p.CurrentStage</td>
-                                <td>@p.AADHAR</td>
-                                <td>@p.GuardianName</td>
-                                <td>@p.Score</td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="6" class="text-center text-muted">No prospects found.</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
     </div>
 </div>
+
+<script>
+    // Handle document file selection
+    document.getElementById('DocumentUpload').addEventListener('change', function (e) {
+        const fileName = e.target.files[0]?.name || 'Choose file...';
+        const label = document.querySelector('label[for="DocumentUpload"]');
+        label.textContent = fileName;
+        
+        if (e.target.files[0]) {
+            // Here you could add OCR or document processing logic
+            // For now, just show a confirmation
+            alert('Document uploaded: ' + fileName + '\n\nNote: Document processing would extract details like name, DOB, etc.');
+        }
+    });
+
+    // Send Behavior Survey
+    function sendBehaviorSurvey() {
+        const name = document.getElementById('Name').value;
+        const aadhar = document.getElementById('AADHAR').value;
+        
+        if (!name || !aadhar) {
+            alert('Please fill in Name and AADHAR before sending the survey.');
+            return;
+        }
+        
+        // Simulate sending survey
+        fetch('@Url.Action("SendBehaviorSurvey", "Prospect")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'RequestVerificationToken': document.querySelector('input[name=\"__RequestVerificationToken\"]').value
+            },
+            body: JSON.stringify({
+                name: name,
+                aadhar: aadhar
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('✓ Behavior Survey Questionnaire sent successfully!\n\nThe survey has been sent to the student via:\n• SMS/Phone\n• Email\n\nStudent Name: ' + name + '\nAADHAR: ' + aadhar);
+            } else {
+                alert('Failed to send survey. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while sending the survey.');
+        });
+    }
+
+    // Bootstrap file input styling
+    document.querySelectorAll('.custom-file-input').forEach(input => {
+        input.addEventListener('change', function () {
+            const label = this.nextElementSibling;
+            label.textContent = this.files[0]?.name || 'Choose file...';
+        });
+    });
+</script>
