@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Prospects";
+    Layout = "_Layout";
+}
+
+@model RECAP.Models.ProspectDetailsViewModel
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Prospect Detail</h6>
+        </div>
+
+        <div class="card-body">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form asp-controller="Prospect" asp-action="Save" method="post" class="needs-validation" novalidate>
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" name="__SelectedIndex" value="@(Model.SelectedIndex?.ToString() ?? "")" />
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="Name">Name</label>
+                        <input type="text" id="Name" name="Name" class="form-control" required value="@(Model.SelectedProspect?.Name ?? "")" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="DOB">Date of Birth</label>
+                        <input type="date" id="DOB" name="DOB" class="form-control" required value="@(Model.SelectedProspect != null ? Model.SelectedProspect.DOB.ToString():"")" />
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="AADHAR">AADHAR</label>
+                        <input type="text" id="AADHAR" name="AADHAR" class="form-control" value="@(Model.SelectedProspect?.AADHAR ?? "")" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label for="GuardianName">Guardian Name</label>
+                        <input type="text" id="GuardianName" name="GuardianName" class="form-control" value="@(Model.SelectedProspect?.GuardianName ?? "")" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="text" id="Address" name="Address" class="form-control" value="@(Model.SelectedProspect?.Address ?? "")" />
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="FamilyIncome">Family Income</label>
+                        <input type="text" id="FamilyIncome" name="FamilyIncome" class="form-control" value="@(Model.SelectedProspect?.FamilyIncome ?? "")" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="CurrentStage">Current Stage</label>
+                        <input type="text" id="CurrentStage" name="CurrentStage" class="form-control" value="@(Model.SelectedProspect?.CurrentStage ?? "")" />
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="Score">Score</label>
+                        <input type="number" id="Score" name="Score" class="form-control" value="@(Model.SelectedProspect?.Score.ToString() ?? "")" />
+                    </div>
+                    <div class="form-group col-md-2 d-flex align-items-center">
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="Reference" name="Reference" value="true" @(Model.SelectedProspect != null && Model.SelectedProspect.Reference ? "checked" : "") />
+                            <label class="form-check-label" for="Reference">Reference?</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="prospectsTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Current Stage</th>
+                        <th>AADHAR</th>
+                        <th>Guardian Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Prospects != null && Model.Prospects.Any())
+                    {
+                        for (int i = 0; i < Model.Prospects.Count; i++)
+                        {
+                            var p = Model.Prospects[i];
+                            var isSelected = Model.SelectedIndex.HasValue && Model.SelectedIndex.Value == (i + 1);
+                            <tr class="@(isSelected ? "table-primary" : "")">
+                                <td>@(i + 1)</td>
+                                <td>@p.Name</td>
+                                <td>@p.CurrentStage</td>
+                                <td>@p.AADHAR</td>
+                                <td>@p.GuardianName</td>
+                                <td>@p.Score</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">No prospects found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
