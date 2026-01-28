@@ -261,6 +261,43 @@ public class HomeController : Controller
 
     #endregion
 
+    #region Prospect
+
+    public IActionResult Prospect()
+    {
+        var prospect = ReadProspectsFromExcel();
+        return View(prospect);
+    }
+
+    private List<ProspectViewModel> ReadProspectsFromExcel()
+    {
+        var prospects = new List<ProspectViewModel>();
+
+        if (!System.IO.File.Exists(_rulesFile))
+            return prospects;
+
+        //using (var package = new ExcelPackage(new FileInfo(_rulesFile)))
+        //{
+        //    var ws = package.Workbook.Worksheets.FirstOrDefault();
+        //    if (ws == null) return rules;
+        //    int row = 2;
+        //    while (ws.Cells[row, 1].Value != null)
+        //    {
+        //        rules.Add(new RuleModel
+        //        {
+        //            RuleName = ws.Cells[row, 1].Text,
+        //            Sheet1Attribute = ws.Cells[row, 2].Text,
+        //            Sheet2Attribute = ws.Cells[row, 3].Text,
+        //            MatchType = ws.Cells[row, 4].Text
+        //        });
+        //        row++;
+        //    }
+        //}
+        return prospects;
+    }
+
+    #endregion
+
     /// <summary>
     /// 
     /// </summary>

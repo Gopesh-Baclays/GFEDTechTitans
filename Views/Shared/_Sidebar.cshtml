@@ -19,6 +19,12 @@
     <div class="sidebar-heading">
         Interface
     </div>
+    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Prospect" ? "active" : "")">
+        <a class="nav-link" href="/Home/Prospect">
+            <i class="fas fa-fw fa-gavel"></i>
+            <span>Prospect</span>
+        </a>
+    </li>
     <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Rules" ? "active" : "")">
         <a class="nav-link" href="/Home/Rules">
             <i class="fas fa-fw fa-gavel"></i>
