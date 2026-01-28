@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using OfficeOpenXml;
 using RECAP.Models;
@@ -12,12 +13,24 @@ namespace RECAP.Controllers
     public class ProspectController : Controller
     {
         private readonly ILogger<ProspectController> _logger;
-        private readonly string _prospectsFile;
+        private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
 
-        public ProspectController(ILogger<ProspectController> logger)
+        public ProspectController(ILogger<ProspectController> logger, IConfiguration configuration, IWebHostEnvironment env)
         {
             _logger = logger;
-            _prospectsFile = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles", "ProspectData.xlsx");
+            _configuration = configuration;
+            _env = env;
+        }
+
+        /// <summary>
+        /// Gets the full file path from configuration.
+        /// </summary>
+        private string GetFilePath(string configKey)
+        {
+            var fileName = _configuration[$"FileStoragePaths:Files:{configKey}"];
+            var sourceFolder = _configuration["FileStoragePaths:SourceFilesFolder"];
+            return Path.Combine(_env.ContentRootPath, sourceFolder, fileName);
         }
 
         // Map both /Prospect and /Home/Prospect to this action
@@ -32,7 +45,6 @@ namespace RECAP.Controllers
 
             if (id.HasValue)
             {
-                // Interpret id as 1-based row index (1 => first prospect)
                 var idx = id.Value - 1;
                 if (idx >= 0 && idx < list.Count)
                 {
@@ -48,7 +60,6 @@ namespace RECAP.Controllers
                 Prospects = list
             };
 
-            // view is kept at Views/Home/Prospect.cshtml in this project
             return View("~/Views/Home/Prospect.cshtml", model);
         }
 
@@ -64,7 +75,6 @@ namespace RECAP.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            // Ensure DOB is populated if binder didn't populate DateOnly (fall back to form value)
             if (model.DOB == default)
             {
                 var dobValue = Request.Form["DOB"].FirstOrDefault();
@@ -96,12 +106,13 @@ namespace RECAP.Controllers
         private List<ProspectViewModel> ReadProspectsFromExcel()
         {
             var list = new List<ProspectViewModel>();
+            var prospectsFile = GetFilePath("ProspectDataFile");
 
-            if (!System.IO.File.Exists(_prospectsFile))
+            if (!System.IO.File.Exists(prospectsFile))
                 return list;
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(new FileInfo(_prospectsFile)))
+            using (var package = new ExcelPackage(new FileInfo(prospectsFile)))
             {
                 var ws = package.Workbook.Worksheets.FirstOrDefault();
                 if (ws == null) return list;
@@ -142,9 +153,10 @@ namespace RECAP.Controllers
 
         private void WriteProspectsToExcel(List<ProspectViewModel> list)
         {
+            var prospectsFile = GetFilePath("ProspectDataFile");
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            var dir = Path.GetDirectoryName(_prospectsFile);
+            var dir = Path.GetDirectoryName(prospectsFile);
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
 
@@ -175,7 +187,7 @@ namespace RECAP.Controllers
                     ws.Cells[r, 9].Value = list[i].Score;
                 }
 
-                var fi = new FileInfo(_prospectsFile);
+                var fi = new FileInfo(prospectsFile);
                 package.SaveAs(fi);
             }
         }

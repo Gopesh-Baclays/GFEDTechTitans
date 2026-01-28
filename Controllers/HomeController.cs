@@ -1,83 +1,88 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using RECAP.Models;
-using OfficeOpenXml; // Add this at the top (requires EPPlus NuGet package)
+using OfficeOpenXml;
 
 namespace RECAP.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IConfiguration _configuration;
+    private readonly IWebHostEnvironment _env;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IConfiguration configuration, IWebHostEnvironment env)
     {
         _logger = logger;
+        _configuration = configuration;
+        _env = env;
     }
 
     /// <summary>
-    /// 
+    /// Gets the full file path from configuration using the specified key.
     /// </summary>
-    /// <returns></returns>
+    private string GetFilePath(string configKey)
+    {
+        var fileName = _configuration[$"FileStoragePaths:Files:{configKey}"];
+        var sourceFolder = _configuration["FileStoragePaths:SourceFilesFolder"];
+        return Path.Combine(_env.ContentRootPath, sourceFolder, fileName);
+    }
+
+    /// <summary>
+    /// Gets the output file path from configuration.
+    /// </summary>
+    private string GetOutputFilePath(string configKey)
+    {
+        var fileName = _configuration[$"FileStoragePaths:Files:{configKey}"];
+        var outputFolder = _configuration["FileStoragePaths:OutputFilesFolder"];
+        return Path.Combine(_env.ContentRootPath, outputFolder, fileName);
+    }
+
     public IActionResult Index()
     {
         return View("SystemLogin");
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public IActionResult SSOLogin()
     {
         var userId = Environment.UserName;
         HttpContext.Session.SetString("UserId", userId);
 
-
         if (string.IsNullOrEmpty(userId))
         {
             return RedirectToAction("SystemLogin");
         }
-        else
+
+        var excelPath = GetFilePath("UserDetailsFile");
+
+        string userName = null;
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage(new FileInfo(excelPath)))
         {
-            var sourceFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles");
-            var excelPath = Path.Combine(sourceFilesPath, "userdetails.xlsx");
+            var worksheet = package.Workbook.Worksheets[0];
+            int rowCount = worksheet.Dimension.Rows;
 
-            // ...existing code...
-            string userName = null;
-            OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-            using (var package = new ExcelPackage(new FileInfo(excelPath)))
+            for (int row = 2; row <= rowCount; row++)
             {
-                var worksheet = package.Workbook.Worksheets[0]; // Assumes first worksheet
-                int rowCount = worksheet.Dimension.Rows;
-
-                for (int row = 2; row <= rowCount; row++) // Assuming first row is header
+                var excelUserId = worksheet.Cells[row, 1].Text.Trim();
+                if (string.Equals(excelUserId, userId, StringComparison.OrdinalIgnoreCase))
                 {
-                    var excelUserId = worksheet.Cells[row, 1].Text.Trim(); // Assuming UserId is in column 1
-                    if (string.Equals(excelUserId, userId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        userName = worksheet.Cells[row, 2].Text.Trim(); // Assuming UserName is in column 2
-                        break;
-                    }
+                    userName = worksheet.Cells[row, 2].Text.Trim();
+                    break;
                 }
             }
-
-            if (string.IsNullOrEmpty(userName))
-            {
-                // User not found in Excel
-                return RedirectToAction("SystemLogin");
-            }
-            else
-            {
-                HttpContext.Session.SetString("UserName", userName);
-                return RedirectToAction("Dashboard");
-            }
         }
+
+        if (string.IsNullOrEmpty(userName))
+        {
+            return RedirectToAction("SystemLogin");
+        }
+
+        HttpContext.Session.SetString("UserName", userName);
+        return RedirectToAction("Dashboard");
     }
 
-    /// <summary>
-    /// Displays the login view for the system.
-    /// </summary>
-    /// <returns>An <see cref="IActionResult"/> that renders the login view.</returns>
     public IActionResult SystemLogin()
     {
         return View();
@@ -85,11 +90,11 @@ public class HomeController : Controller
 
     public IActionResult DataFetch()
     {
-        var outputPath = Path.Combine(Directory.GetCurrentDirectory(), "OutputFiles", "Final_Output.xlsx");
+        var outputPath = GetOutputFilePath("FinalOutputFile");
         var matched = new List<Dictionary<string, object>>();
         var unmatched = new List<Dictionary<string, object>>();
 
-        OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         using (var package = new ExcelPackage(new FileInfo(outputPath)))
         {
             var ws = package.Workbook.Worksheets[0];
@@ -124,11 +129,6 @@ public class HomeController : Controller
         return View("Data");
     }
 
-
-    /// <summary>
-    /// Displays the data view for the system.
-    /// </summary>
-    /// <returns></returns>
     public IActionResult Data()
     {
         SetUserInformation();
@@ -137,54 +137,28 @@ public class HomeController : Controller
 
     #region Rules
 
-    private readonly string _rulesFile = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles"), "Rules.xlsx");
-
-    /// <summary>
-    /// Displays a view containing a list of rules retrieved from an Excel file.
-    /// </summary>
-    /// <remarks>The rules are read from an external Excel file and passed to the view for rendering.  Ensure
-    /// the Excel file is properly formatted and accessible to avoid errors.</remarks>
-    /// <returns>An <see cref="IActionResult"/> that renders the view with the list of rules.</returns>
     public IActionResult Rules()
     {
         var rules = ReadRulesFromExcel();
         return View(rules);
     }
 
-    /// <summary>
-    /// Adds a new rule or edits an existing rule in the collection of rules stored in the Excel file.
-    /// </summary>
-    /// <remarks>If <paramref name="rowIndex"/> is provided, the rule at the specified index is replaced with
-    /// the given <paramref name="rule"/>. If <paramref name="rowIndex"/> is null, the rule is appended to the end of
-    /// the collection. The updated collection is saved to the Excel file.</remarks>
-    /// <param name="rule">The rule to add or edit. Cannot be null.</param>
-    /// <param name="rowIndex">The zero-based index of the rule to edit. If null, a new rule is added to the collection.</param>
-    /// <returns>A redirect to the "Rules" action after the operation is completed.</returns>
     [HttpPost]
     public IActionResult AddOrEditRule(RuleModel rule, int? rowIndex)
     {
         var rules = ReadRulesFromExcel();
         if (rowIndex.HasValue && rowIndex.Value >= 0 && rowIndex.Value < rules.Count)
         {
-            // Edit
             rules[rowIndex.Value] = rule;
         }
         else
         {
-            // Add
             rules.Add(rule);
         }
         WriteRulesToExcel(rules);
         return RedirectToAction("Rules");
     }
 
-    /// <summary>
-    /// Deletes a rule at the specified index from the list of rules and updates the data source.
-    /// </summary>
-    /// <remarks>If the specified <paramref name="rowIndex"/> is out of range, no rule is deleted, and the
-    /// data source remains unchanged.</remarks>
-    /// <param name="rowIndex">The zero-based index of the rule to delete. Must be within the valid range of the rules list.</param>
-    /// <returns>An <see cref="IActionResult"/> that redirects to the "Rules" view after the operation is completed.</returns>
     [HttpPost]
     public IActionResult DeleteRule(int rowIndex)
     {
@@ -197,22 +171,16 @@ public class HomeController : Controller
         return RedirectToAction("Rules");
     }
 
-    /// <summary>
-    /// Reads rules from an Excel file and returns a list of <see cref="RuleModel"/> objects.
-    /// </summary>
-    /// <remarks>This method reads data from the first worksheet of the specified Excel file. Each row in the
-    /// worksheet represents a rule, with columns corresponding to the properties of <see cref="RuleModel"/>. If the
-    /// file does not exist or the worksheet is empty, an empty list is returned.</remarks>
-    /// <returns>A list of <see cref="RuleModel"/> objects populated with data from the Excel file. If the file does not exist or
-    /// the worksheet is empty, the returned list will be empty.</returns>
     private List<RuleModel> ReadRulesFromExcel()
     {
         var rules = new List<RuleModel>();
+        var rulesFile = GetFilePath("RulesFile");
 
-        if (!System.IO.File.Exists(_rulesFile))
+        if (!System.IO.File.Exists(rulesFile))
             return rules;
 
-        using (var package = new ExcelPackage(new FileInfo(_rulesFile)))
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+        using (var package = new ExcelPackage(new FileInfo(rulesFile)))
         {
             var ws = package.Workbook.Worksheets.FirstOrDefault();
             if (ws == null) return rules;
@@ -232,15 +200,9 @@ public class HomeController : Controller
         return rules;
     }
 
-    /// <summary>
-    /// Writes a collection of rules to an Excel file.
-    /// </summary>
-    /// <remarks>Each rule is written to a new row in the Excel file, with columns for the rule name,
-    /// attributes from two sheets, and the match type. The Excel file is saved to the location specified by the
-    /// internal <c>_rulesFile</c> field.</remarks>
-    /// <param name="rules">A list of <see cref="RuleModel"/> objects representing the rules to be written to the Excel file.</param>
     private void WriteRulesToExcel(List<RuleModel> rules)
     {
+        var rulesFile = GetFilePath("RulesFile");
         using (var package = new ExcelPackage())
         {
             var ws = package.Workbook.Worksheets.Add("Rules");
@@ -255,172 +217,17 @@ public class HomeController : Controller
                 ws.Cells[i + 2, 3].Value = rules[i].Sheet2Attribute;
                 ws.Cells[i + 2, 4].Value = rules[i].MatchType;
             }
-            package.SaveAs(new FileInfo(_rulesFile));
+            package.SaveAs(new FileInfo(rulesFile));
         }
     }
 
     #endregion
 
-    //#region Prospect
-
-    //private readonly string _prospectsFile = Path.Combine(Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles"), "ProspectData.xlsx");
-
-    //public IActionResult Prospect()
-    //{
-    //    var prospect = ReadProspectsFromExcel();
-    //    return View(prospect);
-    //}
-
-    //private List<ProspectViewModel> ReadProspectsFromExcel()
-    //{
-    //    var list = new List<ProspectViewModel>();
-
-    //    if (!System.IO.File.Exists(_prospectsFile))
-    //        return list;
-
-    //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-    //    using (var package = new ExcelPackage(new FileInfo(_prospectsFile)))
-    //    {
-    //        var ws = package.Workbook.Worksheets.FirstOrDefault();
-    //        if (ws == null) return list;
-
-    //        int row = 2;
-    //        while (!string.IsNullOrWhiteSpace(ws.Cells[row, 1].Text))
-    //        {
-    //            var name = ws.Cells[row, 1].Text;
-    //            var dobText = ws.Cells[row, 2].Text;
-    //            DateOnly dob;
-    //            if (!DateOnly.TryParse(dobText, out dob))
-    //            {
-    //                // fallback parse as DateTime
-    //                if (DateTime.TryParse(dobText, out var dt))
-    //                    dob = DateOnly.FromDateTime(dt);
-    //                else
-    //                    dob = DateOnly.FromDateTime(DateTime.MinValue);
-    //            }
-
-    //            list.Add(new ProspectViewModel
-    //            {
-    //                Name = name,
-    //                DOB = dob,
-    //                AADHAR = ws.Cells[row, 3].Text,
-    //                GuardianName = ws.Cells[row, 4].Text,
-    //                Address = ws.Cells[row, 5].Text,
-    //                FamilyIncome = ws.Cells[row, 6].Text,
-    //                Reference = bool.TryParse(ws.Cells[row, 7].Text, out var r) && r,
-    //                CurrentStage = ws.Cells[row, 8].Text,
-    //                Score = int.TryParse(ws.Cells[row, 9].Text, out var s) ? s : 0
-    //            });
-
-    //            row++;
-    //        }
-    //    }
-
-    //    return list;
-    //}
-
-    //[HttpPost]
-    //public IActionResult AddOrEditProspect(ProspectViewModel prospect, int? rowIndex)
-    //{
-    //    var prospects = ReadProspectsFromExcel();
-
-    //    if (rowIndex.HasValue && rowIndex.Value >= 0 && rowIndex.Value < prospects.Count)
-    //    {
-    //        // Edit
-    //        prospects[rowIndex.Value] = prospect;
-    //    }
-    //    else
-    //    {
-    //        // Add
-    //        prospects.Add(prospect);
-    //    }
-
-    //    WriteProspectsToExcel(prospects);
-    //    return RedirectToAction("Prospect");
-    //}
-
-    //private void WriteProspectsToExcel(List<ProspectViewModel> list)
-    //{
-    //    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-
-    //    // Ensure folder exists
-    //    var dir = Path.GetDirectoryName(_prospectsFile);
-    //    if (!Directory.Exists(dir))
-    //        Directory.CreateDirectory(dir);
-
-    //    using (var package = new ExcelPackage())
-    //    {
-    //        var ws = package.Workbook.Worksheets.Add("Prospects");
-    //        ws.Cells[1, 1].Value = "Name";
-    //        ws.Cells[1, 2].Value = "DOB";
-    //        ws.Cells[1, 3].Value = "AADHAR";
-    //        ws.Cells[1, 4].Value = "GuardianName";
-    //        ws.Cells[1, 5].Value = "Address";
-    //        ws.Cells[1, 6].Value = "FamilyIncome";
-    //        ws.Cells[1, 7].Value = "Reference";
-    //        ws.Cells[1, 8].Value = "CurrentStage";
-    //        ws.Cells[1, 9].Value = "Score";
-
-    //        for (int i = 0; i < list.Count; i++)
-    //        {
-    //            var r = i + 2;
-    //            ws.Cells[r, 1].Value = list[i].Name;
-    //            ws.Cells[r, 2].Value = list[i].DOB.ToString("yyyy-MM-dd");
-    //            ws.Cells[r, 3].Value = list[i].AADHAR;
-    //            ws.Cells[r, 4].Value = list[i].GuardianName;
-    //            ws.Cells[r, 5].Value = list[i].Address;
-    //            ws.Cells[r, 6].Value = list[i].FamilyIncome;
-    //            ws.Cells[r, 7].Value = list[i].Reference;
-    //            ws.Cells[r, 8].Value = list[i].CurrentStage;
-    //            ws.Cells[r, 9].Value = list[i].Score;
-    //        }
-
-    //        var fi = new FileInfo(_prospectsFile);
-    //        package.SaveAs(fi);
-    //    }
-    //}
-
-    //// POST: /Prospect/Save
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public IActionResult Save(ProspectViewModel model)
-    //{
-    //    if (model == null)
-    //    {
-    //        ModelState.AddModelError(string.Empty, "Invalid prospect data.");
-    //        return RedirectToAction(nameof(Index));
-    //    }
-
-    //    var list = ReadProspectsFromExcel();
-    //    list.Add(model);
-    //    try
-    //    {
-    //        WriteProspectsToExcel(list);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        _logger.LogError(ex, "Failed to write prospects to Excel");
-    //        // Optionally display a friendly error to the user
-    //    }
-
-    //    return RedirectToAction(nameof(Index));
-    //}
-
-    //#endregion
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public IActionResult Privacy()
     {
         return View();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
@@ -429,21 +236,14 @@ public class HomeController : Controller
 
     #region Dashboard Controller Methods
 
-    /// <summary>
-    /// Dashboard action method that returns the dashboard view with sample data.
-    /// </summary>
-    /// <returns></returns>
     public IActionResult Dashboard()
     {
         GetDatafromExcel();
-        // Set user information and various data for the dashboard view.
         SetUserInformation();
         SetCardsData();
         SetEmpiricalViewBarChartData();
         SetPieChartData();
         SetRuleChartData();
-
-        // You can replace the above sample data with actual data fetching logic as needed.
         return View();
     }
 
@@ -451,10 +251,9 @@ public class HomeController : Controller
 
     private void GetDatafromExcel()
     {
-        var sourceFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles");
-        var excelPath = Path.Combine(sourceFilesPath, "dashboarddata.xlsx");
+        var excelPath = GetFilePath("DashboardDataFile");
 
-        OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
         _dashboardRows = new List<DashboardRow>();
 
         using (var package = new ExcelPackage(new FileInfo(excelPath)))
@@ -462,7 +261,7 @@ public class HomeController : Controller
             var worksheet = package.Workbook.Worksheets[0];
             int rowCount = worksheet.Dimension.Rows;
 
-            for (int row = 2; row <= rowCount; row++) // Assuming first row is header
+            for (int row = 2; row <= rowCount; row++)
             {
                 var data = new DashboardRow
                 {
@@ -477,26 +276,15 @@ public class HomeController : Controller
         }
     }
 
-    // Helper class for dashboard data
     private class DashboardRow
     {
         public string Month { get; set; }
-
         public decimal Total { get; set; }
-
         public decimal MatchedRule { get; set; }
-
         public decimal MatchedAI { get; set; }
-
         public decimal Unmatched { get; set; }
     }
 
-    /// <summary>
-    /// Sets user information in the current view context by retrieving values from the session.
-    /// </summary>
-    /// <remarks>This method retrieves the user's ID and name from the session and assigns them to the  <see
-    /// cref="ViewBag"/> for use in the current view. Ensure that the session contains valid  values for "UserId" and
-    /// "UserName" before calling this method.</remarks>
     private void SetUserInformation()
     {
         var userId = HttpContext.Session.GetString("UserId");
@@ -505,16 +293,9 @@ public class HomeController : Controller
         ViewBag.UserName = userName;
     }
 
-    /// <summary>
-    /// Sets card-related data to the ViewBag for use in the view.
-    /// </summary>
-    /// <remarks>This method populates the ViewBag with predefined financial data, including total amount, 
-    /// matched balances (rule-based and AI-based), and unmatched balance. These values are intended  for display
-    /// purposes and may not reflect real-time or dynamic data.</remarks>
     private void SetCardsData()
     {
         if (_dashboardRows == null || !_dashboardRows.Any()) return;
-        // Use the latest month (last row)
         var latest = _dashboardRows.Last();
         ViewBag.TotalAmount = latest.Total;
         ViewBag.MatchedBalanceRuleBased = latest.MatchedRule;
@@ -522,9 +303,6 @@ public class HomeController : Controller
         ViewBag.MatchedBalanceAi = latest.MatchedAI;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void SetEmpiricalViewBarChartData()
     {
         if (_dashboardRows == null || !_dashboardRows.Any()) return;
@@ -532,21 +310,14 @@ public class HomeController : Controller
         ViewBag.MatchedBalanceRuleBasedData = _dashboardRows.Select(r => r.MatchedRule).ToArray();
         ViewBag.MatchedBalanceAiData = _dashboardRows.Select(r => r.MatchedAI).ToArray();
         ViewBag.UnmatchedBalanceData = _dashboardRows.Select(r => r.Unmatched).ToArray();
-
         ViewBag.YAxisMax = 380000;
     }
 
-    /// <summary>
-    /// Sets the rule chart data for the view by assigning predefined values to the ViewBag.
-    /// </summary>
-    /// <remarks>This method populates the ViewBag with specific values for keys "Rl01", "Rl02", and "Rl03",
-    /// which can be used in the view to display rule-related chart data.</remarks>
     private void SetRuleChartData()
     {
-        var sourceFilesPath = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles");
-        var excelPath = Path.Combine(sourceFilesPath, "RuleData.xlsx");
+        var excelPath = GetFilePath("RuleDataFile");
 
-        OfficeOpenXml.ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+        ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
         int rl01Pct = 0, rl02Pct = 0, rl03Pct = 0;
 
@@ -557,7 +328,7 @@ public class HomeController : Controller
                 var worksheet = package.Workbook.Worksheets[0];
                 int rowCount = worksheet.Dimension.Rows;
 
-                for (int row = 2; row <= rowCount; row++) // Assuming first row is header
+                for (int row = 2; row <= rowCount; row++)
                 {
                     var ruleName = worksheet.Cells[row, 1].Text.Trim();
                     int total = int.TryParse(worksheet.Cells[row, 2].Text, out var t) ? t : 0;
@@ -580,12 +351,6 @@ public class HomeController : Controller
         ViewBag.Rl03 = rl03Pct;
     }
 
-    /// <summary>
-    /// Sets the data for a pie chart visualization.
-    /// </summary>
-    /// <remarks>This method prepares percentage values representing different categories of data and assigns
-    /// them to the <see cref="ViewBag.PieChartData"/> property for use in a pie chart. The data includes total amount
-    /// percentage, matched balance (rule-based and AI-based), and unmatched balance percentage.</remarks>
     private void SetPieChartData()
     {
         if (_dashboardRows == null || !_dashboardRows.Any()) return;
@@ -595,16 +360,16 @@ public class HomeController : Controller
         decimal matchedAI = latest.MatchedAI;
         decimal unmatched = latest.Unmatched;
 
-        // Calculate percentages
         int matchedRulePct = (int)Math.Round((decimal)matchedRule / total * 100);
         int matchedAIPct = (int)Math.Round((decimal)matchedAI / total * 100);
         int unmatchedPct = (int)Math.Round((decimal)unmatched / total * 100);
 
         ViewBag.PieChartData = new[] { matchedRulePct, unmatchedPct, matchedAIPct };
     }
+
     #endregion
 
-    #region Python 
+    #region Python
 
     [HttpPost]
     public IActionResult RunPythonScript()
@@ -612,13 +377,13 @@ public class HomeController : Controller
         var psi = new ProcessStartInfo();
         psi.FileName = "python";
         psi.Arguments = "Python/Rule5.py";
-        psi.WorkingDirectory = Directory.GetCurrentDirectory();
+        psi.WorkingDirectory = _env.ContentRootPath;
         psi.RedirectStandardOutput = true;
         psi.RedirectStandardError = true;
         psi.UseShellExecute = false;
         psi.CreateNoWindow = true;
 
-        using (var process = Process.Start(psi))
+        using (var process = System.Diagnostics.Process.Start(psi))
         {
             string output = process.StandardOutput.ReadToEnd();
             string error = process.StandardError.ReadToEnd();
@@ -626,7 +391,7 @@ public class HomeController : Controller
 
             if (!string.IsNullOrEmpty(error))
             {
-                // Log or return the error for debugging
+                _logger.LogError("Python script error: {Error}", error);
                 return Content("Error: " + error);
             }
         }
