@@ -177,7 +177,7 @@ namespace RECAP.Controllers
                 {
                     var r = i + 2;
                     ws.Cells[r, 1].Value = list[i].Name;
-                    ws.Cells[r, 2].Value = list[i].DOB == DateOnly.FromDateTime(DateTime.MinValue) ? "" : list[i].DOB.ToString("yyyy-MM-dd");
+                    ws.Cells[r, 2].Value = !list[i].DOB.HasValue || list[i].DOB == DateOnly.FromDateTime(DateTime.MinValue) ? "" : list[i].DOB.Value.ToString("yyyy-MM-dd");
                     ws.Cells[r, 3].Value = list[i].AADHAR;
                     ws.Cells[r, 4].Value = list[i].GuardianName;
                     ws.Cells[r, 5].Value = list[i].Address;

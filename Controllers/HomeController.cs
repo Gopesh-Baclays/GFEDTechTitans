@@ -3,32 +3,34 @@ using Microsoft.AspNetCore.Mvc;
 using RECAP.Models;
 using OfficeOpenXml; // Add this at the top (requires EPPlus NuGet package)
 
-namespace RECAP.Controllers;
-
-public class HomeController : Controller
+namespace RECAP.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ILogger<HomeController> _logger;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public IActionResult Index()
-    {
-        return View("SystemLogin");
-    }
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public IActionResult SSOLogin()
-    {
+        public IActionResult Index()
+        {
+            return View("SystemLogin");
+        }
+
+        public IActionResult Mobilizer()
+        {
+            return View();
+        }
+
+        public IActionResult HeatMap()
+        {
+            return View();
+        }
+
+        public IActionResult SSOLogin()
+        {
         var userId = Environment.UserName;
         HttpContext.Session.SetString("UserId", userId);
 
@@ -70,7 +72,7 @@ public class HomeController : Controller
             else
             {
                 HttpContext.Session.SetString("UserName", userName);
-                return RedirectToAction("Scoring");
+                return RedirectToAction("Dashboard");
             }
         }
     }
@@ -808,4 +810,6 @@ public class HomeController : Controller
     }
 
     #endregion
+    // End of HomeController
+}
 }

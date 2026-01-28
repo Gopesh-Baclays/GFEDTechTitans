@@ -15,28 +15,32 @@
             <span>Dashboard</span>
         </a>
     </li>
-    <hr class="sidebar-divider">
-    <div class="sidebar-heading">
-        Interface
-    </div>
+    <!-- Nav Items under Dashboard -->
+    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "HeatMap" ? "active" : "")">
+        <a class="nav-link" href="/Home/HeatMap">
+            <i class="fas fa-fw fa-th"></i>
+            <span>Heatmap</span>
+        </a>
+    </li>
+    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Scoring" ? "active" : "")">
+        <a class="nav-link" href="/Home/Scoring">
+            <i class="fas fa-fw fa-chart-line"></i>
+            <span>Dropout Score</span>
+        </a>
+    </li>
     <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Prospect" ? "active" : "")">
         <a class="nav-link" href="/Home/Prospect">
             <i class="fas fa-fw fa-gavel"></i>
             <span>Prospect</span>
         </a>
     </li>
-    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Rules" ? "active" : "")">
-        <a class="nav-link" href="/Home/Rules">
-            <i class="fas fa-fw fa-gavel"></i>
-            <span>Rule</span>
+    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Mobilizer" ? "active" : "")">
+        <a class="nav-link" href="/Home/Mobilizer">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Mobilizer</span>
         </a>
     </li>
-    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Data" ? "active" : "")">
-        <a class="nav-link" href="/Home/Data">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Data</span>
-        </a>
-    </li>
+    <!-- Interface section removed as requested -->
     <hr class="sidebar-divider d-none d-md-block">
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
