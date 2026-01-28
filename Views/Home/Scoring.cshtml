@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Scoring";
+    Layout = "_Layout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mt-4">Candidate Dropout Score Prediction</h1>
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Enter Candidate Details</h6>
+                </div>
+                <div class="card-body">
+                    <form asp-action="PredictDropout" method="post">
+                        <h6>Personal & Background</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="age">Age</label>
+                                <input type="number" class="form-control" id="age" name="age" min="18" max="60" required />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="gender">Gender</label>
+                                <select class="form-control" id="gender" name="gender" required>
+                                    <option value="0">Male</option>
+                                    <option value="1">Female</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="location">Location Type</label>
+                                <select class="form-control" id="location" name="location" required>
+                                    <option value="0">Rural</option>
+                                    <option value="1">Urban</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="educationLevel">Education Level</label>
+                                <select class="form-control" id="educationLevel" name="educationLevel" required>
+                                    <option value="0">12th Pass</option>
+                                    <option value="1">ITI</option>
+                                    <option value="2">Diploma</option>
+                                    <option value="3">BA</option>
+                                    <option value="4">MSc</option>
+                                </select>
+                            </div>
+                        </div>
+                        <h6>Experience & Skills</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="skillsCount">Number of Skills</label>
+                                <input type="number" class="form-control" id="skillsCount" name="skillsCount" min="0" required />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hasPastTraining">Has Past Training</label>
+                                <select class="form-control" id="hasPastTraining" name="hasPastTraining" required>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="hasWorkExperience">Has Work Experience</label>
+                                <select class="form-control" id="hasWorkExperience" name="hasWorkExperience" required>
+                                    <option value="0">No</option>
+                                    <option value="1">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                        <h6>Onboarding & Engagement</h6>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="currentStepIndex">Current Step</label>
+                                <select class="form-control" id="currentStepIndex" name="currentStepIndex" required>
+                                    <option value="0">Signed Up</option>
+                                    <option value="1">Orientation Scheduled</option>
+                                    <option value="2">Orientation Completed</option>
+                                    <option value="3">Assessment Scheduled</option>
+                                    <option value="4">Assessment Completed</option>
+                                    <option value="5">Training Assigned</option>
+                                    <option value="6">Training In Progress</option>
+                                    <option value="7">Placement Support</option>
+                                    <option value="8">Onboarding Completed</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="daysSinceSignup">Days Since Signup</label>
+                                <input type="number" class="form-control" id="daysSinceSignup" name="daysSinceSignup" min="0" required />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="totalEngagements">Total Engagements</label>
+                                <input type="number" class="form-control" id="totalEngagements" name="totalEngagements" min="0" required />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="responseRate">Response Rate (0-1)</label>
+                                <input type="number" class="form-control" id="responseRate" name="responseRate" min="0" max="1" step="0.01" required />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="missedSessions">Missed Sessions</label>
+                                <input type="number" class="form-control" id="missedSessions" name="missedSessions" min="0" required />
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="lastActiveDays">Last Active Days Ago</label>
+                                <input type="number" class="form-control" id="lastActiveDays" name="lastActiveDays" min="0" required />
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Predict Dropout Score</button>
+                    </form>
+                    @if (ViewBag.DropoutScore != null)
+                    {
+                        <div class="mt-4">
+                            <h5>Predicted Dropout Score: @ViewBag.DropoutScore%</h5>
+                            <p>This is an estimated probability based on historical data.</p>
+                            @if (ViewBag.Reasons != null)
+                            {
+                                <h6>Key Reasons for This Prediction:</h6>
+                                <ul>
+                                    @foreach (var reason in (List<string>)ViewBag.Reasons)
+                                    {
+                                        <li>@reason</li>
+                                    }
+                                </ul>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
