@@ -97,3 +97,8 @@ appsettings.Development.json
 /obj/AARAMBH.csproj.nuget.g.targets
 /obj/AARAMBH.csproj.nuget.dgspec.json
 /.vs/AARAMBH/config/applicationhost.config
+/obj/Debug/net8.0/AARAMBH.AssemblyInfo.cs
+/obj/Debug/net8.0/AARAMBH.AssemblyInfoInputs.cache
+/.vs/AARAMBH/v18/.suo
+/.vs/AARAMBH/v18/DocumentLayout.json
+/obj/Debug/net8.0/AARAMBH.csproj.AssemblyReference.cache
