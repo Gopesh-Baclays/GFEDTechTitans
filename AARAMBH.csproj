@@ -14,9 +14,4 @@
     <Folder Include="Asset\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\bootstrap\img\Designer.png" />
-    <None Include="wwwroot\bootstrap\img\OutReachandImpact.png" />
-  </ItemGroup>
-
 </Project>

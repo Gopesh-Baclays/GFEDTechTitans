@@ -10,10 +10,9 @@ namespace RECAP.Controllers
             // Replace with real data fetching logic
             var model = new DashboardViewModel
             {
-                TotalAmount = 40000,
-                MatchedBalanceRuleBased = 215000,
-                UnmatchedBalance = 18,
-                MatchedBalanceAiPercent = 50
+                MobilizerName = "Simran Shah",
+                NumberOfActiveCases = 25,
+                NumberOfCompletedCases = 150
             };
 
             return View(model);

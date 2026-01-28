@@ -4,7 +4,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">RECAP</div>
+        <div class="sidebar-brand-text mx-3">AARAMBH</div>
     </a>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -31,6 +31,12 @@
             <span>Data</span>
         </a>
     </li>
+    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "MobilizerView" ? "active=" : "")">
+		<a class="nav-link" href="/Home/MobilizerView">
+			<i class="fas fa-fw fa-table"></i>
+			<span>Mobilizer View</span>
+		</a>
+	</li>
     <hr class="sidebar-divider d-none d-md-block">
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
