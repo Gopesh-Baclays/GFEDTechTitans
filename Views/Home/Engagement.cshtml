@@ -1,0 +1,345 @@
+@{
+    ViewData["Title"] = "Engagement Engine";
+    Layout = "_Layout";
+}
+
+@model RECAP.Models.EngagementViewModel
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Engagement Engine</h1>
+    </div>
+
+    <!-- Stage Selection -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Select Engagement Stage</h6>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="stageSelect">Stage:</label>
+                        <select class="form-control form-control-lg" id="stageSelect">
+                            <option value="Identification">Identification</option>
+                            <option value="Screening">Screening</option>
+                            <option value="Counseling">Counseling</option>
+                            <option value="Document Processing">Document Processing</option>
+                            <option value="Waiting for Batch">Waiting for Batch</option>
+                            <option value="On Job">On Job</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Predictability Score Card -->
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Predictability Score</h6>
+                </div>
+                <div class="card-body text-center">
+                    <div class="h2 mb-0 font-weight-bold">
+                        <span class="text-success">@Model.PredictabilityScore%</span>
+                    </div>
+                    <small class="text-muted d-block mt-2">Prospect Success Probability</small>
+                    <div class="progress mt-3">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: @Model.PredictabilityScore%"
+                             aria-valuenow="@((int)Model.PredictabilityScore)" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Engagement Sections -->
+    <div class="row">
+        <!-- Prospect Engagement Section -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header py-3 bg-primary">
+                    <h6 class="m-0 font-weight-bold text-white">
+                        <i class="fas fa-user-graduate"></i> Prospect Engagement
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="small font-weight-bold text-uppercase mb-1">Name</label>
+                        <p class="form-control-plaintext h6">@Model.ProspectName</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small font-weight-bold text-uppercase mb-1">Phone Number</label>
+                        <p class="form-control-plaintext h6">
+                            <a href="tel:@Model.ProspectPhoneNumber">@Model.ProspectPhoneNumber</a>
+                        </p>
+                    </div>
+                    <hr />
+                    <p class="small text-muted mb-2">Engagement Channel:</p>
+                    <div class="btn-group-vertical w-100" role="group">
+                        <button type="button" class="btn btn-outline-success text-left mb-2 engagement-btn" 
+                                data-party="Prospect" data-channel="whatsapp" data-phone="@Model.ProspectPhoneNumber" data-name="@Model.ProspectName">
+                            <i class="fab fa-whatsapp"></i> Engage via WhatsApp
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-left mb-2 engagement-btn"
+                                data-party="Prospect" data-channel="socialmedia" data-phone="@Model.ProspectPhoneNumber" data-name="@Model.ProspectName">
+                            <i class="fab fa-facebook"></i> Engage via Social Media
+                        </button>
+                        <button type="button" class="btn btn-outline-info text-left engagement-btn"
+                                data-party="Prospect" data-channel="message" data-phone="@Model.ProspectPhoneNumber" data-name="@Model.ProspectName">
+                            <i class="fas fa-sms"></i> Engage by Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Guardian Engagement Section -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header py-3 bg-warning">
+                    <h6 class="m-0 font-weight-bold text-white">
+                        <i class="fas fa-user-tie"></i> Guardian Engagement
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="small font-weight-bold text-uppercase mb-1">Name</label>
+                        <p class="form-control-plaintext h6">@Model.GuardianName</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small font-weight-bold text-uppercase mb-1">Phone Number</label>
+                        <p class="form-control-plaintext h6">
+                            <a href="tel:@Model.GuardianPhoneNumber">@Model.GuardianPhoneNumber</a>
+                        </p>
+                    </div>
+                    <hr />
+                    <p class="small text-muted mb-2">Engagement Channel:</p>
+                    <div class="btn-group-vertical w-100" role="group">
+                        <button type="button" class="btn btn-outline-success text-left mb-2 engagement-btn"
+                                data-party="Guardian" data-channel="whatsapp" data-phone="@Model.GuardianPhoneNumber" data-name="@Model.GuardianName">
+                            <i class="fab fa-whatsapp"></i> Engage via WhatsApp
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-left mb-2 engagement-btn"
+                                data-party="Guardian" data-channel="socialmedia" data-phone="@Model.GuardianPhoneNumber" data-name="@Model.GuardianName">
+                            <i class="fab fa-facebook"></i> Engage via Social Media
+                        </button>
+                        <button type="button" class="btn btn-outline-info text-left engagement-btn"
+                                data-party="Guardian" data-channel="message" data-phone="@Model.GuardianPhoneNumber" data-name="@Model.GuardianName">
+                            <i class="fas fa-sms"></i> Engage by Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Referee Engagement Section -->
+        <div class="col-lg-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-header py-3 bg-info">
+                    <h6 class="m-0 font-weight-bold text-white">
+                        <i class="fas fa-user-check"></i> Referee Engagement
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="small font-weight-bold text-uppercase mb-1">Name</label>
+                        <p class="form-control-plaintext h6">@Model.RefereeName</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="small font-weight-bold text-uppercase mb-1">Phone Number</label>
+                        <p class="form-control-plaintext h6">
+                            <a href="tel:@Model.RefereePhoneNumber">@Model.RefereePhoneNumber</a>
+                        </p>
+                    </div>
+                    <hr />
+                    <p class="small text-muted mb-2">Engagement Channel:</p>
+                    <div class="btn-group-vertical w-100" role="group">
+                        <button type="button" class="btn btn-outline-success text-left mb-2 engagement-btn"
+                                data-party="Referee" data-channel="whatsapp" data-phone="@Model.RefereePhoneNumber" data-name="@Model.RefereeName">
+                            <i class="fab fa-whatsapp"></i> Engage via WhatsApp
+                        </button>
+                        <button type="button" class="btn btn-outline-primary text-left mb-2 engagement-btn"
+                                data-party="Referee" data-channel="socialmedia" data-phone="@Model.RefereePhoneNumber" data-name="@Model.RefereeName">
+                            <i class="fab fa-facebook"></i> Engage via Social Media
+                        </button>
+                        <button type="button" class="btn btn-outline-info text-left engagement-btn"
+                                data-party="Referee" data-channel="message" data-phone="@Model.RefereePhoneNumber" data-name="@Model.RefereeName">
+                            <i class="fas fa-sms"></i> Engage by Message
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Engagement History (Optional) -->
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Engagement History</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="engagementHistoryTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Date & Time</th>
+                                    <th>Party</th>
+                                    <th>Channel</th>
+                                    <th>Stage</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2024-01-29 10:30 AM</td>
+                                    <td>Prospect</td>
+                                    <td>WhatsApp</td>
+                                    <td>Identification</td>
+                                    <td><span class="badge badge-success">Sent</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-28 02:15 PM</td>
+                                    <td>Guardian</td>
+                                    <td>Message</td>
+                                    <td>Screening</td>
+                                    <td><span class="badge badge-success">Sent</span></td>
+                                </tr>
+                                <tr>
+                                    <td>2024-01-27 09:45 AM</td>
+                                    <td>Referee</td>
+                                    <td>Social Media</td>
+                                    <td>Identification</td>
+                                    <td><span class="badge badge-warning">Pending</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Handle engagement button clicks
+            $('.engagement-btn').on('click', function() {
+                const partyType = $(this).data('party');
+                const channel = $(this).data('channel');
+                const phoneNumber = $(this).data('phone');
+                const name = $(this).data('name');
+                const stage = $('#stageSelect').val();
+                const prospectId = @Model.ProspectId;
+
+                // Determine endpoint based on channel
+                let endpoint = '';
+                switch(channel) {
+                    case 'whatsapp':
+                        endpoint = '/Engagement/EngageViaWhatsApp';
+                        break;
+                    case 'socialmedia':
+                        endpoint = '/Engagement/EngageViaSocialMedia';
+                        break;
+                    case 'message':
+                        endpoint = '/Engagement/EngageByMessage';
+                        break;
+                }
+
+                // Send engagement request
+                $.ajax({
+                    type: 'POST',
+                    url: endpoint,
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        prospectId: prospectId,
+                        stage: stage,
+                        partyType: partyType,
+                        engagementChannel: channel,
+                        phoneNumber: phoneNumber,
+                        name: name
+                    }),
+                    success: function(response) {
+                        if (response.success) {
+                            showNotification('Success', response.message, 'success');
+                            // Optionally add to engagement history
+                            addToEngagementHistory(name, partyType, channel, stage);
+                        } else {
+                            showNotification('Error', response.message, 'danger');
+                        }
+                    },
+                    error: function(error) {
+                        showNotification('Error', 'Failed to send engagement message', 'danger');
+                        console.error(error);
+                    }
+                });
+            });
+
+            // Handle stage change
+            $('#stageSelect').on('change', function() {
+                const selectedStage = $(this).val();
+                console.log('Stage changed to: ' + selectedStage);
+            });
+        });
+
+        // Show notification toast
+        function showNotification(title, message, type) {
+            const alertDiv = $('<div>')
+                .addClass('alert alert-' + type + ' alert-dismissible fade show')
+                .attr('role', 'alert')
+                .html(`
+                    <strong>${title}:</strong> ${message}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                `);
+
+            $('body').prepend(alertDiv);
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(function() {
+                alertDiv.alert('close');
+            }, 5000);
+        }
+
+        // Add engagement to history table
+        function addToEngagementHistory(name, party, channel, stage) {
+            const now = new Date();
+            const dateTime = now.toLocaleString('en-US', { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            });
+
+            const channelIcon = {
+                'whatsapp': '<i class="fab fa-whatsapp"></i> WhatsApp',
+                'socialmedia': '<i class="fab fa-facebook"></i> Social Media',
+                'message': '<i class="fas fa-sms"></i> Message'
+            };
+
+            const newRow = `
+                <tr>
+                    <td>${dateTime}</td>
+                    <td>${party}</td>
+                    <td>${channelIcon[channel]}</td>
+                    <td>${stage}</td>
+                    <td><span class="badge badge-success">Sent</span></td>
+                </tr>
+            `;
+
+            $('#engagementHistoryTable tbody').prepend(newRow);
+        }
+    </script>
+}

@@ -27,7 +27,7 @@
     <!-- Content Row -->
     <div class="row">
        
-        <!-- Matched Balance (Rule Based) Card -->
+        <!-- Mobilizer Name Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -48,7 +48,7 @@
             </a>
         </div>
 
-        <!-- Matched Balance (AI) Cars -->
+        <!-- Active Cases Card -->
         <div class="col-xl-3 col-md-6 mb-4">
             <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-success shadow h-100 py-2">
@@ -69,9 +69,9 @@
             </a>
         </div>
 
-        <!-- Unmatched Balance Card -->
+        <!-- Closed Cases Card -->
         <div class="col-xl-3 col-md-6 mb-4">
-            <ahref ="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
                 <div class="card border-left-warning shadow h-100 py-2">
                     <div class="card-body">
                         <div class="row no-gutters align-items-center">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                </a>
+            </a>
         </div>
 
     </div>
@@ -123,7 +123,12 @@
                                     <td>@(c.DateStarted ?? "")</td>
                                     <td>@(c.State ?? "")</td>
                                     <td>
-                                        <button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('@(c.CaseId ?? "")')">View Details</button>
+                                        <button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('@(c.CaseId ?? "")')">
+                                            <i class="fas fa-eye"></i> View Details
+                                        </button>
+                                        <a href="/Engagement?prospectId=@(c.CaseId ?? "")" class="btn btn-sm btn-success" title="Engage Prospect">
+                                            <i class="fas fa-comments"></i> Engage
+                                        </a>
                                     </td>
                                 </tr>
                             }
@@ -137,7 +142,14 @@
                                 <td>Active</td>
                                 <td>2026-01-01</td>
                                 <td>Onboarding</td>
-                                <td><button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('CASE-001')">View Details</button></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('CASE-001')">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <a href="/Engagement?prospectId=CASE-001" class="btn btn-sm btn-success" title="Engage Prospect">
+                                        <i class="fas fa-comments"></i> Engage
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>CASE-002</td>
@@ -145,7 +157,14 @@
                                 <td>Completed</td>
                                 <td>2025-12-15</td>
                                 <td>Counselling</td>
-                                <td><button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('CASE-002')">View Details</button></td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('CASE-002')">
+                                        <i class="fas fa-eye"></i> View Details
+                                    </button>
+                                    <a href="/Engagement?prospectId=CASE-002" class="btn btn-sm btn-success" title="Engage Prospect">
+                                        <i class="fas fa-comments"></i> Engage
+                                    </a>
+                                </td>
                             </tr>
                         }
                     </tbody>
