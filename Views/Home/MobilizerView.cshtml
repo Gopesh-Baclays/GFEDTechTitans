@@ -1,0 +1,196 @@
+﻿@{
+    ViewData["Title"] = "Profile";
+    Layout = "_Layout";
+}
+
+<script>
+    var barLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.barLabels));
+    var MobilizerName = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.MobilizerName));
+    var NumberOfActiveCases = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.NumberOfActiveCases));
+    var NumberOfCompletedCases = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(ViewBag.NumberOfCompletedCases));
+
+    var yAxisMin = @(ViewBag.yAxisMin ?? 0);
+    var yAxisMax = @(ViewBag.yAxisMax ?? 100);
+</script>
+
+<!-- #endregion -->
+
+
+<div class="container-fluid">   
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Profile</h1>
+        <a href="javascript:void(0);" onclick="runReconn()" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-play fa-sm text-white-50"></i> Refresh Data
+        </a>
+    </div>
+    <!-- Content Row -->
+    <div class="row">
+       
+        <!-- Matched Balance (Rule Based) Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Name
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @ViewBag.MobilizerName.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Matched Balance (AI) Cars -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <a href="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Number of active cases
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @ViewBag.NumberOfActiveCases.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Unmatched Balance Card -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <ahref ="@Url.Action("DataFetch", "Home")" class="text-decoration-none">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Number of Closed cases
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    @ViewBag.NumberOfCompletedCases.ToString(System.Globalization.CultureInfo.GetCultureInfo("en-GB"))
+                                </div>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                </a>
+        </div>
+
+    </div>
+    
+
+    <!-- Cases table -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Cases</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="casesTable" width="100%" cellspacing="0">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>CaseId</th>
+                            <th>Prospect name</th>
+                            <th>Status</th>
+                            <th>Date Started</th>
+                            <th>State</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.Cases != null)
+                        {
+                            foreach (dynamic c in (System.Collections.IEnumerable)ViewBag.Cases)
+                            {
+                                <tr>
+                                    <td>@(c.CaseId ?? "")</td>
+                                    <td>@(c.ProspectName ?? "")</td>
+                                    <td>@(c.Status ?? "")</td>
+                                    <td>@(c.DateStarted ?? "")</td>
+                                    <td>@(c.State ?? "")</td>
+                                    <td>
+                                        <button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('@(c.CaseId ?? "")')">View Details</button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <!-- sample rows when no data provided by controller -->
+                            <tr>
+                                <td>CASE-001</td>
+                                <td>Manoj Bisht</td>
+                                <td>Active</td>
+                                <td>2026-01-01</td>
+                                <td>Onboarding</td>
+                                <td><button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('CASE-001')">View Details</button></td>
+                            </tr>
+                            <tr>
+                                <td>CASE-002</td>
+                                <td>Sonam Kumari</td>
+                                <td>Completed</td>
+                                <td>2025-12-15</td>
+                                <td>Counselling</td>
+                                <td><button type="button" class="btn btn-sm btn-primary" onclick="viewDetails('CASE-002')">View Details</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+  
+    
+</div>
+<a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+</a>
+
+@section Scripts {
+    <script src="~/bootstrap/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/bootstrap/js/demo/chart-area-demo.js"></script>
+    <script src="~/bootstrap/js/demo/chart-pie-demo.js"></script>
+    <script src="~/bootstrap/js/demo/chart-bar-demo.js"></script>
+    <script>
+        function runReconn() {
+            fetch('@Url.Action("RunPythonScript", "Home")', {
+                method: 'POST',
+                headers: {
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Python script executed!');
+                } else {
+                    alert('Failed to run script.');
+                }
+            });
+        }
+
+        function viewDetails(caseId) {
+            // Navigate to a details page or show a modal. Adjust URL as needed.
+            if (!caseId) return;
+            var url = '@Url.Action("Details", "Mobilizer")';
+            // If Mobilizer controller Details action expects id parameter named "id"
+            window.location.href = url + '?id=' + encodeURIComponent(caseId);
+        }
+    </script>
+}
