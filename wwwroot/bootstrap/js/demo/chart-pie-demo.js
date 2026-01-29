@@ -4,11 +4,11 @@ Chart.defaults.global.defaultFontColor = '#858796';
 
 // Pie Chart Example
 var ctx = document.getElementById("myPieChart");
-var data = typeof pieChartData !== "undefined" ? pieChartData : [30, 15, 10];
+var data = [45, 37, 68];
 var myPieChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ["Matched Balance (Rule Based)", "Matched Balance (AI)", "Unmatched"],
+        labels: ["High Confidence", "Medium Confidence", "Low Confidence"],
         datasets: [{
             data: data,
             backgroundColor: ['#1cc88a', '#4e73df', '#e74a3b'],
