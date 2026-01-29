@@ -36,7 +36,7 @@ var myBarChart = new Chart(ctx, {
         labels: typeof barLabels !== "undefined" ? barLabels : [],
         datasets: [
             {
-                label: "Matched Balance (Rule Based)",
+                label: "High Confidence",
                 backgroundColor: "#1cc88a",
                 hoverBackgroundColor: "#1cc88a",
                 borderColor: "#1cc88a",
@@ -45,7 +45,7 @@ var myBarChart = new Chart(ctx, {
                 categoryPercentage: 0.5
             },
             {
-                label: "Matched Balance (AI)",
+                label: "Medium Confidence",
                 backgroundColor: "#4e73df",
                 hoverBackgroundColor: "#4e73df",
                 borderColor: "#4e73df",
@@ -54,7 +54,7 @@ var myBarChart = new Chart(ctx, {
                 categoryPercentage: 0.5
             },
             {
-                label: "Unmatched Balance",
+                label: "Low Confidence",
                 backgroundColor: "#e74a3b",
                 hoverBackgroundColor: "#e74a3b",
                 borderColor: "#e74a3b",
