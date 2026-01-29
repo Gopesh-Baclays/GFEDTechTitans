@@ -31,6 +31,7 @@
                         </div>
                         <small class="form-text text-muted">Supported formats: JPG, PNG, PDF (Max 5MB). System will extract details if readable.</small>
                     </div>
+                    <div id="ocrStatus" class="mt-2"></div>
                 </div>
             </div>
 
@@ -47,8 +48,9 @@
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="CandidateName">Candidate Name <span class="text-danger">*</span></label>
+                                <label for="CandidateName"> Candidate Name <span class="text-danger">*</span></label>
                                 <input type="text" id="CandidateName" name="CandidateName" class="form-control" required value="@(Model.SelectedProspect?.CandidateName ?? "")" placeholder="Enter candidate name" />
+                                <small class="form-text text-muted">Extracted from document</small>
                             </div>
 
                             <div class="form-group col-md-6">
@@ -69,13 +71,15 @@
                             </div>
 
                             <div class="form-group col-md-3">
-                                <label for="AADHAR">AADHAR <span class="text-danger">*</span></label>
-                                <input type="text" id="AADHAR" name="AADHAR" class="form-control" required value="@(Model.SelectedProspect?.AADHAR ?? "")" placeholder="AADHAR number" />
+                                <label for="AADHAR">Employee/ID Number <span class="text-danger">*</span></label>
+                                <input type="text" id="AADHAR" name="AADHAR" class="form-control" required value="@(Model.SelectedProspect?.AADHAR ?? "")" placeholder="Employee ID or AADHAR" />
+                                <small class="form-text text-muted">Extracted from document</small>
                             </div>
 
                             <div class="form-group col-md-3">
                                 <label for="EmailId">Email ID</label>
                                 <input type="email" id="EmailId" name="EmailId" class="form-control" value="@(Model.SelectedProspect?.EmailId ?? "")" placeholder="email@example.com" />
+                                <small class="form-text text-muted">Extracted from document</small>
                             </div>
                         </div>
 
@@ -106,13 +110,15 @@
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="EducationLevel">Education Level</label>
-                                <input type="text" id="EducationLevel" name="EducationLevel" class="form-control" value="@(Model.SelectedProspect?.EducationLevel ?? "")" placeholder="Education level" />
+                                <label for="EducationLevel">Designation/Profession <span class="text-info">(from document)</span></label>
+                                <input type="text" id="EducationLevel" name="EducationLevel" class="form-control" value="@(Model.SelectedProspect?.EducationLevel ?? "")" placeholder="Extracted designation" />
+                                <small class="form-text text-muted">Extracted from document</small>
                             </div>
 
                             <div class="form-group col-md-4">
-                                <label for="CurrentStage">Current Stage</label>
-                                <input type="text" id="CurrentStage" name="CurrentStage" class="form-control" value="@(Model.SelectedProspect?.CurrentStage ?? "")" placeholder="Current stage" />
+                                <label for="CurrentStage">Company/Organization</label>
+                                <input type="text" id="CurrentStage" name="CurrentStage" class="form-control" value="@(Model.SelectedProspect?.CurrentStage ?? "")" placeholder="Extracted company name" />
+                                <small class="form-text text-muted">Extracted from document</small>
                             </div>
                         </div>
 
@@ -352,26 +358,91 @@
 </div>
 
 <script>
-    // Handle document file selection
+    // Hardcoded OCR data - simulates document text extraction
+    const ocrData = {
+        fullName: "JAMES SMITH",
+        designation: "SOFTWARE ENGINEER",
+        company: "CONTOSO LTD",
+        employeeId: "123456",
+        email: "james.smith@email.com"
+    };
+
+    // Handle document file selection and simulate OCR
     document.getElementById('DocumentUpload').addEventListener('change', function (e) {
         const fileName = e.target.files[0]?.name || 'Choose file...';
         const label = document.querySelector('label[for="DocumentUpload"]');
         label.textContent = fileName;
+        const ocrStatus = document.getElementById('ocrStatus');
         
         if (e.target.files[0]) {
-            // Here you could add OCR or document processing logic
-            // For now, just show a confirmation
-            alert('Document uploaded: ' + fileName + '\n\nNote: Document processing would extract details like name, DOB, etc.');
+            // Simulate OCR processing delay
+            ocrStatus.innerHTML = '<div class="alert alert-info"><i class="fas fa-spinner fa-spin"></i> Processing document...</div>';
+            
+            setTimeout(() => {
+                // Populate form fields with extracted data
+                populateFormWithOCRData();
+                
+                // Show success message
+                ocrStatus.innerHTML = `
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fas fa-check-circle"></i> <strong>Document processed successfully!</strong>
+                        <br/>
+                        <small>Extracted Information:</small>
+                        <ul style="margin-top: 8px; margin-bottom: 0;">
+                            <li><strong>Name:</strong> ${ocrData.fullName}</li>
+                            <li><strong>Designation:</strong> ${ocrData.designation}</li>
+                            <li><strong>Company:</strong> ${ocrData.company}</li>
+                            <li><strong>Employee ID:</strong> ${ocrData.employeeId}</li>
+                            <li><strong>Email:</strong> ${ocrData.email}</li>
+                        </ul>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                `;
+            }, 1500);
         }
     });
 
+    // Populate form fields with OCR extracted data
+    function populateFormWithOCRData() {
+        // Map OCR data to form fields
+        document.getElementById('CandidateName').value = ocrData.fullName;
+        document.getElementById('EducationLevel').value = ocrData.designation;
+        document.getElementById('CurrentStage').value = ocrData.company;
+        document.getElementById('AADHAR').value = ocrData.employeeId;
+        document.getElementById('EmailId').value = ocrData.email;
+        
+        // Visual feedback - highlight updated fields
+        highlightUpdatedFields(['CandidateName', 'EducationLevel', 'CurrentStage', 'AADHAR', 'EmailId']);
+    }
+
+    // Highlight fields that were auto-populated
+    function highlightUpdatedFields(fieldIds) {
+        fieldIds.forEach(id => {
+            const field = document.getElementById(id);
+            if (field) {
+                field.style.backgroundColor = '#e8f5e9';
+                field.style.borderColor = '#4caf50';
+                field.style.borderWidth = '2px';
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    field.style.backgroundColor = '';
+                    field.style.borderColor = '';
+                    field.style.borderWidth = '';
+                }, 3000);
+            }
+        });
+    }
+
     // Send Behavior Survey
     function sendBehaviorSurvey() {
-        const name = document.getElementById('Name').value;
+        const name = document.getElementById('CandidateName').value;
         const aadhar = document.getElementById('AADHAR').value;
         
         if (!name || !aadhar) {
-            alert('Please fill in Name and AADHAR before sending the survey.');
+            alert('Please fill in Candidate Name and Employee/ID Number before sending the survey.');
             return;
         }
         
@@ -380,7 +451,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'RequestVerificationToken': document.querySelector('input[name=\"__RequestVerificationToken\"]').value
+                'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
             },
             body: JSON.stringify({
                 name: name,
@@ -390,7 +461,7 @@
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('✓ Behavior Survey Questionnaire sent successfully!\n\nThe survey has been sent to the student via:\n• SMS/Phone\n• Email\n\nStudent Name: ' + name + '\nAADHAR: ' + aadhar);
+                alert('✓ Behavior Survey Questionnaire sent successfully!\n\nThe survey has been sent to the student via:\n• SMS/Phone\n• Email\n\nStudent Name: ' + name + '\nEmployee ID: ' + aadhar);
             } else {
                 alert('Failed to send survey. Please try again.');
             }

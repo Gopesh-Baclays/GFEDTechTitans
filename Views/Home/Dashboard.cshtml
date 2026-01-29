@@ -8,7 +8,10 @@
     var pieChartData = ViewBag.PieChartData ?? new int[] { 0, 0, 0 };
     var prospectStageLabels = ViewBag.ProspectStageLabels ?? new[] { "Identification", "Counselling", "Follow-ups", "Document Processing", "Waiting for Session" };
     var prospectStageDays = ViewBag.ProspectStageDays ?? new int[] { 5, 10, 15, 20, 8 };
-    
+
+    var prospectStageStuckLabels = ViewBag.ProspectStageLabels ?? new[] { "Identification", "Counselling", "Follow-ups", "Document Processing", "Waiting for Session" };
+    var prospectStageStuckDays = ViewBag.ProspectStageDays ?? new int[] { 3, 5, 7, 4, 2 };
+
     var barLabels = ViewBag.BarLabels ?? new[] { "January", "February", "March", "April", "May", "June" };
     var matchedBalanceRuleBasedData = ViewBag.MatchedBalanceRuleBasedData ?? new decimal[] { 0, 0, 0, 0, 0, 0 };
     var matchedBalanceAiData = ViewBag.MatchedBalanceAiData ?? new decimal[] { 0, 0, 0, 0, 0, 0 };
@@ -21,7 +24,10 @@
     var pieChartData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(pieChartData));
     var prospectStageLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prospectStageLabels));
     var prospectStageDays = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prospectStageDays));
-    
+
+      var prospectStageStuckLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prospectStageStuckLabels));
+    var prospectStageStuckDays = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prospectStageStuckDays));
+
     var barLabels = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(barLabels));
     var matchedBalanceRuleBasedData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceRuleBasedData));
     var matchedBalanceAiData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(matchedBalanceAiData));
@@ -138,7 +144,7 @@
     <!-- Charts Row 1 -->
     <div class="row">
         <!-- Bar Chart -->
-       @*  <div class="col-lg-6 mb-4">
+        @*  <div class="col-lg-6 mb-4">
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Monthly Distribution</h6>
@@ -224,7 +230,7 @@
                         <div class="progress-bar bg-info" role="progressbar" style="width: 13%"
                              aria-valuenow="13" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    
+
                     <h4 class="small font-weight-bold">Low Trust <span class="float-right">11%</span></h4>
                     <div class="progress mb-4">
                         <div class="progress-bar bg-primary" role="progressbar" style="width: 11%"
@@ -238,30 +244,6 @@
                     <hr />
                     <small class="text-muted d-block mt-2">Top 5 reason why prspects dropped/opted out</small>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Rules Overview Card -->
-    <div class="row">
-        <div class="col-lg-12 mb-4">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Rules: Overview</h6>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <strong>Rule1:</strong> Aggregated match based on Profit Centre, General Ledger Account & Company Code
-                        </div>
-                        <div class="col-md-4">
-                            <strong>Rule2:</strong> Amount match based on ISIN (or any key variables)
-                        </div>
-                        <div class="col-md-4">
-                            <strong>Rule3:</strong> ML Pattern based potential match & explain
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -331,15 +313,15 @@
             });
         }
 
-        // Prospect Stage Distribution Pie Chart
+        // Prospect Stage Distribution/Stuck Pie Chart
         var ctxProspectStage = document.getElementById("15DaysNoStatusChange");
         if (ctxProspectStage) {
             var prospectStageChart = new Chart(ctxProspectStage, {
                 type: 'doughnut',
                 data: {
-                    labels: prospectStageLabels,
+                    labels: prospectStageStuckLabels,
                     datasets: [{
-                        data: prospectStageDays,
+                        data: prospectStageStuckDays,
                         backgroundColor: [
                             '#4e73df',
                             '#858ae3',
