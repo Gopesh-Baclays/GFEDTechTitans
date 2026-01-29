@@ -3,32 +3,34 @@ using Microsoft.AspNetCore.Mvc;
 using RECAP.Models;
 using OfficeOpenXml; // Add this at the top (requires EPPlus NuGet package)
 
-namespace RECAP.Controllers;
-
-public class HomeController : Controller
+namespace RECAP.Controllers
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
+    public class HomeController : Controller
     {
-        _logger = logger;
-    }
+        private readonly ILogger<HomeController> _logger;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public IActionResult Index()
-    {
-        return View("SystemLogin");
-    }
+        public HomeController(ILogger<HomeController> logger)
+        {
+            _logger = logger;
+        }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
-    public IActionResult SSOLogin()
-    {
+        public IActionResult Index()
+        {
+            return View("SystemLogin");
+        }
+
+        public IActionResult Mobilizer()
+        {
+            return View();
+        }
+
+        public IActionResult HeatMap()
+        {
+            return View();
+        }
+
+        public IActionResult SSOLogin()
+        {
         var userId = Environment.UserName;
         HttpContext.Session.SetString("UserId", userId);
 
@@ -60,6 +62,7 @@ public class HomeController : Controller
                     }
                 }
             }
+
 
             if (string.IsNullOrEmpty(userName))
             {
@@ -265,9 +268,328 @@ public class HomeController : Controller
     /// 
     /// </summary>
     /// <returns></returns>
-    public IActionResult Privacy()
+    public IActionResult Scoring()
     {
+        SetUserInformation();
         return View();
+    }
+    
+    [HttpPost]
+    public IActionResult PredictDropout(int age, int gender, int location, int educationLevel, int skillsCount, int hasPastTraining, int hasWorkExperience, int currentStepIndex, int daysSinceSignup, int totalEngagements, double responseRate, int missedSessions, int lastActiveDays)
+    {
+        // Load all historical data
+        var youthData = LoadYouthData();
+        var onboardingData = LoadOnboardingData();
+        var engagementData = LoadEngagementData();
+        var outcomeData = LoadOutcomeData();
+
+        // Merge data for training-like analysis
+        var historicalData = onboardingData
+            .Join(youthData, o => o.CandidateID, y => y.CandidateID, (o, y) => new { Onboarding = o, Youth = y })
+            .Join(outcomeData, oy => oy.Onboarding.CandidateID, outc => outc.CandidateID, (oy, outc) => new { oy.Onboarding, oy.Youth, Outcome = outc })
+            .ToList();
+
+        // Compute engagement features for historical data
+        var engagementFeatures = engagementData.GroupBy(e => e.CandidateID).Select(g => new
+        {
+            CandidateID = g.Key,
+            TotalEngagements = g.Count(),
+            ResponseRate = g.Count(e => !string.IsNullOrEmpty(e.Response)) / (double)g.Count(),
+            MissedSessions = g.Count(e => e.MessageType.Contains("Training") && string.IsNullOrEmpty(e.Response)),
+            LastActiveDays = g.Any() ? (DateTime.Now - g.Max(e => e.Timestamp)).Days : 999
+        }).ToDictionary(e => e.CandidateID);
+
+        // Calculate data-driven weights
+        var stepDropoutRates = historicalData.GroupBy(h => GetStepIndex(h.Onboarding.CurrentStep))
+            .Select(g => new { StepIndex = g.Key, DropoutRate = g.Count(h => h.Onboarding.DropoutFlag) / (double)g.Count() })
+            .ToDictionary(x => x.StepIndex, x => x.DropoutRate);
+
+        var ageDropoutRates = historicalData.GroupBy(h => h.Youth.Age / 5 * 5) // Group by age ranges
+            .Select(g => new { AgeGroup = g.Key, DropoutRate = g.Count(h => h.Onboarding.DropoutFlag) / (double)g.Count() })
+            .ToDictionary(x => x.AgeGroup, x => x.DropoutRate);
+
+        double score = 0;
+        var reasons = new List<string>();
+
+        // Base score from step
+        if (stepDropoutRates.TryGetValue(currentStepIndex, out double stepRate))
+        {
+            score += stepRate * 50;
+            reasons.Add($"Current onboarding step has a historical dropout rate of {Math.Round(stepRate * 100, 1)}%, contributing to the risk.");
+        }
+
+        // Age factor
+        int ageGroup = age / 5 * 5;
+        if (ageDropoutRates.TryGetValue(ageGroup, out double ageRate))
+        {
+            score += ageRate * 20;
+            reasons.Add($"Age group {ageGroup}-{ageGroup+4} has a historical dropout rate of {Math.Round(ageRate * 100, 1)}%, influencing the prediction.");
+        }
+        else
+        {
+            if (age < 20) 
+            {
+                score += 10;
+                reasons.Add("Young age (under 20) is associated with higher dropout risk based on general patterns.");
+            }
+        }
+
+        // Other factors as before
+        if (gender == 1) 
+        {
+            score -= 2;
+            reasons.Add("Female gender is slightly associated with lower dropout risk.");
+        }
+        if (location == 0) 
+        {
+            score += 5;
+            reasons.Add("Rural location increases dropout risk due to potential access challenges.");
+        }
+        if (educationLevel > 0)
+        {
+            score -= educationLevel * 2;
+            reasons.Add($"Higher education level reduces dropout risk.");
+        }
+        if (skillsCount > 0)
+        {
+            score -= skillsCount * 1.5;
+            reasons.Add($"Possessing skills lowers the predicted dropout probability.");
+        }
+        if (hasPastTraining == 1) 
+        {
+            score -= 5;
+            reasons.Add("Prior training experience significantly reduces dropout risk.");
+        }
+        if (hasWorkExperience == 1) 
+        {
+            score -= 5;
+            reasons.Add("Work experience indicates lower likelihood of dropping out.");
+        }
+
+        if (daysSinceSignup > 30) 
+        {
+            score -= 5;
+            reasons.Add("Longer time since signup suggests better engagement and lower risk.");
+        }
+        else if (daysSinceSignup < 7) 
+        {
+            score += 5;
+            reasons.Add("Very recent signup may indicate higher initial dropout risk.");
+        }
+
+        if (totalEngagements < 5) 
+        {
+            score += 15;
+            reasons.Add("Low number of engagements is a strong indicator of potential dropout.");
+        }
+        else if (totalEngagements < 10) 
+        {
+            score += 7;
+            reasons.Add("Moderate engagement levels still pose some risk.");
+        }
+
+        if (responseRate < 0.5) 
+        {
+            score += 20;
+            reasons.Add("Low response rate to communications significantly increases dropout risk.");
+        }
+        else if (responseRate < 0.8) 
+        {
+            score += 10;
+            reasons.Add("Below-average response rate contributes to higher risk.");
+        }
+
+        if (missedSessions > 0)
+        {
+            score += missedSessions * 3;
+            reasons.Add($"Missed {missedSessions} session(s) indicates disengagement and higher dropout probability.");
+        }
+
+        if (lastActiveDays > 7) 
+        {
+            score += 10;
+            reasons.Add("Inactivity for over a week is a major red flag for dropout.");
+        }
+        else if (lastActiveDays > 3) 
+        {
+            score += 5;
+            reasons.Add("Recent inactivity increases risk slightly.");
+        }
+
+        // Ensure at least 3 reasons
+        while (reasons.Count < 3)
+        {
+            reasons.Add("Overall historical patterns from similar candidates contribute to this assessment.");
+        }
+
+        // Normalize to 0-100
+        score = Math.Max(0, Math.Min(100, score));
+
+        ViewBag.DropoutScore = Math.Round(score, 2);
+        ViewBag.Reasons = reasons.Take(5).ToList(); // Limit to top 5 reasons
+        return View("Scoring");
+    }
+
+    private List<OnboardingRecord> LoadOnboardingData()
+    {
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles", "Data", "OnboardingStatus_100.csv");
+        var records = new List<OnboardingRecord>();
+        if (System.IO.File.Exists(path))
+        {
+            var lines = System.IO.File.ReadAllLines(path);
+            foreach (var line in lines.Skip(1)) // Skip header
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 6)
+                {
+                    records.Add(new OnboardingRecord
+                    {
+                        OnboardingID = parts[0],
+                        CandidateID = parts[1],
+                        SignupDate = DateTime.Parse(parts[2]),
+                        CurrentStep = parts[3],
+                        CompletionFlag = bool.Parse(parts[4]),
+                        DropoutFlag = bool.Parse(parts[5])
+                    });
+                }
+            }
+        }
+        return records;
+    }
+
+    private List<EngagementRecord> LoadEngagementData()
+    {
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles", "Data", "EngagementLog_100.csv");
+        var records = new List<EngagementRecord>();
+        if (System.IO.File.Exists(path))
+        {
+            var lines = System.IO.File.ReadAllLines(path);
+            foreach (var line in lines.Skip(1)) // Skip header
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 6)
+                {
+                    records.Add(new EngagementRecord
+                    {
+                        EngagementID = parts[0],
+                        CandidateID = parts[1],
+                        Channel = parts[2],
+                        Timestamp = DateTime.Parse(parts[3]),
+                        MessageType = parts[4],
+                        Response = parts[5]
+                    });
+                }
+            }
+        }
+        return records;
+    }
+
+    private List<YouthRecord> LoadYouthData()
+    {
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles", "Data", "YouthProfile_100.csv");
+        var records = new List<YouthRecord>();
+        if (System.IO.File.Exists(path))
+        {
+            var lines = System.IO.File.ReadAllLines(path);
+            foreach (var line in lines.Skip(1)) // Skip header
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 10)
+                {
+                    records.Add(new YouthRecord
+                    {
+                        CandidateID = parts[0],
+                        Name = parts[1],
+                        Age = int.Parse(parts[2]),
+                        Gender = parts[3],
+                        Location = parts[4].Trim('"'),
+                        EducationLevel = parts[5],
+                        SkillsQualifications = parts[6],
+                        PastTrainingExperience = parts[7],
+                        WorkExperience = parts[8],
+                        ProgramInterest = parts[9]
+                    });
+                }
+            }
+        }
+        return records;
+    }
+
+    private List<OutcomeRecord> LoadOutcomeData()
+    {
+        var path = Path.Combine(Directory.GetCurrentDirectory(), "SourceFiles", "Data", "OutcomeData_100.csv");
+        var records = new List<OutcomeRecord>();
+        if (System.IO.File.Exists(path))
+        {
+            var lines = System.IO.File.ReadAllLines(path);
+            foreach (var line in lines.Skip(1)) // Skip header
+            {
+                var parts = line.Split(',');
+                if (parts.Length >= 6)
+                {
+                    records.Add(new OutcomeRecord
+                    {
+                        OutcomeID = parts[0],
+                        CandidateID = parts[1],
+                        ProgramCompletion = bool.Parse(parts[2]),
+                        JobPlacement = bool.Parse(parts[3]),
+                        TimeToPlacement = string.IsNullOrEmpty(parts[4]) ? (double?)null : double.Parse(parts[4]),
+                        FeedbackScore = int.Parse(parts[5])
+                    });
+                }
+            }
+        }
+        return records;
+    }
+
+    private int GetStepIndex(string step)
+    {
+        var steps = new[] { "Signed Up", "Orientation Scheduled", "Orientation Completed", "Assessment Scheduled", "Assessment Completed", "Training Assigned", "Training In Progress", "Placement Support", "Onboarding Completed" };
+        return Array.IndexOf(steps, step);
+    }
+
+    private class OnboardingRecord
+    {
+        public string OnboardingID { get; set; }
+        public string CandidateID { get; set; }
+        public DateTime SignupDate { get; set; }
+        public string CurrentStep { get; set; }
+        public bool CompletionFlag { get; set; }
+        public bool DropoutFlag { get; set; }
+    }
+
+    private class EngagementRecord
+    {
+        public string EngagementID { get; set; }
+        public string CandidateID { get; set; }
+        public string Channel { get; set; }
+        public DateTime Timestamp { get; set; }
+        public string MessageType { get; set; }
+        public string Response { get; set; }
+    }
+
+    private class YouthRecord
+    {
+        public string CandidateID { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Gender { get; set; }
+        public string Location { get; set; }
+        public string EducationLevel { get; set; }
+        public string SkillsQualifications { get; set; }
+        public string PastTrainingExperience { get; set; }
+        public string WorkExperience { get; set; }
+        public string ProgramInterest { get; set; }
+    }
+
+    private class OutcomeRecord
+    {
+        public string OutcomeID { get; set; }
+        public string CandidateID { get; set; }
+        public bool ProgramCompletion { get; set; }
+        public bool JobPlacement { get; set; }
+        public double? TimeToPlacement { get; set; }
+        public int FeedbackScore { get; set; }
     }
 
     /// <summary>
@@ -488,4 +810,6 @@ public class HomeController : Controller
     }
 
     #endregion
+    // End of HomeController
+}
 }

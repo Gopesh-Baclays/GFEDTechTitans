@@ -1,0 +1,101 @@
+EngagementID,CandidateID,Channel,Timestamp,MessageType,Response
+a2d715ba-a23f-4e35-ba87-8c5c37cf9546,f793545c-657d-4258-a333-822f9975d10c,SMS,2025-11-04 09:27:00,Training assigned,When is deadline?
+93cdd7dc-d3d3-48c7-b141-acd50906a788,4c370a83-a101-448c-abca-e87c384bd203,Email,2025-07-31 14:03:00,Orientation invite,Confirmed
+d2562876-dca3-429a-88d5-4b81a4e3aff5,adc1b194-ea8b-4e51-83fe-6284118261eb,Email,2025-12-10 15:48:00,Training assigned,Unable to access
+56cd3c88-f249-4cca-9a37-a6fb0c1ce9c7,8cbab4bc-f6cb-4f6d-8ce5-a69714740060,WhatsApp,2025-06-29 10:06:00,Assessment link,Facing login issue
+32ac7a8a-7b16-484b-9465-d64b3b44beb7,4c370a83-a101-448c-abca-e87c384bd203,Email,2025-09-15 10:12:00,Follow-up,
+f2cbc0d5-f7dc-4f8c-8ea7-3694fb5a82d9,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,WhatsApp,2025-10-20 13:51:00,Placement check-in,Interested
+113b4fe8-c483-4bb7-a8d9-2398d9c1da5a,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,SMS,2025-09-25 17:20:00,Follow-up,Call back later
+7cfebb23-0f0e-42a3-a59c-bedda962aa7f,105a3c88-9345-4949-abd8-eda28e3a6f9e,Email,2025-09-24 13:32:00,Placement check-in,Not ready
+f0c8b531-c17f-4c2c-8814-cac857d0af0b,257b1717-b6ee-4763-9e6d-93c654fbe554,SMS,2026-01-25 13:43:00,Follow-up,No response
+e659dd1f-dd74-4143-b2fb-56fc529f1f29,e4fb57d9-b5e2-40ec-9b7e-2603a41b7555,SMS,2025-08-11 19:40:00,Placement check-in,Interested
+ea30e0ce-598c-4e79-bea8-0c64ef06f0d9,27740195-a021-4197-9cec-2d2a741ee341,Email,2025-11-06 17:14:00,OTP sent,
+bf1f2da2-9a8a-44b4-aa83-cb97add4f0ec,902943ea-9a08-4719-85eb-923cf49933d9,WhatsApp,2025-12-03 17:49:00,Reminder,Can you call me?
+ddfed99f-0bbd-415a-a5cf-2c7ca78447ae,43d633f0-9221-4b84-9f24-ac2984a4dc34,SMS,2025-12-16 19:07:00,OTP sent,OTP verified
+a2ac80bd-40a7-4784-807f-0a4a7f7a430e,93d3bff1-611e-4167-8de6-2fb583f9f555,Email,2025-10-01 11:26:00,Placement check-in,Already placed elsewhere
+087f0863-30d5-49a9-b5ce-e52554e829c8,ecec9b3f-c372-43f7-bc1c-bc299207ebf3,SMS,2025-08-04 10:33:00,Assessment link,Facing login issue
+31e8d9d0-a544-4b26-95a2-18a700307b99,18957943-f95f-49c4-a067-90f98f9cb9a7,Email,2026-01-30 10:29:00,Assessment link,Need extension
+53825a06-e4c5-415d-a30e-4338cba0aa17,e4fb57d9-b5e2-40ec-9b7e-2603a41b7555,Email,2025-07-30 18:51:00,Training assigned,
+2acff3e5-c8bb-4ee8-91fb-b5b0933e9003,addf4ce2-ce3a-4c92-8619-d6f6403bc655,SMS,2026-01-27 16:19:00,Training assigned,Unable to access
+bb5fc72c-6169-4e64-b16a-47223db04677,f9c0e342-eb08-406e-844a-ae78f4cc208b,WhatsApp,2025-08-18 15:20:00,Assessment link,Need extension
+9cc57687-5f2d-452a-9125-08f192c894f8,e4fb57d9-b5e2-40ec-9b7e-2603a41b7555,Email,2025-07-04 12:07:00,Follow-up,Call back later
+83fcfebf-c1e8-4e95-98cb-a7c7782f7bba,57674182-8c1d-402a-81c6-96ab4a25de29,WhatsApp,2026-02-13 20:09:00,OTP sent,OTP verified
+1b852353-755e-44ca-8f7e-553a527b12c6,57674182-8c1d-402a-81c6-96ab4a25de29,WhatsApp,2026-02-23 15:41:00,Placement check-in,Interested
+95936eff-a26b-4b6d-a045-2b8d0c66ab60,11b78c9b-76ae-423c-83d7-0eda0240e10f,WhatsApp,2025-10-09 16:44:00,Reminder,Will do today
+646f8c2a-1664-4102-8955-f5989ea7dbad,6f3fce8a-67bd-45b7-bbe7-6b879fa659f7,Email,2026-01-12 08:42:00,Orientation invite,
+f802aed7-f8af-4999-8f9e-dad3a5d399c7,93d3bff1-611e-4167-8de6-2fb583f9f555,SMS,2025-09-08 19:30:00,Reminder,Will do today
+dfa8af2c-c1b7-4b28-aa18-f92747aee97f,f44c4b97-2cff-4948-9b37-387beab6ee0b,WhatsApp,2026-02-04 18:59:00,Placement check-in,Not ready
+b70d260b-4c9f-41f2-854e-834358c2f1fc,75e8614d-d7c3-4538-adb6-5248c25fe234,SMS,2025-12-05 12:41:00,Form link,Need help filling form
+7bf2a8ea-3b53-4f90-9156-f97f82159c5f,cca5f3dd-4f9d-46d4-8a92-44240e22c89c,SMS,2025-12-05 08:58:00,Follow-up,
+fc989aa9-7f6e-4479-b9d2-b519cc039f57,cac7dd84-0d42-44ee-88fb-fbbbbfc90698,WhatsApp,2025-11-28 14:50:00,Reminder,Can you call me?
+8696860a-1eb6-4ca8-a11d-b8dbc1ecb203,3a645614-4467-4922-87a9-019a878a569a,WhatsApp,2025-09-24 08:00:00,Form link,Link not working
+eb666457-0830-45de-834b-16580e12019f,5de6ef0f-3599-47e9-8128-18a724fdfbdb,WhatsApp,2025-12-12 16:33:00,Reminder,Can you call me?
+17b1b2e1-d19f-4cec-9803-9eaf0148b921,633c90f0-f414-456e-852c-9448e1c94de8,SMS,2026-02-01 09:21:00,Placement check-in,Not ready
+1f3705a9-d8bb-4184-9d81-79d09973234b,f793545c-657d-4258-a333-822f9975d10c,WhatsApp,2025-10-28 13:50:00,Orientation invite,Confirmed
+9b1f5a88-d1d5-4caa-b761-a60cd0f819c5,70f28c9c-7695-4898-8e9c-e9a04e7ca2d9,WhatsApp,2026-02-17 14:32:00,Form link,
+017a4680-249e-428e-9dea-9f543b50ca64,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,SMS,2025-10-05 13:59:00,OTP sent,OTP verified
+77c83564-109c-46a4-af22-0fa32ab9acb6,fe70d797-11bb-4e80-a561-7af9de0a801e,Email,2025-11-16 13:19:00,OTP sent,OTP verified
+56de9b04-9d62-4305-9ee0-c6b68e3090fd,6f3fce8a-67bd-45b7-bbe7-6b879fa659f7,WhatsApp,2025-12-31 18:07:00,Training assigned,Started
+339783cc-627c-4ce1-90de-d597cf68e9a6,3324ae5e-7d0a-4cf0-95dc-90a7eeed97b4,SMS,2025-09-04 12:44:00,Training assigned,Started
+bc82f50b-4a72-4ddf-9cce-d6abe7fa49e6,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,Email,2025-10-05 10:29:00,Assessment link,Attempted
+bad3dbac-2be5-44cf-a521-c40c319d2bb8,4491a996-e64f-4eae-91c1-5dee5af1f830,Email,2026-02-25 16:51:00,Orientation invite,Joined late
+28ba5a5c-6ab0-41a8-96d3-bbe7168b0996,efc7b0d3-31bb-4ac9-8f85-7d1270340891,Email,2025-11-26 20:05:00,Placement check-in,Not ready
+bdba10eb-32fb-470b-9d6a-8f46ce33c8d8,d9dbef38-cbd3-438b-a694-0f0cc896e849,Email,2025-12-04 08:53:00,Orientation invite,
+fbed8aff-9977-4769-905c-b2b1f047ab72,e9483740-0cb0-4f2f-a7f6-185ede9c70cc,SMS,2026-01-22 16:28:00,Orientation invite,Need reschedule
+49c3e404-4fa1-466d-8f19-9e9000dbea48,2d056cad-9218-4e63-9563-2bdbb1fdf7e8,WhatsApp,2025-07-25 20:03:00,Reminder,Done
+3e2c2942-0aa3-4bb0-a092-d0999eb82bd8,ecec9b3f-c372-43f7-bc1c-bc299207ebf3,WhatsApp,2025-07-25 15:43:00,OTP sent,OTP verified
+fab846b1-a8ac-451e-8a89-55e6b587e6d1,187b4af4-14a5-45d2-bc44-5379cd599e7a,SMS,2025-12-11 17:04:00,Follow-up,
+f9f6f59a-241e-4220-b944-fb6fd702382d,ecec9b3f-c372-43f7-bc1c-bc299207ebf3,WhatsApp,2025-08-18 09:59:00,OTP sent,
+86348601-552f-478e-a549-8db20fe0dd15,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,Email,2025-10-24 18:46:00,Follow-up,Yes
+6f8cfc2f-88fb-44ec-ae23-afd34af944ac,fbb4bbfa-9160-4b84-962c-bcb363f46e33,SMS,2026-01-01 14:24:00,Reminder,Done
+41cc218f-5c26-411d-ac98-f7f1cc51d26c,88d642dc-3095-4f3d-86dc-f401208e2aa7,SMS,2025-12-22 14:33:00,Orientation invite,Joined late
+07be9eb2-0799-4a8b-bf26-f976897e3fa7,105a3c88-9345-4949-abd8-eda28e3a6f9e,Email,2025-09-16 18:46:00,Follow-up,No response
+cc730e21-836f-463a-ac01-6ff273cd5869,addf4ce2-ce3a-4c92-8619-d6f6403bc655,WhatsApp,2026-02-08 13:09:00,Orientation invite,Joined late
+88e7526f-fe3f-44c6-99ef-12ae5e8aec44,ee80dff5-79b9-4bfb-9c07-df0c0f98e117,WhatsApp,2026-01-22 20:42:00,OTP sent,
+5add81fc-b000-4930-9dfa-657202260952,efc7b0d3-31bb-4ac9-8f85-7d1270340891,Email,2025-10-04 15:38:00,OTP sent,
+371809e8-4fa6-4656-9c92-46bd07f316f3,84be07a7-4446-42ff-8fa9-1eddc164b8f8,SMS,2025-11-26 16:13:00,Reminder,Done
+d3fce988-6cb2-4c7d-b2e4-59ad959dde3e,c35fb501-b30b-40aa-a5f3-491ca986130d,Email,2026-02-28 13:36:00,Assessment link,Attempted
+560d888d-eceb-4e0c-b973-5f5239a693fc,93b4dfac-ce66-436e-adc4-fc60f38729d3,WhatsApp,2025-11-07 11:26:00,Training assigned,Started
+c8d2aeb6-6e42-4486-9496-cb5cae7d6066,cca5f3dd-4f9d-46d4-8a92-44240e22c89c,Email,2025-12-17 10:40:00,Follow-up,
+b9a53eed-dfda-40f2-b269-df2769e875a2,57674182-8c1d-402a-81c6-96ab4a25de29,WhatsApp,2026-02-24 18:42:00,Assessment link,Need extension
+9af90470-c61f-4fb5-b8b1-65547eca7c23,105a3c88-9345-4949-abd8-eda28e3a6f9e,Email,2025-09-11 10:48:00,Placement check-in,Interested
+66abaa10-47db-4faf-8399-22fbc6ebbc40,3324ae5e-7d0a-4cf0-95dc-90a7eeed97b4,SMS,2025-07-26 20:29:00,Follow-up,Call back later
+f0425263-6c9a-437d-9c4e-bab91ca5e3e9,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,SMS,2025-09-29 11:16:00,Assessment link,Need extension
+a3c0ad15-397e-45d6-bb7f-621fa5ec003b,f938566b-1836-468b-bffb-5da8444ba31e,SMS,2025-10-20 16:46:00,OTP sent,OTP verified
+bf86576a-2174-4fbe-b739-b8ffdff17854,37c8db4e-0eb8-461c-8319-1f42d91918a9,Email,2025-08-28 09:12:00,Orientation invite,Confirmed
+62b47e6d-cec1-4d61-a1eb-1e1bd630c0f1,397ffaaf-3165-4e27-a34b-ddf57ddcb7f5,SMS,2025-11-16 08:13:00,Form link,Need help filling form
+bd90fcc8-c942-4040-b950-0e9f537c7876,addf4ce2-ce3a-4c92-8619-d6f6403bc655,SMS,2026-02-23 17:45:00,Follow-up,Call back later
+419bec9d-254d-4952-a61a-e8ec984f23ca,27740195-a021-4197-9cec-2d2a741ee341,Email,2025-10-18 14:29:00,Assessment link,Attempted
+f162de31-b8d2-4470-b8f9-6a43206c9bb3,fafbe412-4946-46b2-9895-c344009b8419,Email,2025-10-21 09:51:00,Placement check-in,Already placed elsewhere
+0bd93aac-70a8-4e88-b414-e2549e55cb77,de48507e-1e7b-4248-a620-0ed6bf00b8e1,SMS,2025-12-15 13:26:00,Orientation invite,
+738f2e5e-0981-4160-b3b3-510c5c45feb6,ba7a5e5c-204c-4360-9965-004117a246fc,Email,2025-08-13 17:37:00,Follow-up,
+5ebd8979-ea02-48c5-9982-ac5c4312faed,896b23d0-6c05-416b-88db-f22064210f18,SMS,2025-07-02 17:53:00,Placement check-in,Not ready
+21392693-604a-461d-8454-164ae87386dd,5dbd5b84-056d-49bb-927c-54de320968bc,WhatsApp,2025-10-17 20:52:00,Placement check-in,Interested
+ebe9240b-dbcf-40b0-b422-fda270aacc63,4b8983fb-086f-49e5-b0f9-18cabe84c44c,Email,2026-01-22 10:46:00,Placement check-in,Interested
+a81141df-74fb-48df-89f7-fe6b3d046b40,0194452c-1dd5-4702-ba0f-a90661227220,SMS,2026-01-04 16:02:00,OTP sent,OTP expired
+79d0dc46-528c-4bab-8ee8-a3edc9393a6b,902943ea-9a08-4719-85eb-923cf49933d9,SMS,2025-11-01 09:45:00,OTP sent,OTP verified
+926aa5c7-1906-4390-a837-74a3a59e79ca,ecec9b3f-c372-43f7-bc1c-bc299207ebf3,Email,2025-07-29 18:42:00,Placement check-in,
+ffa7111d-fb69-49b3-bc6d-2116fbe24420,9ab21965-e1ce-4376-9ae5-b055150ab87c,SMS,2025-12-27 14:00:00,Training assigned,When is deadline?
+e70a2bc7-c2f4-4103-baa3-8d353061d2c6,352fd1a7-957b-48dc-8918-6da189f19814,WhatsApp,2026-02-06 19:43:00,Reminder,
+b3ea6ae4-c7d4-492d-b128-d2be8b2a3eb1,c876202a-08c8-486e-a251-a6b822f2e53c,Email,2025-11-09 11:39:00,Training assigned,Unable to access
+fe56274f-1a5a-48a9-8485-4006f2113223,2399fe5e-18ab-4884-8acd-283e7a4a37a6,WhatsApp,2025-10-06 13:25:00,Orientation invite,Joined late
+98dc59ef-2f33-4db0-87a4-ffb35edf49e4,0d6742c7-50ee-45cc-b4ce-7082793a8b20,Email,2026-01-17 09:41:00,OTP sent,OTP verified
+313cffe9-0c9d-45d6-8fad-93602e54b946,ba7a5e5c-204c-4360-9965-004117a246fc,SMS,2025-07-15 08:40:00,Reminder,Will do today
+aa3de644-47cd-40df-bae6-016639b478d2,0194452c-1dd5-4702-ba0f-a90661227220,SMS,2026-02-20 13:36:00,OTP sent,OTP verified
+cb973c35-ba79-4a1f-8c9d-49061a0bf427,f9c0e342-eb08-406e-844a-ae78f4cc208b,WhatsApp,2025-08-29 17:30:00,OTP sent,OTP expired
+4718caaa-2a56-404a-99fa-1f25c62293fc,de719468-e1e5-4bcd-a15b-9e1426de7d3a,Email,2026-03-10 16:36:00,OTP sent,OTP verified
+8b4ec9a3-bc97-4b68-8cbb-1b724e220460,257b1717-b6ee-4763-9e6d-93c654fbe554,Email,2026-01-15 17:09:00,Follow-up,Call back later
+9303f6d8-bc5d-43e8-a75f-d51df2e11944,d9dbef38-cbd3-438b-a694-0f0cc896e849,WhatsApp,2025-12-12 17:53:00,Assessment link,Attempted
+2311ad09-e955-4aaa-b5fe-4c2b1e2ab0af,f9c0e342-eb08-406e-844a-ae78f4cc208b,Email,2025-08-19 09:32:00,Assessment link,Attempted
+43e167cf-fc8d-4cbf-9238-f69c57f09e84,15b724b4-d1ef-4bd6-b529-d166a38224c2,Email,2025-07-31 17:49:00,Follow-up,Call back later
+7c6215db-e82e-482d-864f-6d64154db40c,6a4493e9-061c-445a-a216-dd3c381c2e17,WhatsApp,2025-11-12 20:28:00,Orientation invite,Confirmed
+a55cc60b-9a0f-4f06-977f-e94dd85a9fc0,a82efee5-c89e-40de-a973-3faa52539222,Email,2026-01-08 18:37:00,Follow-up,Yes
+2fbd4efe-87a0-41ff-a945-832c75d1b124,addf4ce2-ce3a-4c92-8619-d6f6403bc655,WhatsApp,2026-02-24 09:05:00,Reminder,Will do today
+54552971-a0c5-49ef-b65b-862fff8a1cd6,c876202a-08c8-486e-a251-a6b822f2e53c,WhatsApp,2025-12-11 14:20:00,Form link,Form submitted
+4fb7a3e5-f221-49cf-be65-25f7b512322c,84be07a7-4446-42ff-8fa9-1eddc164b8f8,SMS,2025-12-05 20:17:00,Reminder,Will do today
+5a9cfa26-f671-4964-85f5-6227a2782e58,bd8c1848-21ba-4d62-8b95-b901c2fdef1f,SMS,2025-09-21 16:26:00,OTP sent,OTP verified
+76511b44-27a7-4474-9bce-bb32accebe35,efc7b0d3-31bb-4ac9-8f85-7d1270340891,WhatsApp,2025-11-09 20:20:00,OTP sent,OTP verified
+7bfa8610-d530-4169-a06b-369b98c4e2f7,6ac4dd2b-29cc-4c99-a39f-17bde5b05040,SMS,2025-09-25 16:57:00,Reminder,
+98fc8c5f-fead-4350-9857-30887e69a33b,11b78c9b-76ae-423c-83d7-0eda0240e10f,SMS,2025-08-30 12:31:00,Form link,Form submitted
+b4a1bfa8-66dc-48b8-8452-cd2ac067a7ab,105a3c88-9345-4949-abd8-eda28e3a6f9e,WhatsApp,2025-09-17 20:04:00,Training assigned,Unable to access
+12c4b85a-0d7b-4cd8-aea2-34abafb0cbd2,fafbe412-4946-46b2-9895-c344009b8419,WhatsApp,2025-10-30 17:12:00,Form link,

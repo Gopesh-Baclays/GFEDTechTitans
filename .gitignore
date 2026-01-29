@@ -1,4 +1,30 @@
-﻿################################################################################
+﻿# General build output and non-essentials
+bin/
+obj/
+**/bin/
+**/obj/
+Debug/
+**/Debug/
+OutputFiles/
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+# OS generated files
+.DS_Store
+Thumbs.db
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+# Logs
+*.log
+# Local settings
+appsettings.Development.json
+################################################################################
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
@@ -65,4 +91,14 @@
 /SourceFiles/~$DashboardData.xlsx
 /Python/Rule3.py
 /obj/Debug/net8.0/RECAP.csproj.AssemblyReference.cache
-.vs/
+/Utilities/ExcelDataGenerator.cs
+/SourceFiles/DashboardData_PieChart_Overview.xlsx
+/SourceFiles/~$DashboardData_PieChart_Overview.xlsx
+/obj/AARAMBH.csproj.nuget.g.targets
+/obj/AARAMBH.csproj.nuget.dgspec.json
+/.vs/AARAMBH/config/applicationhost.config
+/obj/Debug/net8.0/AARAMBH.AssemblyInfo.cs
+/obj/Debug/net8.0/AARAMBH.AssemblyInfoInputs.cache
+/.vs/AARAMBH/v18/.suo
+/.vs/AARAMBH/v18/DocumentLayout.json
+/obj/Debug/net8.0/AARAMBH.csproj.AssemblyReference.cache

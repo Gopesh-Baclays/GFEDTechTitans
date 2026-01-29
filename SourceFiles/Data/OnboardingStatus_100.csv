@@ -1,0 +1,101 @@
+OnboardingID,CandidateID,SignupDate,CurrentStep,CompletionFlag,DropoutFlag
+7eb0804a-6fad-4de8-b3ff-0286106f5d64,ae462336-7c4e-4d91-9edc-cda72864f684,2025-08-27,Orientation Completed,False,False
+90b30b27-3bab-4e79-8b49-e013ede981b6,f793545c-657d-4258-a333-822f9975d10c,2025-09-11,Onboarding Completed,True,False
+001b5885-cb47-4c6e-9e81-6a7c21a8a2f5,257b1717-b6ee-4763-9e6d-93c654fbe554,2026-01-02,Onboarding Completed,True,False
+209ef42e-85e8-4818-a5ac-e3c440f37c9c,71dbbcfc-659d-417b-ae32-6e338bba1a55,2025-08-12,Onboarding Completed,True,False
+57a9f3ef-8d68-4d6b-8ddd-3f0885adabe1,cac7dd84-0d42-44ee-88fb-fbbbbfc90698,2025-10-06,Assessment Scheduled,False,True
+39ab1d73-2b41-4c89-b0e0-f4ba0be0d4b7,8381c040-285e-4030-aea8-23a38a3f9b2a,2025-12-17,Training In Progress,False,True
+84c85456-df32-4084-a586-cfe5a5c93684,9669abfa-7d60-43c1-a8dc-8fb709759d1c,2025-10-06,Onboarding Completed,True,False
+76429193-bf63-4156-93ec-772807e94762,ecec9b3f-c372-43f7-bc1c-bc299207ebf3,2025-06-20,Assessment Completed,False,False
+a2e15f61-c912-4c1d-9a75-4381d1babc81,30d94b0b-f8c1-4c80-95a0-29852f94ac53,2025-10-09,Onboarding Completed,True,False
+d505718a-ef6b-417f-b927-b732c647c926,15b724b4-d1ef-4bd6-b529-d166a38224c2,2025-07-10,Signed Up,False,False
+cb8bd7a7-c49e-4922-bfc0-95ca6b1af321,6ac4dd2b-29cc-4c99-a39f-17bde5b05040,2025-08-10,Training In Progress,False,True
+723469af-b989-418a-8a05-e0c95376a985,560c96d1-bbb5-40dd-b4d8-260e75afbb5d,2025-09-19,Placement Support,False,False
+daaba147-7d0d-4e77-aa35-8d13cc85cf88,523507ce-6ae9-4bd0-a5f8-c48576bcabe7,2025-12-19,Orientation Completed,False,False
+f744b320-2778-4ab8-ab10-3f1fec387bfc,a8ed5bd4-d642-4659-9a29-d46d713ee756,2025-06-25,Assessment Scheduled,False,True
+8a097022-bce4-49b0-89f0-05bf57cc712f,ee80dff5-79b9-4bfb-9c07-df0c0f98e117,2026-01-20,Onboarding Completed,True,False
+178af1dc-6375-4e14-9544-df7e7b271db7,29e1a67a-f89e-4993-9154-a965803b642d,2025-11-29,Training Assigned,False,False
+b195aa41-f099-46f6-b130-ce97676494ab,7573db21-ba3f-4aa8-ba38-f921976a04a2,2025-10-28,Onboarding Completed,True,False
+b1154ca7-b2fb-497e-bd60-f107e6ad0562,37eb5be1-c39e-4e8f-b1bd-fd588c4a9f91,2025-09-05,Onboarding Completed,True,False
+714fe4d8-5c41-4c67-81af-dab5202afb55,d5fc7501-b76d-413b-a8e4-15ee3fe17c7d,2025-12-20,Training In Progress,False,True
+658a919b-3dde-4c9e-b563-5a6605b765ad,c876202a-08c8-486e-a251-a6b822f2e53c,2025-10-25,Onboarding Completed,True,False
+14893d90-ac35-4d59-a949-2abe760a3556,f44c4b97-2cff-4948-9b37-387beab6ee0b,2026-01-09,Training In Progress,False,True
+40d36862-8a36-45af-8105-9096d25cafb6,2030ebd2-62d5-46e1-b96d-a560da3c1b4c,2025-10-19,Onboarding Completed,True,False
+e1e13859-5467-4fab-b584-1af20a3361f8,88d642dc-3095-4f3d-86dc-f401208e2aa7,2025-11-18,Onboarding Completed,True,False
+c4a5e549-88e0-4ff9-837b-0506d4b7484a,b6244bfc-25f6-4cb1-b8b7-d0e6ba74f00f,2025-12-30,Onboarding Completed,True,False
+b286a2b8-bf9b-4c6f-bf7c-1050e8434849,633c90f0-f414-456e-852c-9448e1c94de8,2025-12-12,Onboarding Completed,True,False
+28ab132c-2333-43bd-9f5e-5e6fda845725,9e4afbd3-caaf-4e7b-b434-fbb60d96ce97,2025-10-21,Signed Up,False,False
+9bd3aed1-9220-4859-a6f8-40989d494a82,de48507e-1e7b-4248-a620-0ed6bf00b8e1,2025-11-22,Placement Support,False,False
+766a86c5-b6aa-4f3c-ab2f-7cbffdd6224c,75a7225b-3a02-454e-9498-343b35cf19ad,2025-10-06,Onboarding Completed,True,False
+dd3a21ca-ac55-4ac3-91b3-836d68600eab,d88d4323-ef4b-4e3f-8e81-58e129c12196,2025-08-25,Onboarding Completed,True,False
+62ae0bf1-ca67-42fa-87ad-1f7a00437f97,896b23d0-6c05-416b-88db-f22064210f18,2025-06-08,Orientation Completed,False,False
+e4b9678f-0908-4677-8cce-0bb9e91c7f71,6f3fce8a-67bd-45b7-bbe7-6b879fa659f7,2025-12-28,Onboarding Completed,True,False
+26808c6f-61b8-445a-9b03-837a4be6a8d0,addf4ce2-ce3a-4c92-8619-d6f6403bc655,2026-01-10,Onboarding Completed,True,False
+7c9ba37e-e13c-4e74-a91c-223647235848,39e57423-4c45-44f0-9993-27d0cecfda85,2025-06-12,Signed Up,False,False
+74313f19-389b-48ba-a230-37690ffec436,f6653a0e-8889-441f-919a-07b01a7c4e59,2025-07-05,Training In Progress,False,True
+4a3c020e-e2a9-414b-ae49-c522021b0c26,11b78c9b-76ae-423c-83d7-0eda0240e10f,2025-08-11,Onboarding Completed,True,False
+83a9417f-aceb-47bb-b604-ff6de640a24d,de719468-e1e5-4bcd-a15b-9e1426de7d3a,2026-01-12,Onboarding Completed,True,False
+dbb4ab9e-cc27-438d-8343-84d4d11ad9b3,75e8614d-d7c3-4538-adb6-5248c25fe234,2025-11-15,Orientation Completed,False,False
+3c37b980-6070-446b-b81b-19898ae6fce6,3a645614-4467-4922-87a9-019a878a569a,2025-07-30,Placement Support,False,False
+aca9f9e6-d54b-471e-9da8-052977dc5b6e,105a3c88-9345-4949-abd8-eda28e3a6f9e,2025-08-18,Onboarding Completed,True,False
+fcc62791-057e-4e24-a754-c6786e62f65b,b1f87f5e-1711-433e-a902-c1f1c895ae22,2025-10-28,Onboarding Completed,True,False
+abf2ecf8-ad8b-4c68-8fe7-23a6dfab9e43,b819fda9-675c-4cb3-8fba-d4395e2a188b,2025-12-28,Orientation Completed,False,False
+f1a11df1-055c-4c85-9b32-5a49ffc78225,e9483740-0cb0-4f2f-a7f6-185ede9c70cc,2025-11-29,Signed Up,False,False
+b6642efe-8ed9-4f6d-b3e7-532d78c2c5d4,397ffaaf-3165-4e27-a34b-ddf57ddcb7f5,2025-10-28,Training In Progress,False,True
+a159cc74-1218-4263-b661-55fba3ddcf5c,5dbd5b84-056d-49bb-927c-54de320968bc,2025-10-01,Assessment Completed,False,False
+345c633b-17ac-40d9-9d34-e405e5f8e5b0,57674182-8c1d-402a-81c6-96ab4a25de29,2025-12-26,Orientation Scheduled,False,True
+b4efb3cb-244a-4caf-86a9-d383ba2934e1,4b8983fb-086f-49e5-b0f9-18cabe84c44c,2026-01-12,Onboarding Completed,True,False
+e8310287-3746-4016-9fe8-c927edc09da6,4c370a83-a101-448c-abca-e87c384bd203,2025-07-29,Assessment Completed,False,False
+2cac6f39-25d2-42a1-b138-c3efa65aba28,f938566b-1836-468b-bffb-5da8444ba31e,2025-10-15,Assessment Completed,False,False
+da43ef29-cbc3-48c6-9ee5-030ae905882c,18957943-f95f-49c4-a067-90f98f9cb9a7,2026-01-10,Onboarding Completed,True,False
+310f5185-82a3-4349-8fbb-6ddecff9791f,adc1b194-ea8b-4e51-83fe-6284118261eb,2025-11-08,Assessment Scheduled,False,True
+b5fc1145-757e-4261-8d55-cb3a890ba0eb,2399fe5e-18ab-4884-8acd-283e7a4a37a6,2025-10-01,Training In Progress,False,True
+6c73c366-6f59-4906-be0d-bea5845cf020,70f28c9c-7695-4898-8e9c-e9a04e7ca2d9,2025-12-27,Assessment Completed,False,False
+fcd1b8f0-de45-48a3-ab46-fbb44c21636c,93d3bff1-611e-4167-8de6-2fb583f9f555,2025-08-18,Training Assigned,False,True
+df7e3ae8-5def-4336-a32c-fa5923879a6b,3cda5997-c5f7-4551-af44-b8448bf47035,2025-10-10,Onboarding Completed,True,False
+46682adf-5240-452f-b603-3db1e12ef14a,57e6f1ef-0389-45f2-a23f-f7b871643838,2025-06-20,Onboarding Completed,True,False
+cd75bfe0-20b6-4834-a983-854d5de82fa7,a82efee5-c89e-40de-a973-3faa52539222,2025-12-28,Onboarding Completed,True,False
+46b88972-1b5a-4256-bc44-c40b90af9de0,84be07a7-4446-42ff-8fa9-1eddc164b8f8,2025-11-12,Onboarding Completed,True,False
+b400e6a8-44ad-4039-9834-2ea7b6dcf1aa,fbb4bbfa-9160-4b84-962c-bcb363f46e33,2025-11-07,Orientation Completed,False,False
+0b4c7b60-287c-483d-9493-feb53dc10dd3,5de6ef0f-3599-47e9-8128-18a724fdfbdb,2025-11-01,Assessment Completed,False,False
+48f8b944-ced7-4530-ae43-e993c8abb4d6,5217dd60-577e-4627-b619-82bf69ccbf46,2025-06-13,Onboarding Completed,True,False
+65f105d4-cd20-4078-a84c-252317512859,4491a996-e64f-4eae-91c1-5dee5af1f830,2026-01-08,Onboarding Completed,True,False
+56ed6c5a-266d-4e48-b65f-eb508fafd3b3,5d3c3486-6c3e-46f1-ab57-ef4a5f617165,2025-08-19,Training Assigned,False,False
+c57ad344-5bde-4a3b-a64e-3c7c9db20f3b,f682574f-007b-4715-a417-c250e4f35d5e,2025-12-27,Orientation Scheduled,False,True
+bdcf3473-fa7d-49ac-864a-6c58a681ab0c,fafbe412-4946-46b2-9895-c344009b8419,2025-09-22,Training Assigned,False,True
+b7f0f9b9-12ac-49d4-949a-c1d92ba43984,352fd1a7-957b-48dc-8918-6da189f19814,2025-12-16,Training In Progress,False,True
+b1f1449b-a1a1-4c2a-8fbc-bad4479522bb,2d056cad-9218-4e63-9563-2bdbb1fdf7e8,2025-06-27,Signed Up,False,False
+0d6cc99b-0c53-4570-8b51-60904304b7b5,31440c7a-fa66-4946-8adb-89699635ddce,2025-07-01,Signed Up,False,False
+00346124-bc92-4bc6-bd6f-ab9ea52df495,5315748e-1a69-46e3-9e8a-7d6955f5c6b0,2026-01-17,Assessment Completed,False,False
+50d9b561-a9ad-426d-bfc9-5ca38f2b2602,9ab21965-e1ce-4376-9ae5-b055150ab87c,2025-11-22,Assessment Scheduled,False,True
+2cf8243e-8d58-4576-8c63-282eebf7d6bd,cd0740ed-95e7-402b-9189-8a16070e21c2,2025-08-23,Assessment Scheduled,False,True
+7bc6c65a-0250-4425-991a-0537d33af27e,ba7a5e5c-204c-4360-9965-004117a246fc,2025-06-15,Training In Progress,False,True
+880b0edf-a809-419f-b110-b7bae12afa25,bd8c1848-21ba-4d62-8b95-b901c2fdef1f,2025-08-17,Training In Progress,False,False
+ddbfddc2-28d1-42df-97b8-4764e2a74e0d,d9dbef38-cbd3-438b-a694-0f0cc896e849,2025-11-27,Placement Support,False,False
+af7dca49-248d-4b65-b6e9-17278252e20a,43d633f0-9221-4b84-9f24-ac2984a4dc34,2025-10-17,Onboarding Completed,True,False
+f27de698-1bed-4a10-97cf-1a8345569809,ad8e568f-bad4-4e95-8a96-533b59fc6ee9,2026-01-10,Training Assigned,False,True
+fef95303-122b-4134-844b-395cb3cbbec1,1314afe1-28dd-40e1-8618-e79ffddca720,2025-10-08,Onboarding Completed,True,False
+52d4558b-75b2-4d71-80b4-fd180e3fb24a,efc7b0d3-31bb-4ac9-8f85-7d1270340891,2025-10-02,Onboarding Completed,True,False
+d897582a-3997-4d62-ba9a-3a482617cb59,37c8db4e-0eb8-461c-8319-1f42d91918a9,2025-08-26,Onboarding Completed,True,False
+6066dcd8-5db7-4adb-babb-8bb118fab157,8cbab4bc-f6cb-4f6d-8ce5-a69714740060,2025-06-22,Placement Support,False,False
+bc17ebc1-603d-44cb-9de8-dccf7842a932,6926d854-ac99-45eb-9c78-ea2c6e9010b8,2025-06-22,Onboarding Completed,True,False
+c18129cd-fed8-4db7-bb58-c8811ad8f446,902943ea-9a08-4719-85eb-923cf49933d9,2025-10-18,Onboarding Completed,True,False
+a87166fc-9a13-47e4-8d7b-086633911830,6a4493e9-061c-445a-a216-dd3c381c2e17,2025-10-26,Onboarding Completed,True,False
+95c4539f-dfdb-4d0a-828d-2aaee7396ec7,0194452c-1dd5-4702-ba0f-a90661227220,2026-01-01,Onboarding Completed,True,False
+9129d9a6-514a-461f-9c71-5206705baf82,d7d3b65a-345c-43f0-957a-7588aa3190e1,2025-10-01,Onboarding Completed,True,False
+9a220d0f-bd5a-43bf-b4c5-e848a84ed8da,93b4dfac-ce66-436e-adc4-fc60f38729d3,2025-10-05,Onboarding Completed,True,False
+67bf81ca-b0bc-45fd-ab38-6f733e4ea4bc,c52077d2-79c1-4b2e-9876-c890d36429cb,2026-01-04,Onboarding Completed,True,False
+313eba5d-9bac-4d5c-8b88-a497227ccc4f,e4009686-ddb4-4bec-a72f-86820bdf4e7a,2025-10-22,Training In Progress,False,False
+bf1eb62d-90e8-4baa-b836-678c4baa13e6,0d6742c7-50ee-45cc-b4ce-7082793a8b20,2025-11-26,Orientation Completed,False,False
+0f2aa549-e5ba-4709-b910-e30f04d26a1b,f9c0e342-eb08-406e-844a-ae78f4cc208b,2025-07-04,Onboarding Completed,True,False
+aa4b6a8d-b10b-48c4-9a98-346682451e33,bacca144-10ba-419d-9924-f5b0e3c66aa4,2025-09-03,Orientation Completed,False,False
+94693baf-b01d-4880-a884-a5043a39333b,3324ae5e-7d0a-4cf0-95dc-90a7eeed97b4,2025-07-17,Onboarding Completed,True,False
+90898c04-b616-4088-8bcb-ba8297bd07ae,111b7003-65c6-4e3a-b04f-88a3dd78fba0,2025-09-19,Onboarding Completed,True,False
+baccc368-4b24-4625-b377-07e23db58440,e4fb57d9-b5e2-40ec-9b7e-2603a41b7555,2025-06-17,Onboarding Completed,True,False
+dad20341-c23f-421d-869b-d277fa679de4,c35fb501-b30b-40aa-a5f3-491ca986130d,2026-01-23,Onboarding Completed,True,False
+5699799e-5d75-4868-a661-aaa47dba9c4a,cca5f3dd-4f9d-46d4-8a92-44240e22c89c,2025-10-20,Onboarding Completed,True,False
+8a9e9298-c94f-4a95-9b1e-40ec77c96157,187b4af4-14a5-45d2-bc44-5379cd599e7a,2025-11-28,Onboarding Completed,True,False
+6792939f-9e51-4dfa-897d-46fbb369f86d,fe70d797-11bb-4e80-a561-7af9de0a801e,2025-10-30,Onboarding Completed,True,False
+ede67597-706c-4016-8952-7d64be375f96,778eee59-8969-465b-baf8-85d585ee0731,2025-11-17,Onboarding Completed,True,False
+b01dfe18-143c-46cb-86f7-56b44fb8c501,5388dbc6-aafe-4adc-92d0-595820b9e1e6,2025-06-17,Placement Support,False,False
+a26bef5f-4e3c-4612-8e99-e360f51d9d9f,27740195-a021-4197-9cec-2d2a741ee341,2025-09-30,Onboarding Completed,True,False
