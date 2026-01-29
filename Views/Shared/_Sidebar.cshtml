@@ -38,6 +38,12 @@
 			<span>Mobilizer View</span>
 		</a>
 	</li>
+    <li class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "Engagement" ? "active" : "")">
+        <a class="nav-link" href="/Engagement">
+            <i class="fas fa-fw fa-comments"></i>
+            <span>Engagement Engine</span>
+        </a>
+    </li>
     <hr class="sidebar-divider d-none d-md-block">
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
