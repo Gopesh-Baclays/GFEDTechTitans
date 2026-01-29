@@ -7,401 +7,214 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>System Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
     <style type="text/css">
         body {
-            font-family: Calibri;
-            font-size: 12pt;
+            font-family: Calibri, Arial, sans-serif;
+            font-size: 14px;
             color: #00AEEF;
             font-weight: normal;
+            background: #f1f4f6;
+            margin: 0;
+            padding: 20px;
         }
 
-        #divOuterFrame {
-            position: relative;
-            width: 900px;
-            height: 620px;
-            border: 0px dotted red
-            border-radius: 15px 15px 15px 15px;
-            margin: 50px auto 0 auto;
-            padding: 10px;
-            box-shadow: rgb(224,224,224) 5px 5px 40px 0px;
+        /* Outer wrapper that provides the visible border around the whole page content */
+        .page-border {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 18px;
+            border: 6px solid #00AEEF; /* page border color */
+            border-radius: 14px;
+            background: #ffffff; /* inner background so border is visible */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
         }
 
-        #divOuterFrame_TopHalf {
-            position: absolute;
-            left: 0;
-            top: -50px;
-            width: 900px;
-            height: 200px;
-            border-top: 1px solid #E0E0E0;
-            border-bottom: 1px solid #E0E0E0;
-            border-left: 1px solid #E0E0E0;
-            border-right: 1px solid #E0E0E0;
-            border-radius: 15px 15px 0px 0px;
-            margin: 50px auto 50px auto;
-            padding: 10px;
+        .page-container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 12px;
         }
 
-        #divOuterFrame_BottomHalf {
-            position: absolute;
-            left: 0;
-            top: 220px;
-            width: 900px;
-            height: 400px;
-            border-bottom: 1px solid #E0E0E0;
-            border-left: 1px solid #E0E0E0;
-            border-right: 1px solid #E0E0E0;
-            border-radius:  0px 0px 15px 15px;
-            margin: 50px auto 50px auto;
-            padding: 10px;
+        /* Header (row 1) - image left, title/subtitle right horizontally */
+        .sys-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        .header-logo {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: white;
+            padding: 8px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+        .sys-title {
+            text-align: left;
+        }
+        .sys-title h1 {
+            font-size: 48px;
+            margin: 0;
+            color: #00AEEF;
+            font-weight: 700;
+        }
+        .sys-title p {
+            font-size: 20px;
+            margin: 6px 0 0;
+            color: #00AEEF;
+            font-style: italic;
+        }
+
+        /* Pictures (row 2) */
+        .icons-row {
+            margin: 25px 0;
+        }
+        .icons-flex {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        .icon-block {
+            text-align: center;
+            width: 260px;
+        }
+        .login_icons {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            border-radius: 12px;
+            background: white;
+            padding: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+        .icon-caption {
+            text-align: center;
+            margin-top: 12px;
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 200;
+        }
+
+        /* Responsive adjustments */
+       
+        /* Login card (row 3) */
+        .login-card {
+            padding: 20px;
+            border-radius: 12px;
+            background: #ffffff;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        }
+        .login-card .lead { color: #6c757d; }
+        #btnLogin {
+            background-color: #00AEEF;
+            color: #fff;
+            border: none;
+        }
+        #btnLogin:hover {
+            background-color: #059bd1;
+            color: #fff;
         }
 
         .vertical_blue_bar {
-            position: absolute;
             width: 6px;
-            height: 100px;
-            border: 0px solid red;
-            border-radius: 3px;
-            background-color: #0AEEF0;
-        }
-
-        .login_icons {
-            position: absolute;
-            width: 96px;
-            height: 96px;
-            border: 0px dotted red;
-        }
-
-        #imgBarclaysLogo {
-            position: absolute;
-            left: 25px;
-            top: 775px;
-            width: 100px;
-            height: 17px;
-        }
-
-        #lblSystemTitle {
-            position: absolute;
-            top: 50px;
-            left: 500px;
-            width: 375px;
-            height: 45px;
-            font-size: 36px;
-            font-weight: bold;
-            color: #00AEEF;
-            overflow: hidden;
-             border: 0px dotted red;
-        }
-
-        #lblSystemName {
-            position: absolute;
-            top: 100px;
-            left: 500px;
-            width: 375px;
-            height: 30px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #00AEEF;
-            overflow: hidden;
-            border: 0px dotted red;
-        }
-
-        #lblSystemSummary {
-            position: absolute;
-            top: 135px;
-            left: 500px;
-            width: 375px;
             height: 60px;
-            font-size: 16px;
-            font-style: italic;
-            font-weight: normal;
-            color: #00AEEF;
-            overflow: hidden;
-            border: 0px dotted red;
-        }
-
-        #lblLoginTitle {
-            position: absolute;
-            top: 25px;
-            left: 50px;
-            width: 825px;
-            height: 35px;
-            font-size: 28px;
-           font-weight: normal;
-            color: #00AEEF;
-            overflow: hidden;
-            border: 0px dotted red;
-        }
-
-        #lblLoginSummary {
-            position: absolute;
-            top: 70px;
-            left: 50px;
-            width: 825px;
-            height: 25px;
-            font-size: 20px;
-              font-weight: normal;
-            color: #00AEEF;
-            overflow: hidden;
-            border: 0px dotted red;
-        }
-
-        #divLoginFrame {
-            position: absolute;
-            left: 50px;
-            top: 125px;
-            width: 550px;
-            height: 200px;
-            border: 1px solid #E0E0E0;
-            border-radius: 15px 15px 15px 15px;
-            padding: 10px;
-            box-shadow: rgb(224,224,224) 5px 5px 20px 0px;
-        }
-
-        #divMisuseWarningFrame {
-            position: absolute;
-            left: 650px;
-            top: 125px;
-            width: 200px;
-            height: 200px;
-            border: 1px solid #E0E0E0;
-            border-radius: 15px 15px 15px 15px;
-            padding: 10px;
-            background-color: aliceblue;
-            box-shadow: rgb(224,224,224) 5px 5px 20px 0px;
-        }
-
-        #lblLoginGuidance {
-            position: absolute;
-            left: 25px;
-            top: 25px;
-            width: 525px;
-            height: 45px;
-            font-size: 13pt;
-            color: #A0A0A0;
-            text-align: center;
-            border: 0px dotted red;
-        }
-
-        #btnLogin {
-            position: absolute;
-            left: 225px;
-            top: 85px;
-            width: 125px;
-            height: 40px;
             background-color: #00AEEF;
-            background-image: -webkit-linear-gradient(top, #59CAF5, #00AEEF);
-            background-image: -moz-linear-gradient(top, #59CAF5, #00AEEF);
-            background-image: -ms-linear-gradient(top, #59CAF5, #00AEEF);
-            background-image: -o-linear-gradient(top, #59CAF5, #00AEEF);
-            background-image: linear-gradient(to bottom, #59CAF5, #00AEEF);
-            -webkit-border-radius: 10px;
-            -moz-border-radius: 10px;
-            border-radius: 10px;
-            color: white;
-            font-size: 17px;
-            cursor: pointer;
-        }
-
-        #btnLogin:hover {
-            background: #59B5EC;
-        }
-
-        #btnLogin_PopupText {
-            position: absolute;
-            left: 250px;
-            top: 130px;
-            width: 225px;
-            height: 50px;
-            border: solid 5px white;
-            border-radius: 25px;
-            background-color: #59B5EC;
-            color: white;
-            text-align: center;
-            padding: 15px 10px 5px 10px;
-            box-shadow: rgb(224,224,224) 5px 5px 40px 0px;
-            z-index: 999;
-            display: none;
-        }
-
-        #lblNewUserGuidance {
-            position: absolute;
-            left: 25px;
-            top: 145px;
-            width: 525px;
-            height: 60px;
-            font-size: 12pt;
-            color: #A0A0AA;
-            text-align: center;
-            border: 0px dotted red;
-        }
-
-        #lblNewUserGuidance a {
-            color: #ABAA00;
-        }
-
-        #lblMisuseWarningHeading {
-            position: absolute;
-            left: 10px;
-            top: 10px;
-            width: 200px;
-            height: 40px;
-            border: 0px dotted red;
-            font-size: 10pt;
-            font-weight: bold;
-            color: #808080;
-            text-align: center;
-        }
-
-        #lblMisuseWarningText {
-            position: absolute;
-            left: 10px;
-            top: 50px;
-            width: 200px;
-            height: 160px;
-            border: 0px dotted red;
-            font-weight: normal;
-            font-size: 10pt;
-            line-height: 90%;
-            color: #808080;
-            text-align: center;
-        }
-
-        #divHelpFrame {
-            position: absolute;
-            left: 50px;
-            top: 370px;
-            width: 825px;
-            height: 32px;
-            border: 0px dotted red;
-        }
-
-        #imgHelpIcon {
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            width: 32px;
-            height: 32px;
-        }
-
-        #lblHelpText {
-            position: absolute;
-            left: 40px;
-            top: 5px;
-            width: 785px;
-            height: 25px;
-            font-size: 10pt;
-            border: 0px dotted red;
-        }
-
-        #lblHelpText a {
-            font-size: 10pt;
-        }
-        #imgRttIcon {
-            position: absolute;
-            left: 850px;
-            top: 660px;
-            width: 75px;
-            height: 30px;
-        }
-
-
-        #divEnvironmentInformation {
-            position: absolute;
-            right: 20px;
-            bottom: 0px;
-            width: 100px;
-            height: 25px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-left-radius: 0px;
-            border-bottom-right-radius: 0px;
-            background-color: darkred;
-            text-align: center;
-            font-size: 10pt;
-            font-weight: bold;
-            line-height: 25px;
-            color: white;
-            cursor: pointer;
-        }
-
-        #divEnvironmentInformation_PopupText {
-            position: absolute;
-            right: 50px;
-            bottom: 50px;
-            width: 475px;
-            height: 155px;
-            border: solid 5px white;
-            border-radius: 25px;
-            background-color: #59B5EC;
-            padding: 15px 25px 5px 25px;
-            text-align: left;
-            color: white;
-            display: none;
-            z-index: 999;
-        }
-
-        #divEnvironmentInformation_PopupText b {
-            color: white;
-            font-weight: bold;
-            font-size: 14pt;
-        }
-
-        #divEnvironmentInformation_PopupText td {
-            color: white;
-            font-weight: normal;
-            font-size: 12pt;
+            border-radius: 3px;
+            margin: 0 auto 10px;
         }
     </style>
-
-    <script type="text/javascript">
-        function PopupHelp_Show(ControlName) {
-            document.getElementById(ControlName).style.display = "block";
-        }
-
-        function PopupHelp_Hide(ControlName) {
-            document.getElementById(ControlName).style.display = "none";
-        }
-    </script>
-    @section Scripts {
-        <script>
-            document.getElementById("btnLogin").addEventListener("click", function (event) {
-                window.location.href = "/Home/SSOLogin";
-            });
-        </script>
-    }
 </head>
 <body>
-    <form id="form1" method="post" asp-action="SsoLogin">
-        <div id="divOuterFrame">
-            <div id="divOuterFrame_TopHalf">
-                <div id="column_1_left" class="vertical_blue_bar" style="left: 49px; top: 50px;"></div>
-                <div id="column_1_right" class="vertical_blue_bar" style="left: 151px; top: 50px;"></div>
-                <div id="column_2_left" class="vertical_blue_bar" style="left: 199px; top: 75px;"></div>
-                <div id="column_2_right"class="vertical_blue_bar" style="left: 301px; top: 75px;"></div>
-                <div id="column_3_left" class="vertical_blue_bar" style="left: 349px; top: 50px;"></div>
-                <div id="column_3_right"class="vertical_blue_bar" style="left: 451px; top: 50px;"></div>
-
-                <img src="~/bootstrap/img/Mission.png" id="imgLoginIcon01" class="login_icons" style="left: 55px; top: 51px;" />
-                <img src="~/bootstrap/img/Corevalues.png" id="imgLoginIcon02" class="login_icons" style="left: 205px; top: 76px;" />
-                <img src="~/bootstrap/img/Vison.png" id="imgLoginIcon03" class="login_icons" style="left: 355px; top: 51px;" />
-                
-                <div id="lblSystemTitle">AARAMBH</div>
-                <div id="lblSystemName">Journey begins here...</div>
+    <div class="page-border">
+        <div class="page-container">
+            <!-- ROW 1: Image OIP.png and Title + Subtitle horizontally -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="sys-header">
+                        <img src="~/bootstrap/img/OIP.jpg" alt="AARAMBH Logo" class="header-logo" />
+                        <div class="sys-title">
+                            <h1>AARAMBH</h1>
+                            <p>Journey begins here...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div id="divOuterFrame_BottomHalf">
-                <div id="lblLoginTitle">Login</div>
-                <div id="lblLoginSummary">Please log into the system</div>
-
-                <div id="divLoginFrame">
-                    <div id="lblLoginGuidance">Click on the Login button below<br />to log into the RECAP system using SSO</div>
-                    <button id="btnLogin" type="submit">SSO Login</button>
-                    <div id="btnLogin_PopupText">Click here to log into the system using SSO Single Sign-On</div>
-                    <div id="lblNewUserGuidance">If you are not yet registered to use the system<br />then please consult your system administrator.</div>
+            <!-- ROW 2: Pictures (large, horizontal alignment) -->
+            <div class="row icons-row">
+                <div class="col-12">
+                    <div class="icons-flex">
+                        <div class="icon-block">
+                            <img src="~/bootstrap/img/Mission.png" alt="Mission" class="login_icons" />
+                            <div class="lblLoginTitle">Mission</div>
+                        </div>
+                        <div class="icon-block">
+                            <img src="~/bootstrap/img/Corevalues.png" alt="Core values" class="login_icons" />
+                            <div class="lblLoginTitle">Core Values</div>
+                        </div>
+                        <div class="icon-block">
+                            <img src="~/bootstrap/img/Vison.png" alt="Vision" class="login_icons" />
+                            <div class="lblLoginTitle">Vision</div>
+                        </div>
+                    </div>
                 </div>
-          
+            </div>
+
+            <!-- ROW 3: Login section -->
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8">
+                    <div class="login-card">
+                        <h3 id="lblLoginTitle">Login</h3>
+                        <p class="lead" id="lblLoginSummary">Please log into the system</p>
+
+                        <form id="form1" method="post" asp-action="SsoLogin">
+                            <div class="text-center mb-3" id="lblLoginGuidance">
+                                Click on the Login button below to log into the RECAP system using SSO
+                            </div>
+
+                            <div class="d-flex justify-content-center mb-2">
+                                <button id="btnLogin" type="submit" class="btn btn-lg">SSO Login</button>
+                            </div>
+
+                            <div class="text-center text-muted" id="lblNewUserGuidance">
+                                If you are not yet registered to use the system then please consult your system administrator.
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Side info box -->
+                <div class="col-12 col-md-4 mt-3 mt-md-0">
+                    <div class="login-card">
+                        <div id="lblMisuseWarningHeading">Important</div>
+                        <div id="lblMisuseWarningText">
+                            Use of this system is authorised for assigned personnel only. Misuse will be reported.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </form>
+    </div>
+
+    <script src="~/bootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="~/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script type="text/javascript">
+        var btn = document.getElementById("btnLogin");
+        if (btn) {
+            btn.addEventListener("click", function (event) {
+                // Keep default form submit to the SSO action
+            });
+        }
+    </script>
 </body>
 </html>
